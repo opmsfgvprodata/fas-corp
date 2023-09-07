@@ -1,0 +1,136 @@
+﻿@using MVC_SYSTEM.Class
+@{
+
+    if (ViewBag.Datacount > 0)
+    {
+        GetConfig getConfig = new GetConfig();
+
+        var grid = new WebGrid(
+        canPage: true,
+        rowsPerPage: Model.PageSize,
+        canSort: false,
+        ajaxUpdateContainerId: "grid");
+
+        grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+
+        <div class="text-center">@grid.TotalRowCount @Html.Label(GlobalResCorp.lblUnitCount)</div>
+
+        @grid.GetHtml(htmlAttributes: new { id = "grid" }, // id for ajaxUpdateontainerId parameter
+                            tableStyle: "table table-bordered table-striped table-list table-hover",
+                            headerStyle: "header_table",
+                            alternatingRowStyle: "Grid-alt",
+                            selectedRowStyle: "Grid-selected",
+                            rowStyle: "Grid-rowstyle",
+                            footerStyle: "table-pager",
+                            mode: WebGridPagerModes.All,
+                            columns: grid.Columns(
+                               grid.Column(header: "No."
+                                   , format: item => item.WebGrid.Rows.IndexOf(item) + 1
+                                   + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage)
+                                   * grid.RowsPerPage * grid.PageIndex, style: "count"),
+                                               //grid.Column(columnName: "fld_ID", header: GlobalResCorp.lblGLId, style: "kod"),
+                                               grid.Column(columnName: "fld_KodAktvt", header: GlobalResCorp.hdrActvtCode, style: "kod"),
+                                               grid.Column(columnName: "fld_Desc", header: GlobalResCorp.hdrDesc, style: "keterangan"),
+                                               //grid.Column(columnName: "fld_Desc", header: GlobalResCorp.hdrDesc, style: "keterangan"),
+                                               grid.Column(columnName: "fld_Harga", header: GlobalResCorp.hdrPrice + "(RM)", style: "tetapan1"),
+                                               ////Commented by Shazana on 5/5/2021
+                                               ////Added by Shazana on 15/12
+                                               //grid.Column(columnName: "fld_Paysheet", header: GlobalResCorp.hdrCategory, style: "tetapan1"),
+                                               ////Close Added by Shazana on 15/12
+                                               ////Close Commented by Shazana on 5/5/2021
+                                               grid.Column(GlobalResCorp.hdrAction, format: (item) =>
+                                               {
+                                                   //Commented by Shazana on 15/12
+                                                   //if (item.fld_Deleted == false)
+                                                   //{
+                                                   //    var tindakan = "<a data-modal1='' href='" + @Url.Action("_PayrateGMNUpdate", "Maintenance") + "/?id=" + item.fld_idMapGL + "' class='btn btn-success' role='button' title='" + GlobalResCorp.btnUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-pencil-square-o  fa-lg'></i></a>&nbsp;" +
+                                                   //                   "<a data-modal1='' href='" + @Url.Action("_PayrateGMNDelete", "Maintenance") + "/?id=" + item.fld_ID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-trash fa-lg'></i></span></a>";
+                                                   //    return @Html.Raw(tindakan);
+                                                   //}
+                                                   //else
+                                                   //{
+                                                   //    var tindakan = "<a data-modal1='' href='" + @Url.Action("_PayrateGMNDelete", "Maintenance") + "/?id=" + item.fld_ID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnUnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-undo fa-lg'></i></a>&nbsp;";
+                                                   //    return @Html.Raw(tindakan);
+                                                   //}
+                                                   //Close Commented by Shazana on 15 / 12
+
+                                                   //Added by Shazana on 15/12
+                                                   if (item.fld_Deleted == false)
+                                                   {
+                                                       var tindakan = "<a data-modal1='' href='" + @Url.Action("_PayrateGMNUpdate", "Maintenance") + "/?id=" + item.fld_idUpahAktiviti + "&id1=" + item.fld_idMapGL + "' class='btn btn-success' role='button' title='" + GlobalResCorp.btnUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-pencil-square-o  fa-lg'></i></a>&nbsp;" +
+                                                                      "<a data-modal1='' href='" + @Url.Action("_PayrateGMNDelete", "Maintenance") + "/?id=" + item.fld_idUpahAktiviti + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-trash fa-lg'></i></span></a>";
+                                                       return @Html.Raw(tindakan);
+                                                   }
+
+                                                   else
+                                                   {
+                                                       var tindakan = "<a data-modal1='' href='" + @Url.Action("_PayrateGMNDelete", "Maintenance") + "/?id=" + item.fld_idUpahAktiviti + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnUnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-undo fa-lg'></i></a>&nbsp;";
+                                                       return @Html.Raw(tindakan);
+                                                   }
+                                                   //"Close Added by Shazana on 15/12
+                                               }, canSort: false, style: "tindakan")
+                           ))
+        ;
+    }
+    else
+    {
+        <hr />
+        <div class="text-center">
+            @Html.Label(GlobalResCorp.msgErrorSearch)
+        </div>
+
+        <hr />
+    }
+
+}
+
+<style>
+    .header_table th {
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .count {
+        width: 30px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .kod {
+        width: 100px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .keterangan {
+        width: 150px;
+        font-size: 12px;
+        text-align: left;
+        vertical-align: middle !important;
+    }
+
+    .tetapan1 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tetapan2 {
+        width: 150px;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+
+    .tindakan {
+        width: 80px !important;
+        text-align: center;
+        vertical-align: middle !important;
+    }
+</style>
+
+
+

@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CheckRollCorpModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="sp_AddTotblPkjmastApp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fldFileID" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="sp_AddTotblUserIDApp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fldFileID" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="sp_RptBulPenPekLad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Selection" Type="int" Mode="In" />
+          <Parameter Name="NegaraID" Type="int" Mode="In" />
+          <Parameter Name="SyarikatID" Type="int" Mode="In" />
+          <Parameter Name="WilayahID" Type="int" Mode="In" />
+          <Parameter Name="LadangID" Type="int" Mode="In" />
+          <Parameter Name="Kdrytan" Type="char" Mode="In" />
+          <Parameter Name="Month" Type="int" Mode="In" />
+          <Parameter Name="Year" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_RptBulPenPekLadSum" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NegaraID" Type="int" Mode="In" />
+          <Parameter Name="SyarikatID" Type="int" Mode="In" />
+          <Parameter Name="WilayahID" Type="int" Mode="In" />
+          <Parameter Name="LadangID" Type="int" Mode="In" />
+          <Parameter Name="Kdrytan" Type="char" Mode="In" />
+          <Parameter Name="Month" Type="int" Mode="In" />
+          <Parameter Name="Year" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_RptLapMakKer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NegaraID" Type="int" Mode="In" />
+          <Parameter Name="SyarikatID" Type="int" Mode="In" />
+          <Parameter Name="WilayahID" Type="int" Mode="In" />
+          <Parameter Name="LadangID" Type="int" Mode="In" />
+          <Parameter Name="Month" Type="int" Mode="In" />
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <Parameter Name="NoPkj" Type="char" Mode="In" />
+        </Function>
+        <Function Name="sp_RptTransPek" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NegaraID" Type="int" Mode="In" />
+          <Parameter Name="SyarikatID" Type="int" Mode="In" />
+          <Parameter Name="WilayahID" Type="int" Mode="In" />
+          <Parameter Name="LadangID" Type="int" Mode="In" />
+          <Parameter Name="Month" Type="char" Mode="In" />
+          <Parameter Name="Year" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="CheckRollCorpModelStoreContainer" />
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CheckRollCorpModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="sp_AddTotblPkjmastApp">
+            <Parameter Name="fldFileID" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AddTotblUserIDApp">
+            <Parameter Name="fldFileID" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RptBulPenPekLad" ReturnType="Collection(CheckRollCorpModel.sp_RptBulPenPekLad_Result)">
+            <Parameter Name="Selection" Mode="In" Type="Int32" />
+            <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+            <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+            <Parameter Name="WilayahID" Mode="In" Type="Int32" />
+            <Parameter Name="LadangID" Mode="In" Type="Int32" />
+            <Parameter Name="Kdrytan" Mode="In" Type="String" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RptBulPenPekLadSum" ReturnType="Collection(CheckRollCorpModel.sp_RptBulPenPekLadSum_Result)">
+            <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+            <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+            <Parameter Name="WilayahID" Mode="In" Type="Int32" />
+            <Parameter Name="LadangID" Mode="In" Type="Int32" />
+            <Parameter Name="Kdrytan" Mode="In" Type="String" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RptLapMakKer" ReturnType="Collection(CheckRollCorpModel.sp_RptLapMakKer_Result)">
+            <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+            <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+            <Parameter Name="WilayahID" Mode="In" Type="Int32" />
+            <Parameter Name="LadangID" Mode="In" Type="Int32" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="NoPkj" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RptTransPek" ReturnType="Collection(CheckRollCorpModel.sp_RptTransPek_Result)">
+            <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+            <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+            <Parameter Name="WilayahID" Mode="In" Type="Int32" />
+            <Parameter Name="LadangID" Mode="In" Type="Int32" />
+            <Parameter Name="Month" Mode="In" Type="String" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_RptBulPenPekLad_Result">
+          <Property Type="Int32" Name="fldNo" Nullable="false" />
+          <Property Type="String" Name="fldNamaWilayah" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="fldKodLadang" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="fldNamaLadang" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="fld_Nopkj" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="fld_Nama1" Nullable="true" MaxLength="40" />
+          <Property Type="Int32" Name="fldJumBilPekerjaL" Nullable="true" />
+          <Property Type="Int32" Name="fldJumBilPekerjaS" Nullable="true" />
+          <Property Type="Int32" Name="fldJumPkjPen1000Kbwh" Nullable="true" />
+          <Property Type="Int32" Name="fldJumPkjPen1000KbwhS" Nullable="true" />
+          <Property Type="Decimal" Name="fldJumPkjPen1000KbwhPrcnt" Nullable="true" Precision="6" Scale="2" />
+          <Property Type="Int32" Name="fldJumPkjPen10011500" Nullable="true" />
+          <Property Type="Int32" Name="fldJumPkjPen10011500S" Nullable="true" />
+          <Property Type="Decimal" Name="fldJumPkjPen10011500Prcnt" Nullable="true" Precision="6" Scale="2" />
+          <Property Type="Int32" Name="fldJumPkjPen1501Kats" Nullable="true" />
+          <Property Type="Int32" Name="fldJumPkjPen1501KatsS" Nullable="true" />
+          <Property Type="Decimal" Name="fldJumPkjPen1501KatsPrcnt" Nullable="true" Precision="6" Scale="2" />
+          <Property Type="Decimal" Name="fldJumPkjPen1000KbwhInd" Nullable="true" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="fldJumPkjPen10011500Ind" Nullable="true" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="fldJumPkjPen1501KatsInd" Nullable="true" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="fldPrtaPenTngi" Nullable="true" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="fldPrtaPenRndh" Nullable="true" Precision="8" Scale="2" />
+          <Property Type="Int32" Name="fldNegaraID" Nullable="true" />
+          <Property Type="Int32" Name="SyarikatID" Nullable="true" />
+          <Property Type="Int32" Name="WilayahID" Nullable="true" />
+          <Property Type="Int32" Name="LadangID" Nullable="true" />
+          <Property Type="String" Name="WargaNegara" Nullable="true" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="sp_RptBulPenPekLadSum_Result">
+          <Property Type="String" Name="Kerakyatan" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="TotalCount" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_RptLapMakKer_Result">
+          <Property Type="Int32" Name="fldNo" Nullable="false" />
+          <Property Type="String" Name="fld_Kum" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="fld_Hujan" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="fld_Kdhdct" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="fld_Glcd" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="fld_Pkt" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="fld_Aktvt" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="fld_No_Kontrak" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="fld_Kdhbyr" Nullable="true" MaxLength="1" />
+          <Property Type="Decimal" Name="fld_Kgk" Nullable="true" Precision="6" Scale="2" />
+          <Property Type="Decimal" Name="fld_Kti1" Nullable="true" Precision="6" Scale="2" />
+          <Property Type="Decimal" Name="fld_Kti3" Nullable="true" Precision="6" Scale="2" />
+          <Property Type="Decimal" Name="fld_Kong" Nullable="true" Precision="6" Scale="2" />
+          <Property Type="Decimal" Name="fld_Kdrot" Nullable="true" Precision="6" Scale="2" />
+          <Property Type="Decimal" Name="fld_Jamot" Nullable="true" Precision="6" Scale="2" />
+          <Property Type="Decimal" Name="fld_Qty" Nullable="true" Precision="6" Scale="2" />
+          <Property Type="Decimal" Name="fld_Amt" Nullable="true" Precision="6" Scale="2" />
+          <Property Type="Decimal" Name="fld_Jumlah" Nullable="true" Precision="8" Scale="2" />
+          <Property Type="String" Name="fld_Nama1" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="fld_UserId" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="fld_UserName" Nullable="true" MaxLength="40" />
+          <Property Type="DateTime" Name="fld_Tarikh" Nullable="true" />
+          <Property Type="String" Name="fld_Nopkj" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="fld_NegaraID" Nullable="true" />
+          <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
+          <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
+          <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_RptTransPek_Result">
+          <Property Type="Int32" Name="fldNo" Nullable="false" />
+          <Property Type="DateTime" Name="fldTrkhDkmn" Nullable="true" />
+          <Property Type="String" Name="fldNoDkmn" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="fldNoCek" Nullable="true" MaxLength="8" />
+          <Property Type="String" Name="fldLejar" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="fldPrgkt" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="fldAktiviti" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="fld_NoSkb" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="fldNoKontrakKP" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="fldInvois" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="fldKodStok" Nullable="true" MaxLength="6" />
+          <Property Type="Decimal" Name="fldKuantiti" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="String" Name="fldNoA" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="fldDebit" Nullable="true" Precision="13" Scale="2" />
+          <Property Type="Decimal" Name="fldKredit" Nullable="true" Precision="13" Scale="2" />
+          <Property Type="Int32" Name="fldNegaraID" Nullable="true" />
+          <Property Type="Int32" Name="SyarikatID" Nullable="true" />
+          <Property Type="Int32" Name="WilayahID" Nullable="true" />
+          <Property Type="Int32" Name="LadangID" Nullable="true" />
+          <Property Type="String" Name="WargaNegara" Nullable="true" MaxLength="2" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CheckRollCorpModelStoreContainer" CdmEntityContainer="Entities" >
+          <FunctionImportMapping FunctionImportName="sp_AddTotblPkjmastApp" FunctionName="CheckRollCorpModel.Store.sp_AddTotblPkjmastApp" />
+          <FunctionImportMapping FunctionImportName="sp_AddTotblUserIDApp" FunctionName="CheckRollCorpModel.Store.sp_AddTotblUserIDApp" />
+          <FunctionImportMapping FunctionImportName="sp_RptBulPenPekLad" FunctionName="CheckRollCorpModel.Store.sp_RptBulPenPekLad">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CheckRollCorpModel.sp_RptBulPenPekLad_Result">
+                <ScalarProperty Name="fldNo" ColumnName="fldNo" />
+                <ScalarProperty Name="fldNamaWilayah" ColumnName="fldNamaWilayah" />
+                <ScalarProperty Name="fldKodLadang" ColumnName="fldKodLadang" />
+                <ScalarProperty Name="fldNamaLadang" ColumnName="fldNamaLadang" />
+                <ScalarProperty Name="fld_Nopkj" ColumnName="fld_Nopkj" />
+                <ScalarProperty Name="fld_Nama1" ColumnName="fld_Nama1" />
+                <ScalarProperty Name="fldJumBilPekerjaL" ColumnName="fldJumBilPekerjaL" />
+                <ScalarProperty Name="fldJumBilPekerjaS" ColumnName="fldJumBilPekerjaS" />
+                <ScalarProperty Name="fldJumPkjPen1000Kbwh" ColumnName="fldJumPkjPen1000Kbwh" />
+                <ScalarProperty Name="fldJumPkjPen1000KbwhS" ColumnName="fldJumPkjPen1000KbwhS" />
+                <ScalarProperty Name="fldJumPkjPen1000KbwhPrcnt" ColumnName="fldJumPkjPen1000KbwhPrcnt" />
+                <ScalarProperty Name="fldJumPkjPen10011500" ColumnName="fldJumPkjPen10011500" />
+                <ScalarProperty Name="fldJumPkjPen10011500S" ColumnName="fldJumPkjPen10011500S" />
+                <ScalarProperty Name="fldJumPkjPen10011500Prcnt" ColumnName="fldJumPkjPen10011500Prcnt" />
+                <ScalarProperty Name="fldJumPkjPen1501Kats" ColumnName="fldJumPkjPen1501Kats" />
+                <ScalarProperty Name="fldJumPkjPen1501KatsS" ColumnName="fldJumPkjPen1501KatsS" />
+                <ScalarProperty Name="fldJumPkjPen1501KatsPrcnt" ColumnName="fldJumPkjPen1501KatsPrcnt" />
+                <ScalarProperty Name="fldJumPkjPen1000KbwhInd" ColumnName="fldJumPkjPen1000KbwhInd" />
+                <ScalarProperty Name="fldJumPkjPen10011500Ind" ColumnName="fldJumPkjPen10011500Ind" />
+                <ScalarProperty Name="fldJumPkjPen1501KatsInd" ColumnName="fldJumPkjPen1501KatsInd" />
+                <ScalarProperty Name="fldPrtaPenTngi" ColumnName="fldPrtaPenTngi" />
+                <ScalarProperty Name="fldPrtaPenRndh" ColumnName="fldPrtaPenRndh" />
+                <ScalarProperty Name="fldNegaraID" ColumnName="fldNegaraID" />
+                <ScalarProperty Name="SyarikatID" ColumnName="SyarikatID" />
+                <ScalarProperty Name="WilayahID" ColumnName="WilayahID" />
+                <ScalarProperty Name="LadangID" ColumnName="LadangID" />
+                <ScalarProperty Name="WargaNegara" ColumnName="WargaNegara" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RptBulPenPekLadSum" FunctionName="CheckRollCorpModel.Store.sp_RptBulPenPekLadSum">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CheckRollCorpModel.sp_RptBulPenPekLadSum_Result">
+                <ScalarProperty Name="Kerakyatan" ColumnName="Kerakyatan" />
+                <ScalarProperty Name="TotalCount" ColumnName="TotalCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RptLapMakKer" FunctionName="CheckRollCorpModel.Store.sp_RptLapMakKer">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CheckRollCorpModel.sp_RptLapMakKer_Result">
+                <ScalarProperty Name="fldNo" ColumnName="fldNo" />
+                <ScalarProperty Name="fld_Kum" ColumnName="fld_Kum" />
+                <ScalarProperty Name="fld_Hujan" ColumnName="fld_Hujan" />
+                <ScalarProperty Name="fld_Kdhdct" ColumnName="fld_Kdhdct" />
+                <ScalarProperty Name="fld_Glcd" ColumnName="fld_Glcd" />
+                <ScalarProperty Name="fld_Pkt" ColumnName="fld_Pkt" />
+                <ScalarProperty Name="fld_Aktvt" ColumnName="fld_Aktvt" />
+                <ScalarProperty Name="fld_No_Kontrak" ColumnName="fld_No_Kontrak" />
+                <ScalarProperty Name="fld_Kdhbyr" ColumnName="fld_Kdhbyr" />
+                <ScalarProperty Name="fld_Kgk" ColumnName="fld_Kgk" />
+                <ScalarProperty Name="fld_Kti1" ColumnName="fld_Kti1" />
+                <ScalarProperty Name="fld_Kti3" ColumnName="fld_Kti3" />
+                <ScalarProperty Name="fld_Kong" ColumnName="fld_Kong" />
+                <ScalarProperty Name="fld_Kdrot" ColumnName="fld_Kdrot" />
+                <ScalarProperty Name="fld_Jamot" ColumnName="fld_Jamot" />
+                <ScalarProperty Name="fld_Qty" ColumnName="fld_Qty" />
+                <ScalarProperty Name="fld_Amt" ColumnName="fld_Amt" />
+                <ScalarProperty Name="fld_Jumlah" ColumnName="fld_Jumlah" />
+                <ScalarProperty Name="fld_Nama1" ColumnName="fld_Nama1" />
+                <ScalarProperty Name="fld_UserId" ColumnName="fld_UserId" />
+                <ScalarProperty Name="fld_UserName" ColumnName="fld_UserName" />
+                <ScalarProperty Name="fld_Tarikh" ColumnName="fld_Tarikh" />
+                <ScalarProperty Name="fld_Nopkj" ColumnName="fld_Nopkj" />
+                <ScalarProperty Name="fld_NegaraID" ColumnName="fld_NegaraID" />
+                <ScalarProperty Name="fld_SyarikatID" ColumnName="fld_SyarikatID" />
+                <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
+                <ScalarProperty Name="fld_WilayahID" ColumnName="fld_WilayahID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RptTransPek" FunctionName="CheckRollCorpModel.Store.sp_RptTransPek">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CheckRollCorpModel.sp_RptTransPek_Result">
+                <ScalarProperty Name="fldNo" ColumnName="fldNo" />
+                <ScalarProperty Name="fldTrkhDkmn" ColumnName="fldTrkhDkmn" />
+                <ScalarProperty Name="fldNoDkmn" ColumnName="fldNoDkmn" />
+                <ScalarProperty Name="fldNoCek" ColumnName="fldNoCek" />
+                <ScalarProperty Name="fldLejar" ColumnName="fldLejar" />
+                <ScalarProperty Name="fldPrgkt" ColumnName="fldPrgkt" />
+                <ScalarProperty Name="fldAktiviti" ColumnName="fldAktiviti" />
+                <ScalarProperty Name="fld_NoSkb" ColumnName="fld_NoSkb" />
+                <ScalarProperty Name="fldNoKontrakKP" ColumnName="fldNoKontrakKP" />
+                <ScalarProperty Name="fldInvois" ColumnName="fldInvois" />
+                <ScalarProperty Name="fldKodStok" ColumnName="fldKodStok" />
+                <ScalarProperty Name="fldKuantiti" ColumnName="fldKuantiti" />
+                <ScalarProperty Name="fldNoA" ColumnName="fldNoA" />
+                <ScalarProperty Name="fldDebit" ColumnName="fldDebit" />
+                <ScalarProperty Name="fldKredit" ColumnName="fldKredit" />
+                <ScalarProperty Name="fldNegaraID" ColumnName="fldNegaraID" />
+                <ScalarProperty Name="SyarikatID" ColumnName="SyarikatID" />
+                <ScalarProperty Name="WilayahID" ColumnName="WilayahID" />
+                <ScalarProperty Name="LadangID" ColumnName="LadangID" />
+                <ScalarProperty Name="WargaNegara" ColumnName="WargaNegara" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

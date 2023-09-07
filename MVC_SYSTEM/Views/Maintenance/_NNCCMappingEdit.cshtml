@@ -1,0 +1,71 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_AktivitiNNCCMap
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblnnccUpdate</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblnnccInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="ListReport" class="control-label col-sm-3">@GlobalResCorp.lblnnccFlag:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_Flag, null, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblnnccNetworkNo:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_NNCC, null, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblnnccxtivitiSAP:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_KodAktivitiSAP, null, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblnnccJnsAktiviti:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.fld_JenisAktiviti, null, htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblnnccKodAktiviti:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownList("fld_KodAktivitiOPMS", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_KodAktivitiOPMS, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.fld_ID)
+                        @Html.HiddenFor(model => model.fld_Deleted)
+                        @Html.HiddenFor(model => model.fld_WIlayahID)
+                        @Html.HiddenFor(model => model.fld_NegaraID)
+                        @Html.HiddenFor(model => model.fld_SyarikatID)
+                        @Html.HiddenFor(model => model.fld_LadangID)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>

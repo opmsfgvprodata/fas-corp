@@ -1,0 +1,140 @@
+﻿@using MVC_SYSTEM.Class
+@*Commented by Shazana on 29/10
+    @model MVC_SYSTEM.ModelsCorporate.tbl_UpahAktivitiViewModelGMNEdit
+    Added by Shazana on 29/10*@
+@model MVC_SYSTEM.ModelsCustom.tbl_UpahAktivitiViewModel
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+    GetWilayah GetWilayah = new GetWilayah();
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.titleUpdate</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@*Maklumat*@</div>
+                    <div class="panel-body">
+                        <div class="form-group" hidden="hidden">
+                            <label class="control-label col-sm-3">Wilayah:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBox("fld_WilayahID", GetWilayah.GetWilayahName(Model.fld_WilayahID.Value), htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.hdrActvtCode:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_KodAktvt, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.fld_KodAktvt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.hdrDesc:</label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.fld_Desc, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Desc, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.hdrPrice (RM):</label>
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(model => model.fld_Harga, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Harga, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">@GlobalResCorp.hdrUnit:</label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(model => model.fld_Unit, new SelectList(ViewBag.fld_Selection, "Value", "Text", Model.fld_Unit), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Unit, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @*Added by Shazana on 5/5/2021*@
+                        <div class="form-group">
+                            <label class="control-label col-md-3">@GlobalResCorp.hdrmaxProduct:</label>
+                            <div class="col-md-7">
+                                @Html.TextBoxFor(model => model.fld_MaxProduktiviti, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_MaxProduktiviti, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @*Close Added by Shazana on 5/5/2021*@
+
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">@GlobalResCorp.hdrDisableFlag:</label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(model => model.fld_DisabledFlag, new SelectList(ViewBag.fld_Select, "Value", "Text", Model.fld_DisabledFlag), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_DisabledFlag, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @*Added by Shazana on 29/10*@
+                        <div class="form-group">
+                            @*Commented by Shazana on 5/5/2021*@
+                            @*<label class="control-label col-md-3">@GlobalResCorp.lblGLCode:</label>*@
+                            @*Close Commented by Shazana on 5/5/2021*@
+                            @*Added by Shazana on 5/5/2021*@  <label class="control-label col-md-3">@GlobalResCorp.lblGLCodePA:</label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(model => model.fld_GLCode, new SelectList(ViewBag.fld_GL, "Value", "Text", ViewBag.Kod), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_GLCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @*Close Added by Shazana on 29/10*@
+                        @*Added by Shazana on 5/5/2021*@
+                        <div class="form-group">
+                            <label class="control-label col-md-3">@GlobalResCorp.lblGLCodePT:</label>
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(model => model.fld_GLCodePT, new SelectList(ViewBag.fld_GLPT, "Value", "Text", ViewBag.KodPT), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_GLCodePT, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @*Close Added by Shazana on 5/5/2021*@
+                        @Html.HiddenFor(model => model.fld_ID)
+
+                        @*Added by Shazana on 15/12*@
+                        @Html.HiddenFor(model => model.fld_idUpahAktiviti)
+                        @Html.HiddenFor(model => model.fld_idMapGL)
+                        @*Close Added by Shazana on 15/12*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <input class="btn btn-primary" type="submit" value=@GlobalResCorp.btnSave />
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>
+@*<script>
+            $(document).ready(function () {
+                $("#fld_Unit").change(function () {
+                    console.log($("#fld_Unit :selected").text());
+                    var unit = $("#fld_Unit :selected").text();
+                    //$("#UnitLabel").empty();
+                    //$("#UnitLabel").val(unit);
+                    document.getElementById("UnitLabel").innerText = "Produktiviti (" + unit + ")";
+                });
+
+            })
+
+    </script>*@
+
+

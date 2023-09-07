@@ -1,0 +1,91 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_MapGLViewModelCreate
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+    
+}
+<section class="content-wrapper main-content clear-fix">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblPUPAdd</h3>
+    </div>
+    @using (Html.BeginForm())
+    {@Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblPUPInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblpupkategori:</label>
+                            <div class="col-sm-9">
+                                @Html.DropDownList("KodKategoriList", null, "Sila Pilih", htmlAttributes: new { @class = "form-control", @data_val = "true", @data_val_required = "Sila Pilih Jenis Aktiviti" })
+                                @Html.ValidationMessageFor(model => model.fld_Paysheet, "", new { @class = "text-danger" })
+                            </div>
+                        </div>                                               
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblpupkatOPMS:</label>
+                            <div class="col-sm-9">
+                                @Html.ListBoxFor(model => model.fld_KodAktvt, new MultiSelectList(ViewBag.KodOPMSList, "Value", "Text"), new { @class = "form-control col-sm-2", multiple = "multiple", size = 15 })
+                                @Html.ValidationMessageFor(model => model.fld_KodAktvt, "", new { @class = "text-danger" })
+                                <div class="has-error">
+                                    <span class="help-block">Sila tekan butang "Ctrl" atau "Shift" pada papan kekunci semasa memilih</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblpupGLcode:</label>
+                            <div class="col-sm-9">
+                                @Html.DropDownList("KodGLList", null, "Sila Pilih", htmlAttributes: new { @class = "form-control", @data_val = "true", @data_val_required = "Sila Pilih Kod GL" })
+                                @Html.ValidationMessageFor(model => model.fld_KodGL, "", new { @class = "text-danger" })
+                            </div>
+                        </div>    
+                        </div>
+                </div>
+            </div>
+        </div>
+            <div class="modal-footer">
+                <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+                <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+            </div>
+    }
+</section>
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>
+<script>
+    $("#KodKategoriList").change(function () {
+        if ($("#KodKategoriList").val() === "0") {
+            $("#fld_KodAktvt").prop("disabled", true);
+        }
+        else {
+            $("#fld_KodAktvt").prop("disabled", false);
+        }
+        var ajxfn = {};
+        ajxfn.url = "@Url.Action("GetKodAktvt", "Maintenance")";
+        ajxfn.type = "POST";
+        ajxfn.data = JSON.stringify({ KatAktvt: $("#KodKategoriList").val() });
+        ajxfn.datatype = "json";
+        ajxfn.contentType = "application/json";
+        ajxfn.success = function (KodOPMSList) {
+            $('#fld_KodAktvt').empty();
+            if (KodOPMSList.length == 0) {
+                $("#fld_KodAktvt").append("<option value=0>@GlobalResCorp.msgErrorSearch</option>");
+                    $("#fld_KodAktvt").prop("disabled", true);
+            }
+            else {
+                for (var i = 0; i < KodOPMSList.length; i++) {
+                    if ($("#KodKategoriList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#fld_KodAktvt").append("<option value=" + KodOPMSList[i].Value + ">" + KodOPMSList[i].Text + "</option>");
+                }
+            }
+        };
+        ajxfn.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(ajxfn);
+    });
+</script>

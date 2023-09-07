@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CheckRollCorpModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="sp_AddTotblPkjmastApp">
+      <Parameter Name="fldFileID" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="sp_AddTotblUserIDApp">
+      <Parameter Name="fldFileID" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="sp_RptBulPenPekLad" ReturnType="Collection(CheckRollCorpModel.sp_RptBulPenPekLad_Result)">
+      <Parameter Name="Selection" Mode="In" Type="Int32" />
+      <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+      <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+      <Parameter Name="WilayahID" Mode="In" Type="Int32" />
+      <Parameter Name="LadangID" Mode="In" Type="Int32" />
+      <Parameter Name="Kdrytan" Mode="In" Type="String" />
+      <Parameter Name="Month" Mode="In" Type="Int32" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_RptBulPenPekLadSum" ReturnType="Collection(CheckRollCorpModel.sp_RptBulPenPekLadSum_Result)">
+      <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+      <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+      <Parameter Name="WilayahID" Mode="In" Type="Int32" />
+      <Parameter Name="LadangID" Mode="In" Type="Int32" />
+      <Parameter Name="Kdrytan" Mode="In" Type="String" />
+      <Parameter Name="Month" Mode="In" Type="Int32" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_RptLapMakKer" ReturnType="Collection(CheckRollCorpModel.sp_RptLapMakKer_Result)">
+      <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+      <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+      <Parameter Name="WilayahID" Mode="In" Type="Int32" />
+      <Parameter Name="LadangID" Mode="In" Type="Int32" />
+      <Parameter Name="Month" Mode="In" Type="Int32" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+      <Parameter Name="NoPkj" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_RptTransPek" ReturnType="Collection(CheckRollCorpModel.sp_RptTransPek_Result)">
+      <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+      <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+      <Parameter Name="WilayahID" Mode="In" Type="Int32" />
+      <Parameter Name="LadangID" Mode="In" Type="Int32" />
+      <Parameter Name="Month" Mode="In" Type="String" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_RptBulPenPekLad_Result">
+    <Property Type="Int32" Name="fldNo" Nullable="false" />
+    <Property Type="String" Name="fldNamaWilayah" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="fldKodLadang" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="fldNamaLadang" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="fld_Nopkj" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="fld_Nama1" Nullable="true" MaxLength="40" />
+    <Property Type="Int32" Name="fldJumBilPekerjaL" Nullable="true" />
+    <Property Type="Int32" Name="fldJumBilPekerjaS" Nullable="true" />
+    <Property Type="Int32" Name="fldJumPkjPen1000Kbwh" Nullable="true" />
+    <Property Type="Int32" Name="fldJumPkjPen1000KbwhS" Nullable="true" />
+    <Property Type="Decimal" Name="fldJumPkjPen1000KbwhPrcnt" Nullable="true" Precision="6" Scale="2" />
+    <Property Type="Int32" Name="fldJumPkjPen10011500" Nullable="true" />
+    <Property Type="Int32" Name="fldJumPkjPen10011500S" Nullable="true" />
+    <Property Type="Decimal" Name="fldJumPkjPen10011500Prcnt" Nullable="true" Precision="6" Scale="2" />
+    <Property Type="Int32" Name="fldJumPkjPen1501Kats" Nullable="true" />
+    <Property Type="Int32" Name="fldJumPkjPen1501KatsS" Nullable="true" />
+    <Property Type="Decimal" Name="fldJumPkjPen1501KatsPrcnt" Nullable="true" Precision="6" Scale="2" />
+    <Property Type="Decimal" Name="fldJumPkjPen1000KbwhInd" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Decimal" Name="fldJumPkjPen10011500Ind" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Decimal" Name="fldJumPkjPen1501KatsInd" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Decimal" Name="fldPrtaPenTngi" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Decimal" Name="fldPrtaPenRndh" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Int32" Name="fldNegaraID" Nullable="true" />
+    <Property Type="Int32" Name="SyarikatID" Nullable="true" />
+    <Property Type="Int32" Name="WilayahID" Nullable="true" />
+    <Property Type="Int32" Name="LadangID" Nullable="true" />
+    <Property Type="String" Name="WargaNegara" Nullable="true" MaxLength="2" />
+  </ComplexType>
+  <ComplexType Name="sp_RptBulPenPekLadSum_Result">
+    <Property Type="String" Name="Kerakyatan" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="TotalCount" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_RptLapMakKer_Result">
+    <Property Type="Int32" Name="fldNo" Nullable="false" />
+    <Property Type="String" Name="fld_Kum" Nullable="true" MaxLength="4" />
+    <Property Type="String" Name="fld_Hujan" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="fld_Kdhdct" Nullable="true" MaxLength="2" />
+    <Property Type="String" Name="fld_Glcd" Nullable="true" MaxLength="3" />
+    <Property Type="String" Name="fld_Pkt" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="fld_Aktvt" Nullable="true" MaxLength="4" />
+    <Property Type="String" Name="fld_No_Kontrak" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="fld_Kdhbyr" Nullable="true" MaxLength="1" />
+    <Property Type="Decimal" Name="fld_Kgk" Nullable="true" Precision="6" Scale="2" />
+    <Property Type="Decimal" Name="fld_Kti1" Nullable="true" Precision="6" Scale="2" />
+    <Property Type="Decimal" Name="fld_Kti3" Nullable="true" Precision="6" Scale="2" />
+    <Property Type="Decimal" Name="fld_Kong" Nullable="true" Precision="6" Scale="2" />
+    <Property Type="Decimal" Name="fld_Kdrot" Nullable="true" Precision="6" Scale="2" />
+    <Property Type="Decimal" Name="fld_Jamot" Nullable="true" Precision="6" Scale="2" />
+    <Property Type="Decimal" Name="fld_Qty" Nullable="true" Precision="6" Scale="2" />
+    <Property Type="Decimal" Name="fld_Amt" Nullable="true" Precision="6" Scale="2" />
+    <Property Type="Decimal" Name="fld_Jumlah" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="String" Name="fld_Nama1" Nullable="true" MaxLength="40" />
+    <Property Type="String" Name="fld_UserId" Nullable="true" MaxLength="12" />
+    <Property Type="String" Name="fld_UserName" Nullable="true" MaxLength="40" />
+    <Property Type="DateTime" Name="fld_Tarikh" Nullable="true" />
+    <Property Type="String" Name="fld_Nopkj" Nullable="true" MaxLength="10" />
+    <Property Type="Int32" Name="fld_NegaraID" Nullable="true" />
+    <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
+    <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
+    <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_RptTransPek_Result">
+    <Property Type="Int32" Name="fldNo" Nullable="false" />
+    <Property Type="DateTime" Name="fldTrkhDkmn" Nullable="true" />
+    <Property Type="String" Name="fldNoDkmn" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="fldNoCek" Nullable="true" MaxLength="8" />
+    <Property Type="String" Name="fldLejar" Nullable="true" MaxLength="3" />
+    <Property Type="String" Name="fldPrgkt" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="fldAktiviti" Nullable="true" MaxLength="4" />
+    <Property Type="String" Name="fld_NoSkb" Nullable="true" MaxLength="60" />
+    <Property Type="String" Name="fldNoKontrakKP" Nullable="true" MaxLength="12" />
+    <Property Type="String" Name="fldInvois" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="fldKodStok" Nullable="true" MaxLength="6" />
+    <Property Type="Decimal" Name="fldKuantiti" Nullable="true" Precision="10" Scale="2" />
+    <Property Type="String" Name="fldNoA" Nullable="true" MaxLength="10" />
+    <Property Type="Decimal" Name="fldDebit" Nullable="true" Precision="13" Scale="2" />
+    <Property Type="Decimal" Name="fldKredit" Nullable="true" Precision="13" Scale="2" />
+    <Property Type="Int32" Name="fldNegaraID" Nullable="true" />
+    <Property Type="Int32" Name="SyarikatID" Nullable="true" />
+    <Property Type="Int32" Name="WilayahID" Nullable="true" />
+    <Property Type="Int32" Name="LadangID" Nullable="true" />
+    <Property Type="String" Name="WargaNegara" Nullable="true" MaxLength="2" />
+  </ComplexType>
+</Schema>

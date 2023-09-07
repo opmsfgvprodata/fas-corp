@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "Socso File Gen";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            Data sedang diproses
+        </label>
+    </div>
+</div>
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">SOCSO FILE GEN</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="EmployeeCode">Employee Code</label>
+                                    @Html.TextBox("EmployeeCode", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>Region</label>
+                                    @Html.DropDownList("wilayahList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-2">
+                                    <label for="TypeContribution">Worker Type</label>
+                                    @Html.DropDownList("kerakyatan", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                           
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="BulanProses">Month</label>
+                                    @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="TahunProses">Year</label>
+                                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="Company">Company</label>
+                                    @Html.DropDownList("CompanyListList", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-2">
+                                    <label for="TypeContribution">Contribution Type</label>
+                                    @Html.DropDownList("TypeContribution", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer-report">
+                    <a class="btn btn-success" href="@Url.Action("WorkerContribution", "Report")">List Worker Contribution</a>
+                    <input class="btn btn-primary" type="submit" name="proceed" id="proceed" value=Gen />
+                </div>
+            </div>
+        }
+    </div>
+</section>
+<script>
+    $("#proceed").click(function () {
+        var Month = $("#MonthList").val();
+        var Year = $("#YearList").val();
+        var wilayahlist = $("#wilayahList").val();
+        var CompanyListList = $("#CompanyListList").val();
+         var kerakyatan = $("#kerakyatan").val();
+        var TypeContribution = $("#TypeContribution").val();
+        var EmployeeCode = $("#EmployeeCode").val();
+        $("#UpdateProgress1").css("display", "");
+        var ajxfn = {};
+        ajxfn.url = "@Url.Action("SocsoFileGen", "Report")";
+        ajxfn.type = "POST";
+        ajxfn.async = false;
+        ajxfn.data = JSON.stringify({ Month: Month, Year: Year, wilayahlist:wilayahlist,CompanyListList: CompanyListList,kerakyatan:kerakyatan, TypeContribution: TypeContribution, EmployeeCode: EmployeeCode });
+        ajxfn.datatype = "json";
+        ajxfn.contentType = "application/json";
+        ajxfn.success = function (result) {
+            $.simplyToast(result.msg, result.statusmsg);
+            var win = window.open(result.link, '_blank');
+            $("#UpdateProgress1").css("display", "none");
+        };
+        ajxfn.error = function () {
+            $.simplyToast('Please Refer Developer', 'danger');
+            $("#UpdateProgress1").css("display", "none");
+        };
+        $.ajax(ajxfn);
+
+        return false;
+    });
+</script>
+
+
+
+

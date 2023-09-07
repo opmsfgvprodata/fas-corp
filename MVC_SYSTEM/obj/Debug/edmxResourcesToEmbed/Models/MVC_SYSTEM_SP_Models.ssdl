@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CheckRollCorpModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <Function Name="sp_AddTotblPkjmastApp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="fldFileID" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="sp_AddTotblUserIDApp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="fldFileID" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="sp_RptBulPenPekLad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Selection" Type="int" Mode="In" />
+    <Parameter Name="NegaraID" Type="int" Mode="In" />
+    <Parameter Name="SyarikatID" Type="int" Mode="In" />
+    <Parameter Name="WilayahID" Type="int" Mode="In" />
+    <Parameter Name="LadangID" Type="int" Mode="In" />
+    <Parameter Name="Kdrytan" Type="char" Mode="In" />
+    <Parameter Name="Month" Type="int" Mode="In" />
+    <Parameter Name="Year" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_RptBulPenPekLadSum" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NegaraID" Type="int" Mode="In" />
+    <Parameter Name="SyarikatID" Type="int" Mode="In" />
+    <Parameter Name="WilayahID" Type="int" Mode="In" />
+    <Parameter Name="LadangID" Type="int" Mode="In" />
+    <Parameter Name="Kdrytan" Type="char" Mode="In" />
+    <Parameter Name="Month" Type="int" Mode="In" />
+    <Parameter Name="Year" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_RptLapMakKer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NegaraID" Type="int" Mode="In" />
+    <Parameter Name="SyarikatID" Type="int" Mode="In" />
+    <Parameter Name="WilayahID" Type="int" Mode="In" />
+    <Parameter Name="LadangID" Type="int" Mode="In" />
+    <Parameter Name="Month" Type="int" Mode="In" />
+    <Parameter Name="Year" Type="int" Mode="In" />
+    <Parameter Name="NoPkj" Type="char" Mode="In" />
+  </Function>
+  <Function Name="sp_RptTransPek" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NegaraID" Type="int" Mode="In" />
+    <Parameter Name="SyarikatID" Type="int" Mode="In" />
+    <Parameter Name="WilayahID" Type="int" Mode="In" />
+    <Parameter Name="LadangID" Type="int" Mode="In" />
+    <Parameter Name="Month" Type="char" Mode="In" />
+    <Parameter Name="Year" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="CheckRollCorpModelStoreContainer" />
+</Schema>

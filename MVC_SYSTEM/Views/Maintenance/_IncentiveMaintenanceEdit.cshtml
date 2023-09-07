@@ -1,0 +1,274 @@
+﻿@using MVC_SYSTEM.Class
+@*Commented by Shazana on 24/12
+    @model MVC_SYSTEM.ModelsCorporate.tbl_JenisInsentif
+    Added by Shazana on 24/12*@
+@model MVC_SYSTEM.ModelsCustom.CusMod_tbl_JenisInsentif
+
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+    var minValue = Model.fld_MinValue != null || Model.fld_MinValue == 0 ? Model.fld_MinValue : 0;
+    var maxValue = Model.fld_MaxValue != null || Model.fld_MaxValue == 0 ? Model.fld_MaxValue : 0;
+    var fixedValue = Model.fld_FixedValue != null || Model.fld_FixedValue == 0 ? Model.fld_FixedValue : 0;
+    var dailyValue = Model.fld_DailyFixedValue != null || Model.fld_DailyFixedValue == 0 ? Model.fld_DailyFixedValue : 0;
+
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblIncentiveUpdate</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblIncentiveInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveCode:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_KodInsentif, htmlAttributes: new { @class = "form-control col-sm-2", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_KodInsentif, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveKodAktvt:</label>
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(model => model.fld_KodAktvt, htmlAttributes: new { @class = "form-control", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.fld_KodAktvt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveName</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_Keterangan, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Keterangan, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @*Commented by Shazana on 24/12
+        <div class="form-group">
+            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveKodGL:</label>
+            <div class="col-sm-8">
+                @Html.DropDownListFor(model => model.fld_KodGL, new SelectList(ViewBag.GLList, "Value", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.fld_KodGL, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        Close Commented by Shazana on 24/12*@
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveIsKwspSocso:</label>
+                            <div class="col-sm-2">
+                                @Html.DropDownListFor(model => model.fld_AdaCaruman, new SelectList(ViewBag.OptionList, "Value", "Text", Model.fld_AdaCaruman), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_AdaCaruman, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveIsFixedValue:</label>
+                            <div class="col-sm-3">
+                                @Html.DropDownListFor(model => model.fld_TetapanNilai, new SelectList(ViewBag.IncentiveValueTypeList, "Value", "Text", Model.fld_TetapanNilai), new { @class = "optionList form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_TetapanNilai, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveMinValue:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_MinValue, htmlAttributes: new { @class = "minVal form-control", @readonly = "true", @Value = minValue })
+                                @Html.ValidationMessageFor(model => model.fld_MinValue, "", new { @class = "validation text-danger" })
+                            </div>
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveMaxValue:</label>
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(model => model.fld_MaxValue, htmlAttributes: new { @class = "maxVal form-control", @readonly = "true", @Value = maxValue })
+                                @Html.ValidationMessageFor(model => model.fld_MaxValue, "", new { @class = "validation text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveFixedValue:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_FixedValue, htmlAttributes: new { @class = "fixedVal form-control", @readonly = "true", @Value = fixedValue })
+                                @Html.ValidationMessageFor(model => model.fld_FixedValue, "", new { @class = "validation text-danger" })
+                            </div>
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblIncentiveDailyFixedValue:</label>
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(model => model.fld_DailyFixedValue, htmlAttributes: new { @class = "dailyVal form-control", @readonly = "true", @Value = dailyValue })
+                                @Html.ValidationMessageFor(model => model.fld_DailyFixedValue, "", new { @class = "validation text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblWorkerType:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_KelayakanKepada, new SelectList(ViewBag.WorkerTypeList, "Value", "Text"), new { @class = " selectionList form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_KelayakanKepada, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @*Added by faeza 17.08.2022*@
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Include in ORP?:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_AdaORP, new SelectList(ViewBag.OptionList, "Value", "Text", Model.fld_AdaORP), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_AdaORP, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @*Added by faeza 26.02.2023*@
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Include in Second Payslip?:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_InclSecondPayslip, new SelectList(ViewBag.OptionList, "Value", "Text", Model.fld_AdaORP), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_InclSecondPayslip, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @*Added on 24/12*@
+                        <div class="form-group" id="KodGLTKA">
+                            <label class="control-label col-sm-3">GL TKA:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_KodGLTKA, new SelectList(ViewBag.GLListTKA, "Value", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_KodGLTKA, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="KodGLTKT">
+
+                            <label class="control-label col-sm-3">GL TKT:</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_KodGLTKT, new SelectList(ViewBag.GLListTKT, "Value", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_KodGLTKT, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @*Close Added by Shazana on 24/12*@
+
+                        @Html.HiddenFor(model => model.fld_JenisInsentifID)
+                        @Html.HiddenFor(model => model.fld_JenisInsentif)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+
+    var minVal = $('.minVal').val();
+    var maxVal = $('.maxVal').val();
+    var fixedVal = $('.fixedVal').val();
+    var dailyVal = $('.dailyVal').val();
+
+
+    if ($(".optionList").val() === "0") {
+        $('.minVal').prop("readonly", false);
+        $('.maxVal').prop("readonly", false);
+        $('.minVal').val(minVal);
+        $('.maxVal').val(maxVal);
+        $('.fixedVal').prop("readonly", true);
+        $('.dailyVal').prop("readonly", true);
+    }
+
+    else if ($(".optionList").val() === "1") {
+        $('.minVal').prop("readonly", true);
+        $('.maxVal').prop("readonly", true);
+        $('.fixedVal').val(fixedVal);
+        $('.fixedVal').prop("readonly", false);
+        $('.dailyVal').prop("readonly", true);
+    }
+
+    else if ($(".optionList").val() === "2") {
+        $('.minVal').prop("readonly", true);
+        $('.maxVal').prop("readonly", false);
+        $('.dailyVal').val(dailyVal);
+        $('.maxVal').val(maxVal);
+        $('.fixedVal').prop("readonly", true);
+        $('.dailyVal').prop("readonly", false);
+    }
+
+    else {
+        $('.fixedVal').prop("readonly", true);
+        $('.minVal').prop("readonly", true);
+        $('.maxVal').prop("readonly", true);
+        $('.dailyVal').prop("readonly", true);
+    }
+
+    $(".optionList").on("change",
+        function () {
+            console.log($(this).val());
+            $('.field-validation-error').html("");
+            $('.minMaxVal').removeClass("input-validation-error");
+            $('.fixedVal').removeClass("input-validation-error");
+            $('.minVal').val("0.00");
+            $('.maxVal').val("0.00");
+            $('.fixedVal').val("0.00");
+            $('.dailyVal').val("0.00");
+            if ($(this).val() === "0") {
+                $('.minVal').prop("readonly", false);
+                $('.maxVal').prop("readonly", false);
+                $('.minVal').val("");
+                $('.maxVal').val("");
+                $('.fixedVal').prop("readonly", true);
+                $('.dailyVal').prop("readonly", true);
+            }
+
+            else if ($(this).val() === "1") {
+                $('.minVal').prop("readonly", true);
+                $('.maxVal').prop("readonly", true);
+                $('.fixedVal').val("");
+                $('.fixedVal').prop("readonly", false);
+                $('.dailyVal').prop("readonly", true);
+            }
+
+            else if ($(this).val() === "2") {
+                $('.minVal').prop("readonly", true);
+                $('.maxVal').prop("readonly", false);
+                $('.dailyVal').val("");
+                $('.maxVal').val("");
+                $('.fixedVal').prop("readonly", true);
+                $('.dailyVal').prop("readonly", false);
+            }
+
+            else {
+                $('.fixedVal').prop("readonly", true);
+                $('.minVal').prop("readonly", true);
+                $('.maxVal').prop("readonly", true);
+                $('.dailyVal').prop("readonly", true);
+            }
+        });
+</script>
+
+
+@*Added by Shazana on 24/12/2020*@
+<script>
+    function KelayakanKepada_Click() {
+        var fld_KelayakanKepada = $('#fld_KelayakanKepada').val();
+        $("#KodGLTKA").attr("style", "display:none");
+        $("#KodGLTKT").attr("style", "display:none");
+
+        if (fld_KelayakanKepada == 1) {
+            $("#KodGLTKA").attr("style", "display:inline");
+        }
+        else if (fld_KelayakanKepada == 0) {
+            $("#KodGLTKT").attr("style", "display:inline");
+        }
+        else {
+            $("#KodGLTKA").attr("style", "display:inline");
+            $("#KodGLTKT").attr("style", "display:inline");
+        }
+    }
+
+    $(document).ready(function () {
+        KelayakanKepada_Click();
+    });
+
+    $('#fld_KelayakanKepada').on("change",
+        function () {
+            KelayakanKepada_Click();
+        });
+</script>
+@*Close Added by Shazana on 24/12*@

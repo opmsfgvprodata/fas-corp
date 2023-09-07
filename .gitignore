@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/MVC_SYSTEM/config
+/MVC_SYSTEM/Files
+/MVC_SYSTEM/JsonLog
+/MVC_SYSTEM/SocsoFile
+/.vs/MVC_SYSTEM/v16
+/.vs/MVC_SYSTEM/v16

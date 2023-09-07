@@ -1,0 +1,207 @@
+﻿@*Added by Shazana on 1/9*@
+@model MVC_SYSTEM.ModelsCustom.CusMod_tbl_UpahAktiviti
+@using MVC_SYSTEM.Class
+@{
+    ViewBag.Title = "PayrateFullMaintenance";
+    //Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    @*<div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 class="modal-title">@GlobalResCorp.lblWorkerTypeUpdate</h3>
+        </div>*@
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-header">
+            @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>*@
+            <h3 class="modal-title">@GlobalResCorp.titleRegister</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@*Maklumat*@</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Kategori Aktiviti:</label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("fld_KategoriAktvt", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_KategoriAktvt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">@GlobalResCorp.hdrActvtCode:</label>
+                            <div class="col-md-3">
+                                @Html.TextBox("fld_KodAktvt", "", new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.fld_KodAktvt, "", new { @class = "text-danger" })
+                            </div>
+                            @*Commented by Shazana on 5/5/2021
+                                <label class="control-label col-md-2">@GlobalResCorp.lblGLCode:</label>
+                                <div class="col-md-3">
+                                    @Html.DropDownList("fld_GLCode", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.fld_GLCode, "", new { @class = "text-danger" })
+                                    @Html.DropDownList("fld_WilayahID", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                Close Commented by Shazana on 5/5/2021*@
+
+
+                        </div>
+                        @*Added by Shazana on 1/9*@
+                        <div class="form-group">
+                            @*Added by Shazana on 5/5/2021*@
+                            <label class="control-label col-md-2">@GlobalResCorp.lblGLCodePA:</label>
+                            <div class="col-md-3">
+                                @Html.DropDownList("fld_GLCode", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_GLCode, "", new { @class = "text-danger" })
+                                @Html.DropDownList("fld_WilayahID", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+
+                            <label class="control-label col-md-2">@GlobalResCorp.lblGLCodePT:</label>
+                            <div class="col-md-3">
+                                @Html.DropDownList("fld_GLCodePT", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_GLCodePT, "", new { @class = "text-danger" })
+                            </div>
+                            @*Close Added by Shazana on 5/5/2021*@
+                            @*Commented by Shazana on 5/5/2021*@
+                            @*<div class="col-sm-3">
+                                </div>
+                                <div class="col-sm-3">
+                                    @Html.RadioButton("RadioGroup", "PA", new { @checked = "checked" })
+                                    @Html.Label(GlobalResCorp.lblTKA)<br />
+                                </div>
+                                <div class="col-sm-3">
+                                    @Html.RadioButton("RadioGroup", "PT")
+                                    @Html.Label(GlobalResCorp.lblTKT)<br />
+                                </div>*@
+                            @*Close Commented by Shazana on 5/5/2021*@
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">@GlobalResCorp.hdrDesc:</label>
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.fld_Desc, new { htmlAttributes = new { @class = "form-control required", @autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.fld_Desc, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">@GlobalResCorp.hdrPrice (RM):</label>
+                            <div class="col-md-3">
+                                @*@Html.EditorFor(model => model.fld_Harga, new { htmlAttributes = new { @class = "form-control required" } })*@
+                                @Html.TextBox("fld_Harga", "", new { @class = "form-control required", @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.fld_Harga, "", new { @class = "text-danger" })
+                            </div>
+                            @*Commented by Shazana on 5/5/2021
+                                <label class="control-label col-md-3">@GlobalResCorp.hdrmaxProduct (RM):</label>
+                                Added by Shazana on 5/5/2021*@
+                            <label class="control-label col-md-3">@GlobalResCorp.hdrmaxProduct:</label>
+                            <div class="col-md-3">
+                                @*@Html.EditorFor(model => model.fld_Harga, new { htmlAttributes = new { @class = "form-control required" } })*@
+                                @Html.TextBox("fld_MaxProduktiviti", "", new { @class = "form-control required", @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.fld_MaxProduktiviti, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">@GlobalResCorp.hdrUnit:</label>
+                            <div class="col-md-3">
+                                @Html.DropDownList("fld_Unit", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_Unit, "", new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-md-3">@GlobalResCorp.hdrDisableFlag:</label>
+                            <div class="col-md-3">
+                                @Html.DropDownList("fld_DisabledFlag", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_DisabledFlag, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                                <label class="control-label col-md-2">@GlobalResCorp.hdrProductvt</label>
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.fld_Produktvt, new { htmlAttributes = new { @class = "form-control required", @autocomplete = "off" } })
+                                    @Html.ValidationMessageFor(model => model.fld_Produktvt, "", new { @class = "text-danger" })
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-primary" type="submit" value=@GlobalResCorp.btnSave />
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+
+</section>
+
+<script>
+
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+
+    $(document).ready(function () {
+        $("#fld_WilayahID").attr("style", "display:none");
+        $("#fld_KategoriAktvt").change(function () {
+            var Kod = {};
+
+            /* Added By Shazana on 4/8*/  var obj = { jnsAktvt: $("#fld_KategoriAktvt").val(), wilayahID: $("#fld_WilayahID").val() };
+
+            //var disableoption = "";
+            Kod.url = "@Url.Action("GenerateKodAktvt", "Maintenance")";
+            Kod.type = "POST";
+            /* Edited By Shazana on 4/8*/  Kod.data = JSON.stringify(obj);
+            Kod.datatype = "json";
+            Kod.contentType = "application/json";
+            Kod.success = function (newcode) {
+                $("#fld_KodAktvt").empty();
+                $("#fld_KodAktvt").val(newcode);
+            };
+            Kod.error = function () { $.simplyToast('@GlobalResCorp.msgError', 'danger'); };
+            $.ajax(Kod);
+        });
+
+        $("#fld_Harga").change(function () {
+            var harga = $("#fld_Harga").val();
+            var defaultnum = "0.00";
+            var num_pieces = harga.split(".");
+            var num_length = harga.length;
+            console.log(num_pieces);
+            console.log(num_length);
+            if (num_pieces.length > 2) {
+                //$.simplyToast('Too many decimals.', 'danger');
+                $.simplyToast('@GlobalResCorp.msgError', 'danger');
+                $("#fld_Harga").val("");
+            }
+            else if (num_pieces[1].length > 2) {
+                //$.simplyToast('Too many decimal places.', 'danger');
+                $.simplyToast('@GlobalResCorp.msgError', 'danger');
+                $("#fld_Harga").val("");
+                return false;
+            }
+        });
+
+        $("#fld_Harga").change(function () {
+            var harga = $("#fld_Harga").val();
+            var defaultnum = "0.00";
+            var num_pieces = harga.split(".");
+            var num_length = harga.length;
+            console.log(num_pieces);
+            console.log(num_length);
+            if (num_pieces.length > 2) {
+                //$.simplyToast('Too many decimals.', 'danger');
+                $.simplyToast('@GlobalResCorp.msgError', 'danger');
+                $("#fld_Harga").val("");
+            }
+            else if (num_pieces[1].length > 2) {
+                //$.simplyToast('Too many decimal places.', 'danger');
+                $.simplyToast('@GlobalResCorp.msgError', 'danger');
+                $("#fld_Harga").val("");
+                return false;
+            }
+        });
+
+    });
+
+</script>

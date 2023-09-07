@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CheckRollCorpModelStoreContainer" CdmEntityContainer="Entities">
+    <FunctionImportMapping FunctionImportName="sp_AddTotblPkjmastApp" FunctionName="CheckRollCorpModel.Store.sp_AddTotblPkjmastApp" />
+    <FunctionImportMapping FunctionImportName="sp_AddTotblUserIDApp" FunctionName="CheckRollCorpModel.Store.sp_AddTotblUserIDApp" />
+    <FunctionImportMapping FunctionImportName="sp_RptBulPenPekLad" FunctionName="CheckRollCorpModel.Store.sp_RptBulPenPekLad">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CheckRollCorpModel.sp_RptBulPenPekLad_Result">
+          <ScalarProperty Name="fldNo" ColumnName="fldNo" />
+          <ScalarProperty Name="fldNamaWilayah" ColumnName="fldNamaWilayah" />
+          <ScalarProperty Name="fldKodLadang" ColumnName="fldKodLadang" />
+          <ScalarProperty Name="fldNamaLadang" ColumnName="fldNamaLadang" />
+          <ScalarProperty Name="fld_Nopkj" ColumnName="fld_Nopkj" />
+          <ScalarProperty Name="fld_Nama1" ColumnName="fld_Nama1" />
+          <ScalarProperty Name="fldJumBilPekerjaL" ColumnName="fldJumBilPekerjaL" />
+          <ScalarProperty Name="fldJumBilPekerjaS" ColumnName="fldJumBilPekerjaS" />
+          <ScalarProperty Name="fldJumPkjPen1000Kbwh" ColumnName="fldJumPkjPen1000Kbwh" />
+          <ScalarProperty Name="fldJumPkjPen1000KbwhS" ColumnName="fldJumPkjPen1000KbwhS" />
+          <ScalarProperty Name="fldJumPkjPen1000KbwhPrcnt" ColumnName="fldJumPkjPen1000KbwhPrcnt" />
+          <ScalarProperty Name="fldJumPkjPen10011500" ColumnName="fldJumPkjPen10011500" />
+          <ScalarProperty Name="fldJumPkjPen10011500S" ColumnName="fldJumPkjPen10011500S" />
+          <ScalarProperty Name="fldJumPkjPen10011500Prcnt" ColumnName="fldJumPkjPen10011500Prcnt" />
+          <ScalarProperty Name="fldJumPkjPen1501Kats" ColumnName="fldJumPkjPen1501Kats" />
+          <ScalarProperty Name="fldJumPkjPen1501KatsS" ColumnName="fldJumPkjPen1501KatsS" />
+          <ScalarProperty Name="fldJumPkjPen1501KatsPrcnt" ColumnName="fldJumPkjPen1501KatsPrcnt" />
+          <ScalarProperty Name="fldJumPkjPen1000KbwhInd" ColumnName="fldJumPkjPen1000KbwhInd" />
+          <ScalarProperty Name="fldJumPkjPen10011500Ind" ColumnName="fldJumPkjPen10011500Ind" />
+          <ScalarProperty Name="fldJumPkjPen1501KatsInd" ColumnName="fldJumPkjPen1501KatsInd" />
+          <ScalarProperty Name="fldPrtaPenTngi" ColumnName="fldPrtaPenTngi" />
+          <ScalarProperty Name="fldPrtaPenRndh" ColumnName="fldPrtaPenRndh" />
+          <ScalarProperty Name="fldNegaraID" ColumnName="fldNegaraID" />
+          <ScalarProperty Name="SyarikatID" ColumnName="SyarikatID" />
+          <ScalarProperty Name="WilayahID" ColumnName="WilayahID" />
+          <ScalarProperty Name="LadangID" ColumnName="LadangID" />
+          <ScalarProperty Name="WargaNegara" ColumnName="WargaNegara" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_RptBulPenPekLadSum" FunctionName="CheckRollCorpModel.Store.sp_RptBulPenPekLadSum">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CheckRollCorpModel.sp_RptBulPenPekLadSum_Result">
+          <ScalarProperty Name="Kerakyatan" ColumnName="Kerakyatan" />
+          <ScalarProperty Name="TotalCount" ColumnName="TotalCount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_RptLapMakKer" FunctionName="CheckRollCorpModel.Store.sp_RptLapMakKer">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CheckRollCorpModel.sp_RptLapMakKer_Result">
+          <ScalarProperty Name="fldNo" ColumnName="fldNo" />
+          <ScalarProperty Name="fld_Kum" ColumnName="fld_Kum" />
+          <ScalarProperty Name="fld_Hujan" ColumnName="fld_Hujan" />
+          <ScalarProperty Name="fld_Kdhdct" ColumnName="fld_Kdhdct" />
+          <ScalarProperty Name="fld_Glcd" ColumnName="fld_Glcd" />
+          <ScalarProperty Name="fld_Pkt" ColumnName="fld_Pkt" />
+          <ScalarProperty Name="fld_Aktvt" ColumnName="fld_Aktvt" />
+          <ScalarProperty Name="fld_No_Kontrak" ColumnName="fld_No_Kontrak" />
+          <ScalarProperty Name="fld_Kdhbyr" ColumnName="fld_Kdhbyr" />
+          <ScalarProperty Name="fld_Kgk" ColumnName="fld_Kgk" />
+          <ScalarProperty Name="fld_Kti1" ColumnName="fld_Kti1" />
+          <ScalarProperty Name="fld_Kti3" ColumnName="fld_Kti3" />
+          <ScalarProperty Name="fld_Kong" ColumnName="fld_Kong" />
+          <ScalarProperty Name="fld_Kdrot" ColumnName="fld_Kdrot" />
+          <ScalarProperty Name="fld_Jamot" ColumnName="fld_Jamot" />
+          <ScalarProperty Name="fld_Qty" ColumnName="fld_Qty" />
+          <ScalarProperty Name="fld_Amt" ColumnName="fld_Amt" />
+          <ScalarProperty Name="fld_Jumlah" ColumnName="fld_Jumlah" />
+          <ScalarProperty Name="fld_Nama1" ColumnName="fld_Nama1" />
+          <ScalarProperty Name="fld_UserId" ColumnName="fld_UserId" />
+          <ScalarProperty Name="fld_UserName" ColumnName="fld_UserName" />
+          <ScalarProperty Name="fld_Tarikh" ColumnName="fld_Tarikh" />
+          <ScalarProperty Name="fld_Nopkj" ColumnName="fld_Nopkj" />
+          <ScalarProperty Name="fld_NegaraID" ColumnName="fld_NegaraID" />
+          <ScalarProperty Name="fld_SyarikatID" ColumnName="fld_SyarikatID" />
+          <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
+          <ScalarProperty Name="fld_WilayahID" ColumnName="fld_WilayahID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_RptTransPek" FunctionName="CheckRollCorpModel.Store.sp_RptTransPek">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CheckRollCorpModel.sp_RptTransPek_Result">
+          <ScalarProperty Name="fldNo" ColumnName="fldNo" />
+          <ScalarProperty Name="fldTrkhDkmn" ColumnName="fldTrkhDkmn" />
+          <ScalarProperty Name="fldNoDkmn" ColumnName="fldNoDkmn" />
+          <ScalarProperty Name="fldNoCek" ColumnName="fldNoCek" />
+          <ScalarProperty Name="fldLejar" ColumnName="fldLejar" />
+          <ScalarProperty Name="fldPrgkt" ColumnName="fldPrgkt" />
+          <ScalarProperty Name="fldAktiviti" ColumnName="fldAktiviti" />
+          <ScalarProperty Name="fld_NoSkb" ColumnName="fld_NoSkb" />
+          <ScalarProperty Name="fldNoKontrakKP" ColumnName="fldNoKontrakKP" />
+          <ScalarProperty Name="fldInvois" ColumnName="fldInvois" />
+          <ScalarProperty Name="fldKodStok" ColumnName="fldKodStok" />
+          <ScalarProperty Name="fldKuantiti" ColumnName="fldKuantiti" />
+          <ScalarProperty Name="fldNoA" ColumnName="fldNoA" />
+          <ScalarProperty Name="fldDebit" ColumnName="fldDebit" />
+          <ScalarProperty Name="fldKredit" ColumnName="fldKredit" />
+          <ScalarProperty Name="fldNegaraID" ColumnName="fldNegaraID" />
+          <ScalarProperty Name="SyarikatID" ColumnName="SyarikatID" />
+          <ScalarProperty Name="WilayahID" ColumnName="WilayahID" />
+          <ScalarProperty Name="LadangID" ColumnName="LadangID" />
+          <ScalarProperty Name="WargaNegara" ColumnName="WargaNegara" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

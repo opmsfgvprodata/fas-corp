@@ -1,0 +1,100 @@
+﻿@using MVC_SYSTEM.Class
+@using MVC_SYSTEM.Models
+@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_RptGajiMinima_Result>
+
+@{
+    GetConfig GetConfig = new GetConfig();
+
+    int bil = 0;
+}
+
+@if (Model != null && Model.Count() != 0)
+{
+    <div id="scrollArea2" class="modal-body">
+        @foreach (var wilayah in Model.Select(s => s.fld_WIlayahID).Distinct())
+        {
+            <p align="center" style="font-size: 11px" :><b>@ViewBag.NamaSyarikat</b></p>
+            <p align="center" style="font-size: 11px" :><b>@GlobalResNoSkb.hdrCmpnyNo : @ViewBag.NoSyarikat</b></p>
+            <p align="center" style="font-size: 11px" :><b>@GlobalResCorp.titleMinimumWageReport</b></p>
+            <br />
+
+            foreach (var ladang in Model.Where(x => x.fld_WIlayahID == wilayah).Select(s => s.fld_LadangID).Distinct())
+            {
+                <p align="center" style="font-size: 11px" :><b>@GlobalResCorp.lblRegion : @GetConfig.GetWilayahNameFromID(wilayah)</b></p>
+
+                <table class="table table-hover" style="font-size: 11px;" border="0">
+                    <thead>
+                        <tr>
+                            <th colspan="11" bgcolor="#CC6600" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">
+                                <font color="white">@GetConfig.GetLadangKodFromID(ladang) - @GetConfig.GetLadangNameFromID(ladang)</font>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th width="1%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResLocalWorkerInfo.hdrNo</th>
+                            <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.hdrNoPkj</th>
+                            <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.hdrNoKp</th>
+                            <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.hdrName</th>
+                            <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblCitizen</th>
+                            <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.hdrCategory</th>
+                            <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblOfferedWorkingDay</th>
+                            <th width="3%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblExactWorkingDay</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblMonthlyWage</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblMinimumWageReason</th>
+                            <th width="2%" bgcolor="#ffcc80" style="color: black; text-align: center; vertical-align: middle !important; border: 1px solid black;" border="1">@GlobalResCorp.lblMinimumWageAction</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var gajiMinimaData in Model.Where(x => x.fld_LadangID == ladang))
+                        {
+                            bil += 1;
+
+                        <tr>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @bil
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @gajiMinimaData.fld_NoPkj
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @gajiMinimaData.fld_NoKP
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @gajiMinimaData.fld_Nama
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetConfig.GetWebConfigDesc(gajiMinimaData.fld_KodWarganegara, "krytnlist", gajiMinimaData.fld_NegaraID, gajiMinimaData.fld_SyarikatID)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetConfig.GetWebConfigDesc(gajiMinimaData.fld_KodKategoriPekerja, "designation", gajiMinimaData.fld_NegaraID, gajiMinimaData.fld_SyarikatID)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetConfig.getTotalOfferedWorkingDaysInAMonth(gajiMinimaData.fld_NegaraID, gajiMinimaData.fld_SyarikatID, gajiMinimaData.fld_LadangID, gajiMinimaData.fld_Bulan, gajiMinimaData.fld_Tahun)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @gajiMinimaData.fld_BilanganHariBekerjaSebenar
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @gajiMinimaData.fld_GajiBulanan
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetConfig.GetWebConfigDesc(gajiMinimaData.fld_SebabGajiMinima, "sebabGajiMinima", gajiMinimaData.fld_NegaraID, gajiMinimaData.fld_SyarikatID)
+                            </td>
+                            <td align="center" style="vertical-align: middle !important; border: 1px solid black;" border="1">
+                                @GetConfig.GetWebConfigDesc(gajiMinimaData.fld_TindakanGajiMinima, "tindakanGajiMinima", gajiMinimaData.fld_NegaraID, gajiMinimaData.fld_SyarikatID)
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        }
+    </div>
+}
+
+@if (Model.Count() == 0)
+{
+    <div id="scrollArea2" class="modal-body" style="text-align: center">
+        <p style="color: red">@ViewBag.Message</p>
+
+    </div>
+}

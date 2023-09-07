@@ -1,0 +1,370 @@
+﻿@model IEnumerable<MVC_SYSTEM.CorpNewModels.tbl_SalaryRequest>
+@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "Approval Worker Salary";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    int bill = 1;
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    GetTriager GetTriager = new GetTriager();
+    GetNSWL GetNSWL = new GetNSWL();
+    GetIdentity GetIdentity = new GetIdentity();
+    var GetAllLadangDetail = GetNSWL.GetAllLadangDetail();
+    var GetAllUserDetail = GetIdentity.GetListUsers();
+}
+
+<link href="~/Asset/Alert2/sweetalert.min.css" rel="stylesheet" />
+
+<div id="UpdateProgress1" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResReport.WaitMsg
+        </label>
+    </div>
+</div>
+
+@using (Html.BeginForm("ApprovalSalaryRequest", "Approval2", FormMethod.Post, new { id = "Report" }))
+{
+    @Html.AntiForgeryToken()
+    <section class="content-wrapper main-content clear-fix">
+        <div class="well bottom" style="padding-bottom: 16px">
+            <div class="row">
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerSalary.lblMonth)
+                    @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerSalary.lblYear)
+                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerSalary.lblWilayah)
+                    @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.Label(GlobalResWorkerSalary.lblLadang)
+                    @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-1" style="padding-top:25px;">
+                    <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="Lihat" value="@GlobalResWorkerSalary.btnViewName" onclick="return DisplayProgressMessage(this);" />
+                </div>
+                <div class="col-sm-1" style="padding-top:25px;">
+                    <p class="btn btn-success" style="width:100px;" onclick="reviewallstatus()">Review All</p>
+                </div>
+                <div class="col-sm-1" style="padding-top:25px;">
+                    <p class="btn btn-success" style="width:100px;" onclick="approveallstatus()">Approve All</p>
+                </div>
+            </div>
+        </div>
+        <div id="Disposition" class="well" style="margin-top:7px;">
+            <div id="scrollArea" class="modal-body">
+                <table class="table table-hover table-bordered" id="filetable">
+                    <thead>
+                        <tr>
+                            <th bgcolor="#ffcc80" rowspan="2" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResApproval.hdrbil</th>
+                            <th bgcolor="#ffcc80" rowspan="2" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">@GlobalResWorkerSalary.lblWilayah</th>
+                            <th bgcolor="#ffcc80" rowspan="2" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Estate Code</th>
+                            <th bgcolor="#ffcc80" rowspan="2" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Estate Name</th>
+                            <th bgcolor="#ffcc80" rowspan="2" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Total Worker</th>
+                            <th bgcolor="#ffcc80" rowspan="2" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Total Salary (RM)</th>
+                            <th bgcolor="#ffcc80" rowspan="2" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Request By</th>
+                            <th bgcolor="#ffcc80" rowspan="2" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Date/Time Request</th>
+                            <th bgcolor="#ffcc80" colspan="7" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Action</th>
+                        </tr>
+                        <tr>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Review</th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Review By</th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Date/Time Review</th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Approve</th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Approve By</th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Date/Time Approve</th>
+                            <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Confirmation</th>
+                        </tr>
+                    </thead>
+
+                    @foreach (var item in Model)
+                    {
+                        var getladangdetail = GetAllLadangDetail.Where(x => x.fld_LadangID == item.fld_LadangID).FirstOrDefault();
+                        var getuserrequest = GetAllUserDetail.Where(x => x.fldUserID == item.fld_RequestBy).Select(s => s.fldUserFullName).FirstOrDefault();
+                        var getuserreview = GetAllUserDetail.Where(x => x.fldUserID == item.fld_ReviewBy).Select(s => s.fldUserFullName).FirstOrDefault();
+                        var getuserapprove = GetAllUserDetail.Where(x => x.fldUserID == item.fld_ApproveBy).Select(s => s.fldUserFullName).FirstOrDefault();
+                        
+                <tr>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@bill</td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@getladangdetail.fld_NamaWilayah</td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@getladangdetail.fld_LdgCode</td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@getladangdetail.fld_NamaLadang</td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_TotalWorker</td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@GetTriager.GetTotalForMoney(item.fld_TotalAmount)</td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@getuserrequest</td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_RequestDT</td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+
+                        @if (item.fld_ReviewStatus == null)
+                        {
+                            <p class="btn btn-warning" style="width:100px;" onclick="updatestatus(@item.fld_ID, 'reject', 'review')">Reject</p><p class="btn btn-success" style="width:100px;" onclick="updatestatus(@item.fld_ID, 'review', 'review')">Verify</p>
+                        }
+                        @if (item.fld_ReviewStatus == false)
+                        {
+                            <strong style="color: red;">REJECT</strong>
+                        }
+                        @if (item.fld_ReviewStatus == true)
+                        {
+                            <strong>VERIFIED</strong>
+                        }
+                    </td>
+
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@getuserreview</td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_ReviewDT</td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+
+                        @if (item.fld_ReviewStatus == true)
+                        {
+                            if (item.fld_ApproveStatus == null)
+                            {
+                                <p class="btn btn-warning" style="width:100px;" onclick="updatestatus(@item.fld_ID, 'reject', 'approve')">Reject</p><p class="btn btn-success" style="width:100px;" onclick="updatestatus(@item.fld_ID, 'approve', 'approve')">Approve</p>
+                            }
+                        }
+                        @if (item.fld_ApproveStatus == false)
+                        {
+                            <strong style="color: red;">REJECT</strong>
+                        }
+                        @if (item.fld_ApproveStatus == true)
+                        {
+                            <strong>APPROVED</strong>
+                        }
+
+                    </td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@getuserapprove</td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">@item.fld_ApproveDT</td>
+                    <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                        @if (item.fld_ApproveStatus == true)
+                        {
+                        <p class="btn btn-warning" style="width:100px;" onclick="updatestatus(@item.fld_ID, 'reject', 'approve')">Reject</p>
+                    }
+                      </td> 
+                    </tr>
+                        bill++;
+                    }
+                </table>
+            </div>
+        </div>
+    </section>
+}
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+<script>
+    $(document).ready(function () {
+
+        if ($("#WilayahIDList").val() == 0) {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResWorkerSalary.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0)
+                    {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        }
+
+        $("#WilayahIDList").change(function () {
+            var WilayahIDList = {};
+            var disableoption = "";
+            WilayahIDList.url = "@Url.Action("GetLadang", "Report")";
+            WilayahIDList.type = "POST";
+            WilayahIDList.data = JSON.stringify({ WilayahID: $("#WilayahIDList").val() });
+            WilayahIDList.datatype = "json";
+            WilayahIDList.contentType = "application/json";
+            WilayahIDList.success = function (ladanglist) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>@GlobalResWorkerSalary.sltAll</option>");
+                for (var i = 0; i < ladanglist.length; i++) {
+                    if ($("#WilayahIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                    $("#LadangIDList").append("<option value=" + ladanglist[i].Value + " " + disableoption + ">" + ladanglist[i].Text + "</option>");
+                }
+            };
+            WilayahIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+            $.ajax(WilayahIDList);
+        });
+    });
+    function reviewallstatus() {
+        var wil = $("#WilayahIDList").val();
+        var month = $("#MonthList").val();
+        var year = $("#YearList").val();
+        if (wil > 0) {
+            Swal.fire({
+                title: 'Attention!',
+                text: "Are you sure to review all this?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("ReviewAll", "Approval2")",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify({ wil, year, month }),
+                        success: function (response) {
+                            Swal.fire(
+                                'Saved',
+                                'Successful Saved',
+                                'success'
+                            );
+                            location.reload();
+                        },
+                        failure: function (response) {
+                            Swal.fire(
+                                'Fail',
+                                'Fail',
+                                'warning'
+                            );
+                        },
+                        error: function (response) {
+                            Swal.fire(
+                                'Fail',
+                                'Fail',
+                                'warning'
+                            );
+                        }
+                    });
+
+                }
+            })
+        }
+    }
+    function approveallstatus() {
+        var wil = $("#WilayahIDList").val();
+        var month = $("#MonthList").val();
+        var year = $("#YearList").val();
+        if (wil > 0) {
+            Swal.fire({
+                title: 'Attention!',
+                text: "Are you sure to approval all this?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("ApprovalAll", "Approval2")",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify({ wil, year, month }),
+                        success: function (response) {
+                            Swal.fire(
+                                'Saved',
+                                'Successful Saved',
+                                'success'
+                            );
+                            location.reload();
+                        },
+                        failure: function (response) {
+                            Swal.fire(
+                                'Fail',
+                                'Fail',
+                                'warning'
+                            );
+                        },
+                        error: function (response) {
+                            Swal.fire(
+                                'Fail',
+                                'Fail',
+                                'warning'
+                            );
+                        }
+                    });
+
+                }
+            })
+        }
+    }
+    function updatestatus(id, status,flag) {
+        var url = "";
+        if (flag == "approve") {
+            url = "@Url.Action("Approval", "Approval2")";
+        }
+        else {
+            url = "@Url.Action("Reviewal", "Approval2")";
+        }
+        Swal.fire({
+            title: 'Attention!',
+            text: "Are you sure to " + status + " this?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify({ id, status }),
+                    success: function (response) {
+                        Swal.fire(
+                            'Saved',
+                            'Successful Saved',
+                            'success'
+                        );
+                        location.reload();
+                    },
+                    failure: function (response) {
+                        Swal.fire(
+                            'Fail',
+                            'Fail',
+                            'warning'
+                        );
+                    },
+                    error: function (response) {
+                        Swal.fire(
+                            'Fail',
+                            'Fail',
+                            'warning'
+                        );
+                    }
+                });
+
+            }
+        })
+    
+    }
+        {
+  var x = document.getElementById("myDIV");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+    }
+</script>
+<script>
+    function DisplayProgressMessage(ctl) {
+        //$("body").addClass("submit-progress-bg");
+        //$(".submit-progress").removeClass("hidden");
+        $("#UpdateProgress1").css("display", "");
+        return true;
+    }
+</script>
+<script src="~/Asset/Alert2/sweetalert.min.js"></script>

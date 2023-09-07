@@ -1,0 +1,135 @@
+﻿@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_PaymentModeReport_Result>
+@using MVC_SYSTEM.Class;
+@{
+    int bill = 1;
+    System.Globalization.DateTimeFormatInfo mfi = new System.Globalization.DateTimeFormatInfo();
+    GetTriager GetTriager = new GetTriager();
+    ChangeTimeZone ChangeTimeZone = new ChangeTimeZone();
+    DateTime Todaydate = ChangeTimeZone.gettimezone();
+    string uniquefilename = "PaymentModeReport" + "_" + Todaydate.Year.ToString() + Todaydate.Month.ToString() + Todaydate.Day.ToString() + Todaydate.Hour.ToString() + Todaydate.Minute.ToString() + Todaydate.Second.ToString();
+    decimal? totaleachladang = 0;
+    decimal? totalcash = 0;
+    decimal? totalcheque = 0;
+    decimal? totalcdmas = 0;
+    decimal? totalewallet = 0;
+    decimal? grandtotal = 0;
+}
+
+@if (Model != null && Model.Count() != 0)
+{
+    <div id="scrollArea" class="modal-body">
+        <logo />
+        <table class="table table-bordered" style="font-size: 11px;" border="0" width="100%">
+            <thead>
+                <tr>
+                    <th colspan="8" style="text-align:center;vertical-align:middle;">
+                        @ViewBag.NamaSyarikat
+                        <br />
+                        (@GlobalResLocalWorkerInfo.hdrCmpnyNo : @ViewBag.NoSyarikat)
+                        <br />
+                        Payment Mode Report
+                        <br />
+                        @GlobalResLocalWorkerInfo.lblMonth : @ViewBag.MonthList
+                        <br />
+                        @GlobalResLocalWorkerInfo.lblYear : @ViewBag.YearList
+                    </th>
+                </tr>
+                <tr>
+                    <th rowspan="2"bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">No</th>
+                    <th rowspan="2"bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Estate Code</th>
+                    <th rowspan="2"bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Estate Name</th>
+                    <th colspan="4" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Payment Mode</th>
+                    <th rowspan="2"bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Total (RM)</th>
+                </tr>
+                <tr>
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Cash (RM)</th>
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Cheque (RM)</th>
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">CDMAS (RM)</th>
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">EWallet (RM)</th>
+                </tr>
+
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    totaleachladang = item.fld_Cash + item.fld_Cheque + item.fld_Cdmas + item.fld_Ewallet;
+                    <tr>
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @bill
+                        </td>
+                        <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @item.fld_LdgCode
+                        </td>
+                        <td align="left" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @item.fld_LdgName
+                        </td>
+                        <td align="right" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @item.fld_Cash
+                        </td>
+                        <td align="right" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @item.fld_Cheque
+                        </td>
+                        <td align="right" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @item.fld_Cdmas
+                        </td>
+                        <td align="right" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @item.fld_Ewallet
+                        </td>
+                        <td align="right" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @totaleachladang
+                        </td>
+                    </tr>
+                    bill++;
+                    totalcash = totalcash + item.fld_Cash;
+                    totalcheque = totalcheque + item.fld_Cheque;
+                    totalcdmas = totalcdmas + item.fld_Cdmas;
+                    totalewallet = totalewallet + item.fld_Ewallet;
+                }
+                @{ 
+                    grandtotal = totalcash + totalcheque + totalcdmas + totalewallet;
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="3" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Total</th>
+                    <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@totalcash</th>
+                    <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@totalcheque</th>
+                    <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@totalcdmas</th>
+                    <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@totalewallet</th>
+                    <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@grandtotal</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div style="text-align:right; margin-top:10px">
+        @*<a class="btn btn-default btn-sm" href="#" id="downloadpdf">
+                <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResEstate.btnDownloadPdf
+            </a>*@
+        <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+            <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> Excel
+        </a>
+    </div>
+}
+else
+{
+    <div id="scrollArea2" class="modal-body" style="text-align: center">
+        <p style="color: red">No Data</p>
+    </div>
+}
+
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea2").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        })
+    });
+</script>

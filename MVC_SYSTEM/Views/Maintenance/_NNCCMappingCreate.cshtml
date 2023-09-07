@@ -1,0 +1,134 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_AktivitiNNCCMap
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+<section class="content-wrapper main-content clear-fix">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblnnccAdd</h3>
+    </div>
+    @using (Html.BeginForm())
+    {@Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblnnccInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblnnccFlag:</label>
+                            <div class="col-sm-9">
+                                @Html.DropDownList("flaglist", null, "Sila Pilih", htmlAttributes: new { @class = "form-control", @data_val = "true", @data_val_required = "Sila Pilih Level" })
+                                @Html.ValidationMessageFor(model => model.fld_Flag, "", new { @class = "text-danger" })
+                            </div>
+                        </div>                      
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblnnccNetworkNo:</label>
+                            <div class="col-sm-9">
+                                @Html.DropDownList("NetworkNo", null, "Sila Pilih", htmlAttributes: new { @class = "form-control", @data_val = "true", @data_val_required = "Sila Pilih Network No" })
+                                @*@Html.ValidationMessageFor(model => model.fld_NNCC, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblnnccxtivitiSAP:</label>
+                            <div class="col-sm-9">
+                                @Html.DropDownList("KodAktivitiSAP", null, "Sila Pilih", htmlAttributes: new { @class = "form-control", @data_val = "true", @data_val_required = "Sila Pilih Network No" })
+                               @* @Html.ValidationMessageFor(model => model.fld_NNCC, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblnnccJnsAktiviti:</label>
+                            <div class="col-sm-9">
+                                @Html.DropDownList("JenisAktiviti", null, "Sila Pilih", htmlAttributes: new { @class = "form-control", @data_val = "true" })
+                                @*@Html.ValidationMessageFor(model => model.fld_JenisAktiviti, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblnnccCostCenter:</label>
+                            <div class="col-sm-9">
+                                @Html.DropDownList("CostCenter", null, "Sila Pilih", htmlAttributes: new { @class = "form-control", @data_val = "true", @data_val_required = "Sila Pilih Cost Center" })
+                                @*@Html.ValidationMessageFor(model => model.fld_KodAktivitiSAP, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">@GlobalResCorp.lblnnccKodAktiviti:</label>
+                            <div class="col-sm-9">
+                                @Html.DropDownList("KodAktiviti", null, "Sila Pilih", htmlAttributes: new { @class = "form-control", @data_val = "true", @data_val_required = "Sila Pilih Kod Aktiviti" })
+                                @Html.ValidationMessageFor(model => model.fld_KodAktivitiOPMS, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>
+<script>
+    $("#flaglist").change(function () {
+        if ($("#flaglist").val() === "1") {
+            $("#JenisAktiviti").prop("disabled", true);
+            $("#CostCenter").prop("disabled", true);
+            $("#NetworkNo").prop("disabled", false);
+            $("#KodAktivitiSAP").prop("disabled", false);
+        }
+        else {
+            $("#JenisAktiviti").prop("disabled", false);
+            $("#CostCenter").prop("disabled", false);
+            $("#NetworkNo").prop("disabled", true);
+            $("#KodAktivitiSAP").prop("disabled", true);
+            var ajxfn = {};
+            var disableoption = "";
+            ajxfn.url = "@Url.Action("GetFlagJnsAktiviti", "Maintenance")";
+            ajxfn.type = "POST";
+            ajxfn.data = JSON.stringify({ jnsFlag: $("#flaglist").val() });
+            ajxfn.datatype = "json";
+            ajxfn.contentType = "application/json";
+            ajxfn.success = function (result) {
+                for (var i = 0; i < result.PilihFlag.length; i++) {
+                    $("#JenisAktiviti").append("<option value=" + result.PilihFlag[i].Value + ">" + result.PilihFlag[i].Text + "</option>");
+                }
+                $("#UpdateProgress1").css("display", "none");
+            };
+            ajxfn.error = function () {
+                $.simplyToast('@GlobalResCorp.msgError', 'danger');
+                $("#UpdateProgress1").css("display", "none");
+            };
+            $.ajax(ajxfn);
+            
+        };
+    });
+
+    $("#NetworkNo").change(function () {
+        var NetwNo = {};
+        var disableoption = "";
+        NetwNo.url = "@Url.Action("GetNetNo", "Maintenance")";
+        NetwNo.type = "POST";
+        NetwNo.data = JSON.stringify({ NetNo: $("#NetworkNo").val() });
+        NetwNo.datatype = "json";
+        NetwNo.contentType = "application/json";
+        NetwNo.success = function (result) {
+            for (var i = 0; i < result.PilihNetw.length; i++) {
+                $("#KodAktivitiSAP").append("<option value=" + result.PilihNetw[i].Value + ">" + result.PilihNetw[i].Text + "</option>");
+            }
+            $("#UpdateProgress1").css("display", "none");
+        };
+        NetwNo.error = function () {
+            $.simplyToast('@GlobalResCorp.msgError', 'danger');
+            $("#UpdateProgress1").css("display", "none");
+        };
+        $.ajax(NetwNo);
+    });
+</script>
+
+
