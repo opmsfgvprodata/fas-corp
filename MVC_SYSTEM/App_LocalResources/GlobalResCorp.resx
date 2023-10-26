@@ -3624,4 +3624,13 @@
   <data name="lblGLCodePT" xml:space="preserve">
     <value>Kod GL(Pekerja Tempatan)</value>
   </data>
+  <data name="lblAccNo" xml:space="preserve">
+    <value>No Akaun</value>
+  </data>
+  <data name="lblClientBatchID" xml:space="preserve">
+    <value>ID Batch Klien</value>
+  </data>
+  <data name="lblCorpID" xml:space="preserve">
+    <value>ID Korporat</value>
+  </data>
 </root>

@@ -3519,6 +3519,9 @@
     <Content Include="Views\ApplicationSupport\WorkerPaySheetRptSearch.cshtml" />
     <Content Include="Views\Report\PaymentMode.cshtml" />
     <Content Include="Views\Report\_PaymentMode.cshtml" />
+    <Content Include="Views\Maintenance\_MaklumatSyarikat.cshtml" />
+    <Content Include="Views\Maintenance\_MaklumatSyarikatEdit.cshtml" />
+    <Content Include="Views\Maintenance\MaklumatSyarikat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
