@@ -492,5 +492,15 @@ namespace MVC_SYSTEM.Class
             var userslist = db.tblUsers.ToList();
             return userslist;
         }
+
+        //fatin added - 19/11/2023
+        public tblUser GetUserDetail(string username)
+        {
+            MVC_SYSTEM_Auth db = new MVC_SYSTEM_Auth();
+            tblUser User;
+            int ID = 0;
+            User = db.tblUsers.Where(u => u.fldUserName.Equals(username)).FirstOrDefault();
+            return User;
+        }
     }
 }

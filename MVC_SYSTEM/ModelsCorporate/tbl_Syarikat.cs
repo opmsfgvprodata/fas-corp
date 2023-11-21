@@ -38,5 +38,10 @@ namespace MVC_SYSTEM.ModelsCorporate
 
         [StringLength(4)]
         public string fld_SAPComCode { get; set; }
+
+        //fatin added - 17/11/2023
+        public string fld_CorporateID { get; set; }
+        public string fld_ClientBatchID { get; set; }
+        public string fld_AccountNo { get; set; }
     }
 }

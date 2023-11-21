@@ -1,19 +1,55 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="FASOPMSCORPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityContainer Name="FASOPMSCORPEntities" annotation:LazyLoadingEnabled="true">
-    <FunctionImport Name="sp_FLAContractorProfile" ReturnType="Collection(FASOPMSCORPModel.sp_FLAContractorProfile_Result)" />
-    <FunctionImport Name="sp_FLAEstateProfile" ReturnType="Collection(FASOPMSCORPModel.sp_FLAEstateProfile_Result)" />
-    <FunctionImport Name="sp_FLAWorkerProfile" ReturnType="Collection(FASOPMSCORPModel.sp_FLAWorkerProfile_Result)">
+<Schema Namespace="MVC_SYSTEM_SP2_Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_FGVAppBackofficeUser" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FGVAppBackofficeUser_Result)" />
+    <FunctionImport Name="sp_FGVAppUserStatus" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FGVAppUserStatus_Result)" />
+    <FunctionImport Name="sp_FGVAppWorkerGroup" />
+    <FunctionImport Name="sp_FGVAppWorkerUser" />
+    <FunctionImport Name="sp_FLAContractorProfile" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FLAContractorProfile_Result)" />
+    <FunctionImport Name="sp_FLAEstateProfile" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FLAEstateProfile_Result)" />
+    <FunctionImport Name="sp_FLAWorkerProfile" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FLAWorkerProfile_Result)">
       <Parameter Name="Month" Mode="In" Type="Int32" />
       <Parameter Name="Year" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_MyegDetail" ReturnType="Collection(FASOPMSCORPModel.sp_MyegDetail_Result)">
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_MaybankRcms" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_MaybankRcms_Result)">
+      <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+      <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+      <Parameter Name="Month" Mode="In" Type="Int32" />
+      <Parameter Name="UserID" Mode="In" Type="Int32" />
+      <Parameter Name="CompCode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_MyegDetail" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_MyegDetail_Result)">
       <Parameter Name="NegaraID" Mode="In" Type="Int32" />
       <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
       <Parameter Name="WilayahID" Mode="In" Type="Int32" />
       <Parameter Name="LadangID" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_PaymentModeReport" ReturnType="Collection(FASOPMSCORPModel.sp_PaymentModeReport_Result)">
+    <FunctionImport Name="sp_PaymentModeReport" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_PaymentModeReport_Result)">
       <Parameter Name="NegaraID" Mode="In" Type="Int32" />
       <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
       <Parameter Name="Company" Mode="In" Type="String" />
@@ -21,14 +57,19 @@
       <Parameter Name="Year" Mode="In" Type="Int32" />
       <Parameter Name="UserID" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_PermitPassportDetail" ReturnType="Collection(FASOPMSCORPModel.sp_PermitPassportDetail_Result)">
+    <FunctionImport Name="sp_PermitPassportDetail" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_PermitPassportDetail_Result)">
       <Parameter Name="NegaraID" Mode="In" Type="Int32" />
       <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
       <Parameter Name="WilayahID" Mode="In" Type="Int32" />
       <Parameter Name="LadangID" Mode="In" Type="Int32" />
       <Parameter Name="KodAktif" Mode="In" Type="String" />
     </FunctionImport>
-    <FunctionImport Name="sp_RptBulPenPekLad" ReturnType="Collection(FASOPMSCORPModel.sp_RptBulPenPekLad_Result)">
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_RptBulPenPekLad" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_RptBulPenPekLad_Result)">
       <Parameter Name="NegaraID" Mode="In" Type="Int32" />
       <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
       <Parameter Name="WilayahID" Mode="In" Type="Int32" />
@@ -38,7 +79,7 @@
       <Parameter Name="Year" Mode="In" Type="Int32" />
       <Parameter Name="UserID" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_RptGajiMinima" ReturnType="Collection(FASOPMSCORPModel.sp_RptGajiMinima_Result)">
+    <FunctionImport Name="sp_RptGajiMinima" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_RptGajiMinima_Result)">
       <Parameter Name="NegaraID" Mode="In" Type="Int32" />
       <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
       <Parameter Name="WilayahID" Mode="In" Type="Int32" />
@@ -47,7 +88,7 @@
       <Parameter Name="Year" Mode="In" Type="Int32" />
       <Parameter Name="UserID" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_RptMakPekTem" ReturnType="Collection(FASOPMSCORPModel.sp_RptMakPekTem_Result)">
+    <FunctionImport Name="sp_RptMakPekTem" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_RptMakPekTem_Result)">
       <Parameter Name="NegaraID" Mode="In" Type="Int32" />
       <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
       <Parameter Name="WilayahID" Mode="In" Type="Int32" />
@@ -55,7 +96,7 @@
       <Parameter Name="AktifStatus" Mode="In" Type="Int32" />
       <Parameter Name="UserID" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_RptMasterDataPkj" ReturnType="Collection(FASOPMSCORPModel.sp_RptMasterDataPkj_Result)">
+    <FunctionImport Name="sp_RptMasterDataPkj" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_RptMasterDataPkj_Result)">
       <Parameter Name="NegaraID" Mode="In" Type="Int32" />
       <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
       <Parameter Name="WilayahID" Mode="In" Type="Int32" />
@@ -65,7 +106,7 @@
       <Parameter Name="KategoriPkj" Mode="In" Type="String" />
       <Parameter Name="UserID" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_RptRumKedKepPekLad" ReturnType="Collection(FASOPMSCORPModel.sp_RptRumKedKepPekLad_Result)">
+    <FunctionImport Name="sp_RptRumKedKepPekLad" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_RptRumKedKepPekLad_Result)">
       <Parameter Name="NegaraID" Mode="In" Type="Int32" />
       <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
       <Parameter Name="WilayahID" Mode="In" Type="Int32" />
@@ -81,7 +122,7 @@
       <Parameter Name="Month" Mode="In" Type="Int32" />
       <Parameter Name="Year" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_SocsoFileGen" ReturnType="Collection(FASOPMSCORPModel.sp_SocsoFileGen_Result)">
+    <FunctionImport Name="sp_SocsoFileGen" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_SocsoFileGen_Result)">
       <Parameter Name="NegaraID" Mode="In" Type="Int32" />
       <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
       <Parameter Name="wilayahlist" Mode="In" Type="Int32" />
@@ -93,8 +134,45 @@
       <Parameter Name="Year" Mode="In" Type="Int32" />
       <Parameter Name="UserID" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_WagerateView" ReturnType="Collection(FASOPMSCORPModel.sp_WagerateView_Result)" />
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="sp_WagerateView" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_WagerateView_Result)" />
+    <FunctionImport Name="sp_MaybankRcmsOnlinePaymentRpt" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_MaybankRcmsOnlinePaymentRpt_Result)">
+      <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+      <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+      <Parameter Name="Month" Mode="In" Type="Int32" />
+      <Parameter Name="UserID" Mode="In" Type="Int32" />
+      <Parameter Name="CompCode" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
+  <ComplexType Name="sp_FGVAppBackofficeUser_Result">
+    <Property Type="String" Name="employee_id" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="name" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="id_type" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="id_number" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="mobile_number" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="office_number" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="source" Nullable="true" MaxLength="4" />
+    <Property Type="String" Name="company" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="is_hq" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="designation" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="department" Nullable="true" MaxLength="6" />
+    <Property Type="String" Name="role_mapping" Nullable="true" />
+    <Property Type="String" Name="status" Nullable="true" MaxLength="6" />
+    <Property Type="Int32" Name="zone_code" Nullable="true" />
+    <Property Type="Int32" Name="region_code" Nullable="true" />
+    <Property Type="String" Name="estate_code" Nullable="true" MaxLength="6" />
+    <Property Type="String" Name="division_code" Nullable="true" MaxLength="6" />
+    <Property Type="String" Name="block_code" Nullable="true" MaxLength="6" />
+    <Property Type="String" Name="worker_group_id" Nullable="true" MaxLength="6" />
+    <Property Type="String" Name="worker_group_name" Nullable="true" MaxLength="6" />
+    <Property Type="String" Name="all_estate" Nullable="false" MaxLength="5" />
+  </ComplexType>
+  <ComplexType Name="sp_FGVAppUserStatus_Result">
+    <Property Type="String" Name="employee_id" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="status" Nullable="false" MaxLength="8" />
+  </ComplexType>
   <ComplexType Name="sp_FLAContractorProfile_Result">
     <Property Type="Int32" Name="fld_ID" Nullable="false" />
     <Property Type="String" Name="fld_KodPbkl" Nullable="true" MaxLength="5" />
@@ -186,6 +264,38 @@
     <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="50" />
     <Property Type="Int32" Name="fld_Month" Nullable="true" />
     <Property Type="Int32" Name="fld_Year" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="sp_MaybankRcms_Result">
+    <Property Type="Guid" Name="fld_ID" Nullable="true" />
+    <Property Type="String" Name="fld_Nokp" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="fld_Nopkj" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="fld_Nama" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="fld_RcmsBankCode" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="fld_NamaBank" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="fld_NoAkaun" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="fld_GajiBersih" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Int32" Name="fld_Year" Nullable="true" />
+    <Property Type="Int32" Name="fld_Month" Nullable="true" />
+    <Property Type="Int32" Name="fld_NegaraID" Nullable="true" />
+    <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
+    <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
+    <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
+    <Property Type="String" Name="fld_LdgCode" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="fld_Kdrkyt" Nullable="true" MaxLength="2" />
+    <Property Type="String" Name="fld_PaymentMode" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
   </ComplexType>
   <ComplexType Name="sp_MyegDetail_Result">
     <Property Type="Int32" Name="fld_ID" Nullable="false" />
@@ -434,5 +544,14 @@
     <Property Type="Int32" Name="fld_NegaraID" Nullable="true" />
     <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
     <Property Type="String" Name="fld_Paysheet" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="sp_MaybankRcmsOnlinePaymentRpt_Result">
+    <Property Type="Guid" Name="fld_ID" Nullable="true" />
+    <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
+    <Property Type="String" Name="fld_LdgCode" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="fld_JumlahPekerja" Nullable="true" />
+    <Property Type="Decimal" Name="fld_JumlahGajiBersih" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
   </ComplexType>
 </Schema>
