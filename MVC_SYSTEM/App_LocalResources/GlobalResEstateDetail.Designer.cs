@@ -19,7 +19,7 @@ namespace MVC_SYSTEM.App_LocalResources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class GlobalResEstateDetail {
@@ -401,7 +401,7 @@ namespace MVC_SYSTEM.App_LocalResources {
                 return ResourceManager.GetString("lblNoAcc", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Potongan Lain-lain.
         /// </summary>
@@ -417,6 +417,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblOthersEarning {
             get {
                 return ResourceManager.GetString("lblOthersEarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Mode.
+        /// </summary>
+        public static string lblPaymentMode {
+            get {
+                return ResourceManager.GetString("lblPaymentMode", resourceCulture);
             }
         }
         

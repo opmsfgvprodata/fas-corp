@@ -128,5 +128,9 @@ namespace MVC_SYSTEM.ViewingModelsOPMS
 
         [StringLength(2)]
         public string fld_Jenispekerja { get; set; }
+
+        //fatin added - 24/10/2023
+        [StringLength(15)]
+        public string fld_PaymentMode { get; set; }
     }
 }
