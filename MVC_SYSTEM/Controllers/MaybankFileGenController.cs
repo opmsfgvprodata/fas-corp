@@ -596,6 +596,127 @@ namespace MVC_SYSTEM.Controllers
             return Json(workerList);
         }
 
+        public ActionResult SSCOnlinePayment()
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+
+            DateTime Minus1month = timezone.gettimezone().AddMonths(-1);
+            int year = Minus1month.Year;
+            int month = Minus1month.Month;
+            int drpyear = 0;
+            int drprangeyear = 0;
+
+            ViewBag.MaybankFileGen = "class = active";
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            drpyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+            drprangeyear = timezone.gettimezone().Year;
+
+            var yearlist = new List<SelectListItem>();
+            for (var i = drpyear; i <= drprangeyear; i++)
+            {
+                if (i == year)
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = true });
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                }
+            }
+
+            ViewBag.YearList = yearlist;
+
+            ViewBag.MonthList = new SelectList(dbC.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "monthlist" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID), "fldOptConfValue", "fldOptConfDesc", month);
+
+
+            List<SelectListItem> CompCodeList = new List<SelectListItem>();
+
+            CompCodeList = new SelectList(dbC.tbl_Syarikat.OrderBy(x => x.fld_NamaPndkSyarikat), "fld_NamaPndkSyarikat", "fld_NamaPndkSyarikat").ToList();
+
+            CompCodeList.Insert(0, (new SelectListItem { Text = "Please Select", Value = "0" }));
+            ViewBag.CompCodeList = CompCodeList;
+
+            ViewBag.UserID = getuserid;
+            //dbC.Dispose();
+            return View();
+        }
+
+        public ViewResult _SSCOnlinePayment(string CompCodeList, int? MonthList, int? YearList)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            //string WilayahName = "";
+            string NamaPendekSyarikat = "";
+            //string LdgCode = "";
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            List<sp_MaybankRcmsOnlinePaymentRpt_Result> ssconlinepayment = new List<sp_MaybankRcmsOnlinePaymentRpt_Result>();
+
+            ViewBag.MonthList = MonthList;
+            ViewBag.YearList = YearList;
+            ViewBag.NamaSyarikat = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_NamaSyarikat)
+                .FirstOrDefault();
+            ViewBag.NamaPendekSyarikat = dbC.tbl_Syarikat
+               .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+               .Select(s => s.fld_NamaPndkSyarikat)
+               .FirstOrDefault();
+            ViewBag.NoSyarikat = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_NoSyarikat)
+                .FirstOrDefault();
+            ViewBag.CorpID = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_CorporateID)
+                .FirstOrDefault();
+            ViewBag.ClientID = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_ClientBatchID)
+                .FirstOrDefault();
+            ViewBag.AccNo = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_AccountNo)
+                .FirstOrDefault();
+            ViewBag.NegaraID = NegaraID;
+            ViewBag.SyarikatID = SyarikatID;
+            ViewBag.UserID = getuserid;
+            ViewBag.UserName = User.Identity.Name;
+            ViewBag.Date = DateTime.Now.ToShortDateString();
+            ViewBag.Time = DateTime.Now.ToShortTimeString();
+            //ViewBag.Print = print;
+            //ViewBag.WilayahName = WilayahName;
+            ViewBag.Description = "Region " + NamaPendekSyarikat + " - SSC Online Payment Report for " + MonthList + "/" + YearList;
+            if (MonthList == null || YearList == null || CompCodeList == "0")
+            {
+                ViewBag.Message = "Please select month, year, and company";
+                return View(ssconlinepayment);
+            }
+            else
+            {
+                dbSP.SetCommandTimeout(2400);
+                ssconlinepayment = dbSP.sp_MaybankRcmsOnlinePaymentRpt(NegaraID, SyarikatID, YearList, MonthList, getuserid, CompCodeList).ToList();
+
+                var BankList = dbC.tbl_Bank
+                    .Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_Deleted == false)
+                    .ToList();
+
+                ViewBag.RecordNo = ssconlinepayment.Count();
+
+                if (ssconlinepayment.Count() == 0)
+                {
+                    ViewBag.Message = GlobalResCorp.msgNoRecord;
+                }
+
+                return View(ssconlinepayment);
+            }
+        }
+
         [HttpPost]
         public ActionResult ConvertPDF2(string myHtml, string filename, string reportname)
         {
@@ -625,6 +746,69 @@ namespace MVC_SYSTEM.Controllers
             int? LadangID = 0;
             int? getuserid = getidentity.ID(User.Identity.Name);
             string width = "1700", height = "1190";
+            string imagepath = Server.MapPath("~/Asset/Images/");
+
+            var gethtml = db.tblHtmlReports.Find(id);
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            var logosyarikat = db.tbl_Syarikat.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID).Select(s => s.fld_LogoName).FirstOrDefault();
+
+
+            Document pdfDoc = new Document(new Rectangle(int.Parse(width), int.Parse(height)), 50f, 50f, 50f, 50f);
+
+            PdfWriter writer = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+            pdfDoc.Open();
+
+            using (TextReader sr = new StringReader(gethtml.fldHtlmCode))
+            {
+                using (var htmlWorker = new HTMLWorkerExtended(pdfDoc, imagepath + logosyarikat))
+                {
+                    htmlWorker.Open();
+                    htmlWorker.Parse(sr);
+                }
+            }
+            pdfDoc.Close();
+            Response.ContentType = "application/pdf";
+            Response.AddHeader("content-disposition", "attachment;filename=" + gethtml.fldFileName + ".pdf");
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Write(pdfDoc);
+            Response.End();
+
+            db.Entry(gethtml).State = EntityState.Deleted;
+            db.SaveChanges();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ConvertPDFRpt(string myHtml, string filename, string reportname)
+        {
+            bool success = false;
+            string msg = "";
+            string status = "";
+            Models.tblHtmlReport tblHtmlReport = new Models.tblHtmlReport();
+
+            tblHtmlReport.fldHtlmCode = myHtml;
+            tblHtmlReport.fldFileName = filename;
+            tblHtmlReport.fldReportName = reportname;
+
+            db.tblHtmlReports.Add(tblHtmlReport);
+            db.SaveChanges();
+
+            success = true;
+            status = "success";
+
+            return Json(new { success = success, id = tblHtmlReport.fldID, msg = msg, status = status, link = Url.Action("GetPDFRpt", "MaybankFileGen", null, "http") + "/" + tblHtmlReport.fldID });
+        }
+
+        public ActionResult GetPDFRpt(int id)
+        {
+            int? NegaraID = 0;
+            int? SyarikatID = 0;
+            int? WilayahID = 0;
+            int? LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string width = "816", height = "1056";
+            //string width = "1000", height = "1190";
             string imagepath = Server.MapPath("~/Asset/Images/");
 
             var gethtml = db.tblHtmlReports.Find(id);
