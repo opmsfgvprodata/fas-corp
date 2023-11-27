@@ -51,6 +51,14 @@
     <Parameter Name="UserID" Type="int" Mode="In" />
     <Parameter Name="CompCode" Type="nvarchar" Mode="In" />
   </Function>
+  <Function Name="sp_MaybankRcmsZAP64" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NegaraID" Type="int" Mode="In" />
+    <Parameter Name="SyarikatID" Type="int" Mode="In" />
+    <Parameter Name="Year" Type="int" Mode="In" />
+    <Parameter Name="Month" Type="int" Mode="In" />
+    <Parameter Name="UserID" Type="int" Mode="In" />
+    <Parameter Name="CompCode" Type="nvarchar" Mode="In" />
+  </Function>
   <Function Name="sp_MyegDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="NegaraID" Type="int" Mode="In" />
     <Parameter Name="SyarikatID" Type="int" Mode="In" />

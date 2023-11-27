@@ -4,42 +4,6 @@
     <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_alterdiagram" />
     <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_creatediagram" />
     <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_dropdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_FGVAppBackofficeUser" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FGVAppBackofficeUser">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_FGVAppBackofficeUser_Result">
-          <ScalarProperty Name="employee_id" ColumnName="employee_id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="id_type" ColumnName="id_type" />
-          <ScalarProperty Name="id_number" ColumnName="id_number" />
-          <ScalarProperty Name="email" ColumnName="email" />
-          <ScalarProperty Name="mobile_number" ColumnName="mobile_number" />
-          <ScalarProperty Name="office_number" ColumnName="office_number" />
-          <ScalarProperty Name="source" ColumnName="source" />
-          <ScalarProperty Name="company" ColumnName="company" />
-          <ScalarProperty Name="is_hq" ColumnName="is_hq" />
-          <ScalarProperty Name="designation" ColumnName="designation" />
-          <ScalarProperty Name="department" ColumnName="department" />
-          <ScalarProperty Name="role_mapping" ColumnName="role_mapping" />
-          <ScalarProperty Name="status" ColumnName="status" />
-          <ScalarProperty Name="zone_code" ColumnName="zone_code" />
-          <ScalarProperty Name="region_code" ColumnName="region_code" />
-          <ScalarProperty Name="estate_code" ColumnName="estate_code" />
-          <ScalarProperty Name="division_code" ColumnName="division_code" />
-          <ScalarProperty Name="block_code" ColumnName="block_code" />
-          <ScalarProperty Name="worker_group_id" ColumnName="worker_group_id" />
-          <ScalarProperty Name="worker_group_name" ColumnName="worker_group_name" />
-          <ScalarProperty Name="all_estate" ColumnName="all_estate" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_FGVAppUserStatus" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FGVAppUserStatus">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_FGVAppUserStatus_Result">
-          <ScalarProperty Name="employee_id" ColumnName="employee_id" />
-          <ScalarProperty Name="status" ColumnName="status" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_FGVAppWorkerGroup" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FGVAppWorkerGroup" />
     <FunctionImportMapping FunctionImportName="sp_FGVAppWorkerUser" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FGVAppWorkerUser" />
     <FunctionImportMapping FunctionImportName="sp_FLAContractorProfile" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FLAContractorProfile">
@@ -143,25 +107,6 @@
           <ScalarProperty Name="fld_LdgName" ColumnName="fld_LdgName" />
           <ScalarProperty Name="fld_Month" ColumnName="fld_Month" />
           <ScalarProperty Name="fld_Year" ColumnName="fld_Year" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_helpdiagramdefinition">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_helpdiagramdefinition_Result">
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_helpdiagrams">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_helpdiagrams_Result">
-          <ScalarProperty Name="Database" ColumnName="Database" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Owner" ColumnName="Owner" />
-          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
@@ -491,6 +436,87 @@
           <ScalarProperty Name="fld_JumlahPekerja" ColumnName="fld_JumlahPekerja" />
           <ScalarProperty Name="fld_JumlahGajiBersih" ColumnName="fld_JumlahGajiBersih" />
           <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_FGVAppBackofficeUser" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FGVAppBackofficeUser">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_FGVAppBackofficeUser_Result">
+          <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id_type" ColumnName="id_type" />
+          <ScalarProperty Name="id_number" ColumnName="id_number" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="mobile_number" ColumnName="mobile_number" />
+          <ScalarProperty Name="office_number" ColumnName="office_number" />
+          <ScalarProperty Name="source" ColumnName="source" />
+          <ScalarProperty Name="company" ColumnName="company" />
+          <ScalarProperty Name="is_hq" ColumnName="is_hq" />
+          <ScalarProperty Name="designation" ColumnName="designation" />
+          <ScalarProperty Name="department" ColumnName="department" />
+          <ScalarProperty Name="role_mapping" ColumnName="role_mapping" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="zone_code" ColumnName="zone_code" />
+          <ScalarProperty Name="region_code" ColumnName="region_code" />
+          <ScalarProperty Name="estate_code" ColumnName="estate_code" />
+          <ScalarProperty Name="division_code" ColumnName="division_code" />
+          <ScalarProperty Name="block_code" ColumnName="block_code" />
+          <ScalarProperty Name="worker_group_id" ColumnName="worker_group_id" />
+          <ScalarProperty Name="worker_group_name" ColumnName="worker_group_name" />
+          <ScalarProperty Name="all_estate" ColumnName="all_estate" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_FGVAppUserStatus" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FGVAppUserStatus">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_FGVAppUserStatus_Result">
+          <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_MaybankRcmsZAP64" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_MaybankRcmsZAP64">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_MaybankRcmsZAP64_Result">
+          <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
+          <ScalarProperty Name="fld_Company" ColumnName="fld_Company" />
+          <ScalarProperty Name="fld_DocType" ColumnName="fld_DocType" />
+          <ScalarProperty Name="fld_RefNo" ColumnName="fld_RefNo" />
+          <ScalarProperty Name="fld_PostingKey" ColumnName="fld_PostingKey" />
+          <ScalarProperty Name="fld_Currency" ColumnName="fld_Currency" />
+          <ScalarProperty Name="fld_VendorNo" ColumnName="fld_VendorNo" />
+          <ScalarProperty Name="fld_VendorAmount" ColumnName="fld_VendorAmount" />
+          <ScalarProperty Name="fld_Assignment" ColumnName="fld_Assignment" />
+          <ScalarProperty Name="fld_Text" ColumnName="fld_Text" />
+          <ScalarProperty Name="fld_GLAcount" ColumnName="fld_GLAcount" />
+          <ScalarProperty Name="fld_Amount" ColumnName="fld_Amount" />
+          <ScalarProperty Name="fld_BusinessArea" ColumnName="fld_BusinessArea" />
+          <ScalarProperty Name="fld_TradingPartner" ColumnName="fld_TradingPartner" />
+          <ScalarProperty Name="fld_TaxCode" ColumnName="fld_TaxCode" />
+          <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
+          <ScalarProperty Name="fld_InternalOrder" ColumnName="fld_InternalOrder" />
+          <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
+          <ScalarProperty Name="fld_LdgShortName" ColumnName="fld_LdgShortName" />
+          <ScalarProperty Name="fld_LdgIndicator" ColumnName="fld_LdgIndicator" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

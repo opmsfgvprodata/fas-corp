@@ -1146,6 +1146,9 @@
     <Compile Include="ModelsSP\sp_MaybankRcmsOnlinePaymentRpt_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelsSP\sp_MaybankRcmsZAP64_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelsSP\sp_MaybankRcms_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
@@ -3544,6 +3547,10 @@
     <Content Include="Views\MaybankFileGen\_rcms.cshtml" />
     <Content Include="Views\MaybankFileGen\RcmsGenIndividu.cshtml" />
     <Content Include="Views\MaybankFileGen\_rcmsIndividu.cshtml" />
+    <Content Include="Views\MaybankFileGen\SSCOnlinePayment.cshtml" />
+    <Content Include="Views\MaybankFileGen\_SSCOnlinePayment.cshtml" />
+    <Content Include="Views\MaybankFileGen\RcmsZAP64.cshtml" />
+    <Content Include="Views\MaybankFileGen\_RcmsZAP64.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

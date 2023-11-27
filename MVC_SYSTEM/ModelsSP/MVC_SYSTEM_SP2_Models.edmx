@@ -56,6 +56,14 @@
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="CompCode" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_MaybankRcmsZAP64" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NegaraID" Type="int" Mode="In" />
+          <Parameter Name="SyarikatID" Type="int" Mode="In" />
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <Parameter Name="Month" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="CompCode" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_MyegDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NegaraID" Type="int" Mode="In" />
           <Parameter Name="SyarikatID" Type="int" Mode="In" />
@@ -171,8 +179,6 @@
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_FGVAppBackofficeUser" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FGVAppBackofficeUser_Result)" />
-          <FunctionImport Name="sp_FGVAppUserStatus" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FGVAppUserStatus_Result)" />
           <FunctionImport Name="sp_FGVAppWorkerGroup" />
           <FunctionImport Name="sp_FGVAppWorkerUser" />
           <FunctionImport Name="sp_FLAContractorProfile" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FLAContractorProfile_Result)" />
@@ -180,14 +186,6 @@
           <FunctionImport Name="sp_FLAWorkerProfile" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FLAWorkerProfile_Result)">
             <Parameter Name="Month" Mode="In" Type="Int32" />
             <Parameter Name="Year" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_MaybankRcms" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_MaybankRcms_Result)">
             <Parameter Name="NegaraID" Mode="In" Type="Int32" />
@@ -298,35 +296,25 @@
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="CompCode" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_FGVAppBackofficeUser" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FGVAppBackofficeUser_Result)" />
+          <FunctionImport Name="sp_FGVAppUserStatus" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FGVAppUserStatus_Result)" />
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_MaybankRcmsZAP64" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_MaybankRcmsZAP64_Result)">
+            <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+            <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="CompCode" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="sp_FGVAppBackofficeUser_Result">
-          <Property Type="String" Name="employee_id" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="name" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="id_type" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="id_number" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="mobile_number" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="office_number" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="source" Nullable="true" MaxLength="4" />
-          <Property Type="String" Name="company" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="is_hq" Nullable="false" MaxLength="5" />
-          <Property Type="String" Name="designation" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="department" Nullable="true" MaxLength="6" />
-          <Property Type="String" Name="role_mapping" Nullable="true" />
-          <Property Type="String" Name="status" Nullable="true" MaxLength="6" />
-          <Property Type="Int32" Name="zone_code" Nullable="true" />
-          <Property Type="Int32" Name="region_code" Nullable="true" />
-          <Property Type="String" Name="estate_code" Nullable="true" MaxLength="6" />
-          <Property Type="String" Name="division_code" Nullable="true" MaxLength="6" />
-          <Property Type="String" Name="block_code" Nullable="true" MaxLength="6" />
-          <Property Type="String" Name="worker_group_id" Nullable="true" MaxLength="6" />
-          <Property Type="String" Name="worker_group_name" Nullable="true" MaxLength="6" />
-          <Property Type="String" Name="all_estate" Nullable="false" MaxLength="5" />
-        </ComplexType>
-        <ComplexType Name="sp_FGVAppUserStatus_Result">
-          <Property Type="String" Name="employee_id" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="status" Nullable="false" MaxLength="8" />
-        </ComplexType>
         <ComplexType Name="sp_FLAContractorProfile_Result">
           <Property Type="Int32" Name="fld_ID" Nullable="false" />
           <Property Type="String" Name="fld_KodPbkl" Nullable="true" MaxLength="5" />
@@ -418,17 +406,6 @@
           <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="fld_Month" Nullable="true" />
           <Property Type="Int32" Name="fld_Year" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="sp_MaybankRcms_Result">
           <Property Type="Guid" Name="fld_ID" Nullable="true" />
@@ -708,6 +685,67 @@
           <Property Type="Decimal" Name="fld_JumlahGajiBersih" Nullable="true" Precision="8" Scale="2" />
           <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
         </ComplexType>
+        <ComplexType Name="sp_FGVAppBackofficeUser_Result">
+          <Property Type="String" Name="employee_id" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="id_type" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="id_number" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="mobile_number" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="office_number" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="source" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="company" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="is_hq" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="designation" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="department" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="role_mapping" Nullable="true" />
+          <Property Type="String" Name="status" Nullable="true" MaxLength="6" />
+          <Property Type="Int32" Name="zone_code" Nullable="true" />
+          <Property Type="Int32" Name="region_code" Nullable="true" />
+          <Property Type="String" Name="estate_code" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="division_code" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="block_code" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="worker_group_id" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="worker_group_name" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="all_estate" Nullable="false" MaxLength="5" />
+        </ComplexType>
+        <ComplexType Name="sp_FGVAppUserStatus_Result">
+          <Property Type="String" Name="employee_id" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="status" Nullable="false" MaxLength="8" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_MaybankRcmsZAP64_Result">
+          <Property Type="Guid" Name="fld_ID" Nullable="true" />
+          <Property Type="String" Name="fld_Company" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="fld_DocType" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="fld_RefNo" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="fld_PostingKey" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="fld_Currency" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="fld_VendorNo" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="fld_VendorAmount" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="fld_Assignment" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="fld_Text" Nullable="true" MaxLength="70" />
+          <Property Type="String" Name="fld_GLAcount" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="fld_Amount" Nullable="true" Precision="8" Scale="2" />
+          <Property Type="String" Name="fld_BusinessArea" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="fld_TradingPartner" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="fld_TaxCode" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="fld_InternalOrder" Nullable="true" MaxLength="4" />
+          <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
+          <Property Type="String" Name="fld_LdgShortName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="fld_LdgIndicator" Nullable="true" MaxLength="4" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -717,42 +755,6 @@
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_FGVAppBackofficeUser" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FGVAppBackofficeUser">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_FGVAppBackofficeUser_Result">
-                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id_type" ColumnName="id_type" />
-                <ScalarProperty Name="id_number" ColumnName="id_number" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="mobile_number" ColumnName="mobile_number" />
-                <ScalarProperty Name="office_number" ColumnName="office_number" />
-                <ScalarProperty Name="source" ColumnName="source" />
-                <ScalarProperty Name="company" ColumnName="company" />
-                <ScalarProperty Name="is_hq" ColumnName="is_hq" />
-                <ScalarProperty Name="designation" ColumnName="designation" />
-                <ScalarProperty Name="department" ColumnName="department" />
-                <ScalarProperty Name="role_mapping" ColumnName="role_mapping" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="zone_code" ColumnName="zone_code" />
-                <ScalarProperty Name="region_code" ColumnName="region_code" />
-                <ScalarProperty Name="estate_code" ColumnName="estate_code" />
-                <ScalarProperty Name="division_code" ColumnName="division_code" />
-                <ScalarProperty Name="block_code" ColumnName="block_code" />
-                <ScalarProperty Name="worker_group_id" ColumnName="worker_group_id" />
-                <ScalarProperty Name="worker_group_name" ColumnName="worker_group_name" />
-                <ScalarProperty Name="all_estate" ColumnName="all_estate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_FGVAppUserStatus" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FGVAppUserStatus">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_FGVAppUserStatus_Result">
-                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
-                <ScalarProperty Name="status" ColumnName="status" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_FGVAppWorkerGroup" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FGVAppWorkerGroup" />
           <FunctionImportMapping FunctionImportName="sp_FGVAppWorkerUser" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FGVAppWorkerUser" />
           <FunctionImportMapping FunctionImportName="sp_FLAContractorProfile" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FLAContractorProfile">
@@ -856,25 +858,6 @@
                 <ScalarProperty Name="fld_LdgName" ColumnName="fld_LdgName" />
                 <ScalarProperty Name="fld_Month" ColumnName="fld_Month" />
                 <ScalarProperty Name="fld_Year" ColumnName="fld_Year" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1204,6 +1187,87 @@
                 <ScalarProperty Name="fld_JumlahPekerja" ColumnName="fld_JumlahPekerja" />
                 <ScalarProperty Name="fld_JumlahGajiBersih" ColumnName="fld_JumlahGajiBersih" />
                 <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_FGVAppBackofficeUser" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FGVAppBackofficeUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_FGVAppBackofficeUser_Result">
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id_type" ColumnName="id_type" />
+                <ScalarProperty Name="id_number" ColumnName="id_number" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="mobile_number" ColumnName="mobile_number" />
+                <ScalarProperty Name="office_number" ColumnName="office_number" />
+                <ScalarProperty Name="source" ColumnName="source" />
+                <ScalarProperty Name="company" ColumnName="company" />
+                <ScalarProperty Name="is_hq" ColumnName="is_hq" />
+                <ScalarProperty Name="designation" ColumnName="designation" />
+                <ScalarProperty Name="department" ColumnName="department" />
+                <ScalarProperty Name="role_mapping" ColumnName="role_mapping" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="zone_code" ColumnName="zone_code" />
+                <ScalarProperty Name="region_code" ColumnName="region_code" />
+                <ScalarProperty Name="estate_code" ColumnName="estate_code" />
+                <ScalarProperty Name="division_code" ColumnName="division_code" />
+                <ScalarProperty Name="block_code" ColumnName="block_code" />
+                <ScalarProperty Name="worker_group_id" ColumnName="worker_group_id" />
+                <ScalarProperty Name="worker_group_name" ColumnName="worker_group_name" />
+                <ScalarProperty Name="all_estate" ColumnName="all_estate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_FGVAppUserStatus" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FGVAppUserStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_FGVAppUserStatus_Result">
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_MaybankRcmsZAP64" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_MaybankRcmsZAP64">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_MaybankRcmsZAP64_Result">
+                <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
+                <ScalarProperty Name="fld_Company" ColumnName="fld_Company" />
+                <ScalarProperty Name="fld_DocType" ColumnName="fld_DocType" />
+                <ScalarProperty Name="fld_RefNo" ColumnName="fld_RefNo" />
+                <ScalarProperty Name="fld_PostingKey" ColumnName="fld_PostingKey" />
+                <ScalarProperty Name="fld_Currency" ColumnName="fld_Currency" />
+                <ScalarProperty Name="fld_VendorNo" ColumnName="fld_VendorNo" />
+                <ScalarProperty Name="fld_VendorAmount" ColumnName="fld_VendorAmount" />
+                <ScalarProperty Name="fld_Assignment" ColumnName="fld_Assignment" />
+                <ScalarProperty Name="fld_Text" ColumnName="fld_Text" />
+                <ScalarProperty Name="fld_GLAcount" ColumnName="fld_GLAcount" />
+                <ScalarProperty Name="fld_Amount" ColumnName="fld_Amount" />
+                <ScalarProperty Name="fld_BusinessArea" ColumnName="fld_BusinessArea" />
+                <ScalarProperty Name="fld_TradingPartner" ColumnName="fld_TradingPartner" />
+                <ScalarProperty Name="fld_TaxCode" ColumnName="fld_TaxCode" />
+                <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
+                <ScalarProperty Name="fld_InternalOrder" ColumnName="fld_InternalOrder" />
+                <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
+                <ScalarProperty Name="fld_LdgShortName" ColumnName="fld_LdgShortName" />
+                <ScalarProperty Name="fld_LdgIndicator" ColumnName="fld_LdgIndicator" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
