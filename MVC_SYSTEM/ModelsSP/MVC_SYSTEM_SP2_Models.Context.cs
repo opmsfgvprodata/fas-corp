@@ -91,39 +91,6 @@ namespace MVC_SYSTEM.ModelsSP
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
         }
     
-        public virtual int sp_FGVAppWorkerGroup()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_FGVAppWorkerGroup");
-        }
-    
-        public virtual int sp_FGVAppWorkerUser()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_FGVAppWorkerUser");
-        }
-    
-        public virtual IEnumerable<sp_FLAContractorProfile_Result> sp_FLAContractorProfile()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FLAContractorProfile_Result>("sp_FLAContractorProfile");
-        }
-    
-        public virtual IEnumerable<sp_FLAEstateProfile_Result> sp_FLAEstateProfile()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FLAEstateProfile_Result>("sp_FLAEstateProfile");
-        }
-    
-        public virtual IEnumerable<sp_FLAWorkerProfile_Result> sp_FLAWorkerProfile(Nullable<int> month, Nullable<int> year)
-        {
-            var monthParameter = month.HasValue ?
-                new ObjectParameter("Month", month) :
-                new ObjectParameter("Month", typeof(int));
-    
-            var yearParameter = year.HasValue ?
-                new ObjectParameter("Year", year) :
-                new ObjectParameter("Year", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FLAWorkerProfile_Result>("sp_FLAWorkerProfile", monthParameter, yearParameter);
-        }
-    
         public virtual IEnumerable<sp_MaybankRcms_Result> sp_MaybankRcms(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode)
         {
             var negaraIDParameter = negaraID.HasValue ?
@@ -523,17 +490,7 @@ namespace MVC_SYSTEM.ModelsSP
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankRcmsOnlinePaymentRpt_Result>("sp_MaybankRcmsOnlinePaymentRpt", negaraIDParameter, syarikatIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
         }
     
-        public virtual IEnumerable<sp_FGVAppBackofficeUser_Result> sp_FGVAppBackofficeUser()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FGVAppBackofficeUser_Result>("sp_FGVAppBackofficeUser");
-        }
-    
-        public virtual IEnumerable<sp_FGVAppUserStatus_Result> sp_FGVAppUserStatus()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FGVAppUserStatus_Result>("sp_FGVAppUserStatus");
-        }
-    
-        public virtual IEnumerable<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+        public virtual int sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
         {
             var diagramnameParameter = diagramname != null ?
                 new ObjectParameter("diagramname", diagramname) :
@@ -543,10 +500,10 @@ namespace MVC_SYSTEM.ModelsSP
                 new ObjectParameter("owner_id", owner_id) :
                 new ObjectParameter("owner_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
         }
     
-        public virtual IEnumerable<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        public virtual int sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
         {
             var diagramnameParameter = diagramname != null ?
                 new ObjectParameter("diagramname", diagramname) :
@@ -556,7 +513,7 @@ namespace MVC_SYSTEM.ModelsSP
                 new ObjectParameter("owner_id", owner_id) :
                 new ObjectParameter("owner_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
         }
     
         public virtual IEnumerable<sp_MaybankRcmsZAP64_Result> sp_MaybankRcmsZAP64(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode)
@@ -586,6 +543,29 @@ namespace MVC_SYSTEM.ModelsSP
                 new ObjectParameter("CompCode", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankRcmsZAP64_Result>("sp_MaybankRcmsZAP64", negaraIDParameter, syarikatIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
+        }
+    
+        public virtual IEnumerable<sp_FLAContractorProfile_Result> sp_FLAContractorProfile()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FLAContractorProfile_Result>("sp_FLAContractorProfile");
+        }
+    
+        public virtual IEnumerable<sp_FLAEstateProfile_Result> sp_FLAEstateProfile()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FLAEstateProfile_Result>("sp_FLAEstateProfile");
+        }
+    
+        public virtual IEnumerable<sp_FLAWorkerProfile_Result> sp_FLAWorkerProfile(Nullable<int> month, Nullable<int> year)
+        {
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FLAWorkerProfile_Result>("sp_FLAWorkerProfile", monthParameter, yearParameter);
         }
     }
 }
