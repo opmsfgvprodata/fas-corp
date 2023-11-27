@@ -91,35 +91,6 @@ namespace MVC_SYSTEM.ModelsSP
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
         }
     
-        public virtual IEnumerable<sp_MaybankRcms_Result> sp_MaybankRcms(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode)
-        {
-            var negaraIDParameter = negaraID.HasValue ?
-                new ObjectParameter("NegaraID", negaraID) :
-                new ObjectParameter("NegaraID", typeof(int));
-    
-            var syarikatIDParameter = syarikatID.HasValue ?
-                new ObjectParameter("SyarikatID", syarikatID) :
-                new ObjectParameter("SyarikatID", typeof(int));
-    
-            var yearParameter = year.HasValue ?
-                new ObjectParameter("Year", year) :
-                new ObjectParameter("Year", typeof(int));
-    
-            var monthParameter = month.HasValue ?
-                new ObjectParameter("Month", month) :
-                new ObjectParameter("Month", typeof(int));
-    
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var compCodeParameter = compCode != null ?
-                new ObjectParameter("CompCode", compCode) :
-                new ObjectParameter("CompCode", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankRcms_Result>("sp_MaybankRcms", negaraIDParameter, syarikatIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
-        }
-    
         public virtual IEnumerable<sp_MyegDetail_Result> sp_MyegDetail(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID)
         {
             var negaraIDParameter = negaraID.HasValue ?
@@ -566,6 +537,35 @@ namespace MVC_SYSTEM.ModelsSP
                 new ObjectParameter("Year", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FLAWorkerProfile_Result>("sp_FLAWorkerProfile", monthParameter, yearParameter);
+        }
+    
+        public virtual IEnumerable<sp_MaybankRcms_Result> sp_MaybankRcms(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode)
+        {
+            var negaraIDParameter = negaraID.HasValue ?
+                new ObjectParameter("NegaraID", negaraID) :
+                new ObjectParameter("NegaraID", typeof(int));
+    
+            var syarikatIDParameter = syarikatID.HasValue ?
+                new ObjectParameter("SyarikatID", syarikatID) :
+                new ObjectParameter("SyarikatID", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(int));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var compCodeParameter = compCode != null ?
+                new ObjectParameter("CompCode", compCode) :
+                new ObjectParameter("CompCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankRcms_Result>("sp_MaybankRcms", negaraIDParameter, syarikatIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
         }
     }
 }

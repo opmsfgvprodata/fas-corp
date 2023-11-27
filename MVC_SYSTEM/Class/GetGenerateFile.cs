@@ -306,7 +306,7 @@ namespace MVC_SYSTEM.Class
                             }
                             else if (i == 2) //3
                             {
-                                Body.Insert(i, "Domestic Payments (MY)|");
+                                Body.Insert(i, "Staff Payroll|");
                             }
                             else if (i == 4) //5
                             {
@@ -314,16 +314,18 @@ namespace MVC_SYSTEM.Class
                             }
                             else if (i == 7) //8
                             {
-                                Body.Insert(i, maybankrcms.fld_Nokp.ToUpper() + "|");
+                                //Body.Insert(i, maybankrcms.fld_Nokp.ToUpper() + "|");
+                                Body.Insert(i, maybankrcms.fld_Nopkj.ToUpper() + "|");
                             }
                             else if (i == 8) //9
                             {
-                                Body.Insert(i, "MAPA " + bulan + tahun + "|");
+                                Body.Insert(i, "SALARY " + bulan + tahun + "|");
                                 //Body.Insert(i, "MAPA " + bulan + tahun.Substring(2, 2) + "|");
                             }
                             else if (i == 9) //10
                             {
-                                Body.Insert(i, maybankrcms.fld_LdgName + "|");
+                                //Body.Insert(i, maybankrcms.fld_LdgName + "|");
+                                Body.Insert(i, maybankrcms.fld_LdgShortName + "|");                               
                             }
                             else if (i == 10) //11
                             {
@@ -387,43 +389,40 @@ namespace MVC_SYSTEM.Class
                                     Body.Insert(i, WorkerName3 + "|");
                                 }
                             }
+                            //else if (i == 24) //25
+                            //{
+                            //    if (maybankrcms.fld_Kdrkyt == "MA")
+                            //    {
+                            //        Body.Insert(i, maybankrcms.fld_Nokp + "|");
+                            //    }
+                            //    else
+                            //    {
+                            //        Body.Insert(i, "|");
+                            //    }
+                            //}
+                            else if (i == 23) //24
+                            {
+                               Body.Insert(i, maybankrcms.fld_Nopkj + "|");                               
+                            }
                             else if (i == 24) //25
                             {
-                                if (maybankrcms.fld_Kdrkyt == "MA")
-                                {
-                                    Body.Insert(i, maybankrcms.fld_Nokp + "|");
-                                }
-                                else
-                                {
-                                    Body.Insert(i, "|");
-                                }
+                               Body.Insert(i, maybankrcms.fld_Nokp + "|");
                             }
-                            else if (i == 27) //28
-                            {
-                                if (maybankrcms.fld_Kdrkyt == "MA")
-                                {
-                                    Body.Insert(i, "|");
-                                }
-                                else
-                                {
-                                    Body.Insert(i, maybankrcms.fld_Nokp + "|");
-                                }
-                            }
-                            else if (i == 36) //37
-                            {
-                                Body.Insert(i, maybankrcms.fld_RcmsBankCode + "|");
-                            }
-                            else if (i == 102) //103
-                            {
-                                if (CompCode == "FASSB")
-                                {
-                                    Body.Insert(i, "FASSB " + /*tbl_Wilayah.fld_WlyhName.ToUpper() +*/ "|");
-                                }
-                                else if (CompCode == "RNDSB")
-                                {
-                                    Body.Insert(i, "RNDSB " + /*tbl_Wilayah.fld_WlyhName.ToUpper() +*/ "|");
-                                }
-                            }
+                            //else if (i == 36) //37
+                            //{
+                            //    Body.Insert(i, maybankrcms.fld_RcmsBankCode + "|");
+                            //}
+                            //else if (i == 102) //103
+                            //{
+                            //    if (CompCode == "FASSB")
+                            //    {
+                            //        Body.Insert(i, "FASSB " + /*tbl_Wilayah.fld_WlyhName.ToUpper() +*/ "|");
+                            //    }
+                            //    else if (CompCode == "RNDSB")
+                            //    {
+                            //        Body.Insert(i, "RNDSB " + /*tbl_Wilayah.fld_WlyhName.ToUpper() +*/ "|");
+                            //    }
+                            //}
                             else if (i == 109) //110
                             {
                                 Body.Insert(i, "01|");
