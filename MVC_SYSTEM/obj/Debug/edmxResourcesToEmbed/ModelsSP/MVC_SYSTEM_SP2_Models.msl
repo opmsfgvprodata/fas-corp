@@ -1,14 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="MVC_SYSTEM_SP2_ModelsStoreContainer" CdmEntityContainer="Entities">
-    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_alterdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_creatediagram" />
-    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_dropdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_FGVAppWorkerGroup" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FGVAppWorkerGroup" />
-    <FunctionImportMapping FunctionImportName="sp_FGVAppWorkerUser" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FGVAppWorkerUser" />
-    <FunctionImportMapping FunctionImportName="sp_FLAContractorProfile" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FLAContractorProfile">
+  <EntityContainerMapping StorageEntityContainer="FASOPMSCORPModelStoreContainer" CdmEntityContainer="FASOPMSCORPEntities">
+    <FunctionImportMapping FunctionImportName="sp_FLAContractorProfile" FunctionName="FASOPMSCORPModel.Store.sp_FLAContractorProfile">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_FLAContractorProfile_Result">
+        <ComplexTypeMapping TypeName="FASOPMSCORPModel.sp_FLAContractorProfile_Result">
           <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
           <ScalarProperty Name="fld_KodPbkl" ColumnName="fld_KodPbkl" />
           <ScalarProperty Name="fld_NamaPbkl" ColumnName="fld_NamaPbkl" />
@@ -24,9 +19,9 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_FLAEstateProfile" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FLAEstateProfile">
+    <FunctionImportMapping FunctionImportName="sp_FLAEstateProfile" FunctionName="FASOPMSCORPModel.Store.sp_FLAEstateProfile">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_FLAEstateProfile_Result">
+        <ComplexTypeMapping TypeName="FASOPMSCORPModel.sp_FLAEstateProfile_Result">
           <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
           <ScalarProperty Name="Estate_Code" ColumnName="Estate_Code" />
           <ScalarProperty Name="Estate_Name" ColumnName="Estate_Name" />
@@ -59,9 +54,9 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_FLAWorkerProfile" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FLAWorkerProfile">
+    <FunctionImportMapping FunctionImportName="sp_FLAWorkerProfile" FunctionName="FASOPMSCORPModel.Store.sp_FLAWorkerProfile">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_FLAWorkerProfile_Result">
+        <ComplexTypeMapping TypeName="FASOPMSCORPModel.sp_FLAWorkerProfile_Result">
           <ScalarProperty Name="fld_Nopkj" ColumnName="fld_Nopkj" />
           <ScalarProperty Name="fld_Nama" ColumnName="fld_Nama" />
           <ScalarProperty Name="fld_Nokp" ColumnName="fld_Nokp" />
@@ -110,34 +105,9 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_MaybankRcms" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_MaybankRcms">
+    <FunctionImportMapping FunctionImportName="sp_MyegDetail" FunctionName="FASOPMSCORPModel.Store.sp_MyegDetail">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_MaybankRcms_Result">
-          <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
-          <ScalarProperty Name="fld_Nokp" ColumnName="fld_Nokp" />
-          <ScalarProperty Name="fld_Nopkj" ColumnName="fld_Nopkj" />
-          <ScalarProperty Name="fld_Nama" ColumnName="fld_Nama" />
-          <ScalarProperty Name="fld_RcmsBankCode" ColumnName="fld_RcmsBankCode" />
-          <ScalarProperty Name="fld_NamaBank" ColumnName="fld_NamaBank" />
-          <ScalarProperty Name="fld_NoAkaun" ColumnName="fld_NoAkaun" />
-          <ScalarProperty Name="fld_GajiBersih" ColumnName="fld_GajiBersih" />
-          <ScalarProperty Name="fld_Year" ColumnName="fld_Year" />
-          <ScalarProperty Name="fld_Month" ColumnName="fld_Month" />
-          <ScalarProperty Name="fld_NegaraID" ColumnName="fld_NegaraID" />
-          <ScalarProperty Name="fld_SyarikatID" ColumnName="fld_SyarikatID" />
-          <ScalarProperty Name="fld_WilayahID" ColumnName="fld_WilayahID" />
-          <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
-          <ScalarProperty Name="fld_LdgCode" ColumnName="fld_LdgCode" />
-          <ScalarProperty Name="fld_LdgName" ColumnName="fld_LdgName" />
-          <ScalarProperty Name="fld_Kdrkyt" ColumnName="fld_Kdrkyt" />
-          <ScalarProperty Name="fld_PaymentMode" ColumnName="fld_PaymentMode" />
-          <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_MyegDetail" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_MyegDetail">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_MyegDetail_Result">
+        <ComplexTypeMapping TypeName="FASOPMSCORPModel.sp_MyegDetail_Result">
           <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
           <ScalarProperty Name="fld_Nopkj" ColumnName="fld_Nopkj" />
           <ScalarProperty Name="fld_Nama" ColumnName="fld_Nama" />
@@ -166,30 +136,9 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_PaymentModeReport" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_PaymentModeReport">
+    <FunctionImportMapping FunctionImportName="sp_PermitPassportDetail" FunctionName="FASOPMSCORPModel.Store.sp_PermitPassportDetail">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_PaymentModeReport_Result">
-          <ScalarProperty Name="fld_Id" ColumnName="fld_Id" />
-          <ScalarProperty Name="fld_LdgCode" ColumnName="fld_LdgCode" />
-          <ScalarProperty Name="fld_LdgName" ColumnName="fld_LdgName" />
-          <ScalarProperty Name="fld_Cash" ColumnName="fld_Cash" />
-          <ScalarProperty Name="fld_Cheque" ColumnName="fld_Cheque" />
-          <ScalarProperty Name="fld_Cdmas" ColumnName="fld_Cdmas" />
-          <ScalarProperty Name="fld_Ewallet" ColumnName="fld_Ewallet" />
-          <ScalarProperty Name="fld_Month" ColumnName="fld_Month" />
-          <ScalarProperty Name="fld_Year" ColumnName="fld_Year" />
-          <ScalarProperty Name="fld_NegaraID" ColumnName="fld_NegaraID" />
-          <ScalarProperty Name="fld_SyarikatID" ColumnName="fld_SyarikatID" />
-          <ScalarProperty Name="fld_WilayahID" ColumnName="fld_WilayahID" />
-          <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
-          <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
-          <ScalarProperty Name="fld_CreatedBy" ColumnName="fld_CreatedBy" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_PermitPassportDetail" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_PermitPassportDetail">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_PermitPassportDetail_Result">
+        <ComplexTypeMapping TypeName="FASOPMSCORPModel.sp_PermitPassportDetail_Result">
           <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
           <ScalarProperty Name="fld_Nopkj" ColumnName="fld_Nopkj" />
           <ScalarProperty Name="fld_Nama" ColumnName="fld_Nama" />
@@ -208,10 +157,9 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_renamediagram" />
-    <FunctionImportMapping FunctionImportName="sp_RptBulPenPekLad" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_RptBulPenPekLad">
+    <FunctionImportMapping FunctionImportName="sp_RptBulPenPekLad" FunctionName="FASOPMSCORPModel.Store.sp_RptBulPenPekLad">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_RptBulPenPekLad_Result">
+        <ComplexTypeMapping TypeName="FASOPMSCORPModel.sp_RptBulPenPekLad_Result">
           <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
           <ScalarProperty Name="fld_NamaWilayah" ColumnName="fld_NamaWilayah" />
           <ScalarProperty Name="fld_KodLadang" ColumnName="fld_KodLadang" />
@@ -243,9 +191,9 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_RptGajiMinima" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_RptGajiMinima">
+    <FunctionImportMapping FunctionImportName="sp_RptGajiMinima" FunctionName="FASOPMSCORPModel.Store.sp_RptGajiMinima">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_RptGajiMinima_Result">
+        <ComplexTypeMapping TypeName="FASOPMSCORPModel.sp_RptGajiMinima_Result">
           <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
           <ScalarProperty Name="fld_NamaWilayah" ColumnName="fld_NamaWilayah" />
           <ScalarProperty Name="fld_KodLadang" ColumnName="fld_KodLadang" />
@@ -269,9 +217,9 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_RptMakPekTem" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_RptMakPekTem">
+    <FunctionImportMapping FunctionImportName="sp_RptMakPekTem" FunctionName="FASOPMSCORPModel.Store.sp_RptMakPekTem">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_RptMakPekTem_Result">
+        <ComplexTypeMapping TypeName="FASOPMSCORPModel.sp_RptMakPekTem_Result">
           <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
           <ScalarProperty Name="fld_NamaWilayah" ColumnName="fld_NamaWilayah" />
           <ScalarProperty Name="fld_KodLadang" ColumnName="fld_KodLadang" />
@@ -309,9 +257,9 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_RptMasterDataPkj" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_RptMasterDataPkj">
+    <FunctionImportMapping FunctionImportName="sp_RptMasterDataPkj" FunctionName="FASOPMSCORPModel.Store.sp_RptMasterDataPkj">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_RptMasterDataPkj_Result">
+        <ComplexTypeMapping TypeName="FASOPMSCORPModel.sp_RptMasterDataPkj_Result">
           <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
           <ScalarProperty Name="fld_NamaWilayah" ColumnName="fld_NamaWilayah" />
           <ScalarProperty Name="fld_KodLadang" ColumnName="fld_KodLadang" />
@@ -334,9 +282,9 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_RptRumKedKepPekLad" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_RptRumKedKepPekLad">
+    <FunctionImportMapping FunctionImportName="sp_RptRumKedKepPekLad" FunctionName="FASOPMSCORPModel.Store.sp_RptRumKedKepPekLad">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_RptRumKedKepPekLad_Result">
+        <ComplexTypeMapping TypeName="FASOPMSCORPModel.sp_RptRumKedKepPekLad_Result">
           <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
           <ScalarProperty Name="fld_NamaWilayah" ColumnName="fld_NamaWilayah" />
           <ScalarProperty Name="fld_KodLadang" ColumnName="fld_KodLadang" />
@@ -385,10 +333,10 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_RptSkb" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_RptSkb" />
-    <FunctionImportMapping FunctionImportName="sp_SocsoFileGen" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_SocsoFileGen">
+    <FunctionImportMapping FunctionImportName="sp_RptSkb" FunctionName="FASOPMSCORPModel.Store.sp_RptSkb" />
+    <FunctionImportMapping FunctionImportName="sp_SocsoFileGen" FunctionName="FASOPMSCORPModel.Store.sp_SocsoFileGen">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_SocsoFileGen_Result">
+        <ComplexTypeMapping TypeName="FASOPMSCORPModel.sp_SocsoFileGen_Result">
           <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
           <ScalarProperty Name="fld_EmployeeCode" ColumnName="fld_EmployeeCode" />
           <ScalarProperty Name="fld_ICNo" ColumnName="fld_ICNo" />
@@ -405,10 +353,9 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_upgraddiagrams" />
-    <FunctionImportMapping FunctionImportName="sp_WagerateView" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_WagerateView">
+    <FunctionImportMapping FunctionImportName="sp_WagerateView" FunctionName="FASOPMSCORPModel.Store.sp_WagerateView">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_WagerateView_Result">
+        <ComplexTypeMapping TypeName="FASOPMSCORPModel.sp_WagerateView_Result">
           <ScalarProperty Name="RowtempUpahAktvt" ColumnName="RowtempUpahAktvt" />
           <ScalarProperty Name="fld_idUpahAktiviti" ColumnName="fld_idUpahAktiviti" />
           <ScalarProperty Name="RowtempMapGL" ColumnName="RowtempMapGL" />
@@ -426,97 +373,25 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_MaybankRcmsOnlinePaymentRpt" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_MaybankRcmsOnlinePaymentRpt">
+    <FunctionImportMapping FunctionImportName="sp_PaymentModeReport" FunctionName="FASOPMSCORPModel.Store.sp_PaymentModeReport">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_MaybankRcmsOnlinePaymentRpt_Result">
-          <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
-          <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
+        <ComplexTypeMapping TypeName="FASOPMSCORPModel.sp_PaymentModeReport_Result">
+          <ScalarProperty Name="fld_Id" ColumnName="fld_Id" />
           <ScalarProperty Name="fld_LdgCode" ColumnName="fld_LdgCode" />
           <ScalarProperty Name="fld_LdgName" ColumnName="fld_LdgName" />
-          <ScalarProperty Name="fld_JumlahPekerja" ColumnName="fld_JumlahPekerja" />
-          <ScalarProperty Name="fld_JumlahGajiBersih" ColumnName="fld_JumlahGajiBersih" />
-          <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_FGVAppBackofficeUser" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FGVAppBackofficeUser">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_FGVAppBackofficeUser_Result">
-          <ScalarProperty Name="employee_id" ColumnName="employee_id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="id_type" ColumnName="id_type" />
-          <ScalarProperty Name="id_number" ColumnName="id_number" />
-          <ScalarProperty Name="email" ColumnName="email" />
-          <ScalarProperty Name="mobile_number" ColumnName="mobile_number" />
-          <ScalarProperty Name="office_number" ColumnName="office_number" />
-          <ScalarProperty Name="source" ColumnName="source" />
-          <ScalarProperty Name="company" ColumnName="company" />
-          <ScalarProperty Name="is_hq" ColumnName="is_hq" />
-          <ScalarProperty Name="designation" ColumnName="designation" />
-          <ScalarProperty Name="department" ColumnName="department" />
-          <ScalarProperty Name="role_mapping" ColumnName="role_mapping" />
-          <ScalarProperty Name="status" ColumnName="status" />
-          <ScalarProperty Name="zone_code" ColumnName="zone_code" />
-          <ScalarProperty Name="region_code" ColumnName="region_code" />
-          <ScalarProperty Name="estate_code" ColumnName="estate_code" />
-          <ScalarProperty Name="division_code" ColumnName="division_code" />
-          <ScalarProperty Name="block_code" ColumnName="block_code" />
-          <ScalarProperty Name="worker_group_id" ColumnName="worker_group_id" />
-          <ScalarProperty Name="worker_group_name" ColumnName="worker_group_name" />
-          <ScalarProperty Name="all_estate" ColumnName="all_estate" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_FGVAppUserStatus" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_FGVAppUserStatus">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_FGVAppUserStatus_Result">
-          <ScalarProperty Name="employee_id" ColumnName="employee_id" />
-          <ScalarProperty Name="status" ColumnName="status" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_helpdiagramdefinition">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_helpdiagramdefinition_Result">
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_helpdiagrams">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_helpdiagrams_Result">
-          <ScalarProperty Name="Database" ColumnName="Database" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Owner" ColumnName="Owner" />
-          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_MaybankRcmsZAP64" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_MaybankRcmsZAP64">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_MaybankRcmsZAP64_Result">
-          <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
-          <ScalarProperty Name="fld_Company" ColumnName="fld_Company" />
-          <ScalarProperty Name="fld_DocType" ColumnName="fld_DocType" />
-          <ScalarProperty Name="fld_RefNo" ColumnName="fld_RefNo" />
-          <ScalarProperty Name="fld_PostingKey" ColumnName="fld_PostingKey" />
-          <ScalarProperty Name="fld_Currency" ColumnName="fld_Currency" />
-          <ScalarProperty Name="fld_VendorNo" ColumnName="fld_VendorNo" />
-          <ScalarProperty Name="fld_VendorAmount" ColumnName="fld_VendorAmount" />
-          <ScalarProperty Name="fld_Assignment" ColumnName="fld_Assignment" />
-          <ScalarProperty Name="fld_Text" ColumnName="fld_Text" />
-          <ScalarProperty Name="fld_GLAcount" ColumnName="fld_GLAcount" />
-          <ScalarProperty Name="fld_Amount" ColumnName="fld_Amount" />
-          <ScalarProperty Name="fld_BusinessArea" ColumnName="fld_BusinessArea" />
-          <ScalarProperty Name="fld_TradingPartner" ColumnName="fld_TradingPartner" />
-          <ScalarProperty Name="fld_TaxCode" ColumnName="fld_TaxCode" />
-          <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
-          <ScalarProperty Name="fld_InternalOrder" ColumnName="fld_InternalOrder" />
+          <ScalarProperty Name="fld_Cash" ColumnName="fld_Cash" />
+          <ScalarProperty Name="fld_Cheque" ColumnName="fld_Cheque" />
+          <ScalarProperty Name="fld_Cdmas" ColumnName="fld_Cdmas" />
+          <ScalarProperty Name="fld_Ewallet" ColumnName="fld_Ewallet" />
+          <ScalarProperty Name="fld_M2EHQ" ColumnName="fld_M2EHQ" />
+          <ScalarProperty Name="fld_Month" ColumnName="fld_Month" />
+          <ScalarProperty Name="fld_Year" ColumnName="fld_Year" />
+          <ScalarProperty Name="fld_NegaraID" ColumnName="fld_NegaraID" />
+          <ScalarProperty Name="fld_SyarikatID" ColumnName="fld_SyarikatID" />
+          <ScalarProperty Name="fld_WilayahID" ColumnName="fld_WilayahID" />
           <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
-          <ScalarProperty Name="fld_LdgShortName" ColumnName="fld_LdgShortName" />
-          <ScalarProperty Name="fld_LdgIndicator" ColumnName="fld_LdgIndicator" />
+          <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
+          <ScalarProperty Name="fld_CreatedBy" ColumnName="fld_CreatedBy" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

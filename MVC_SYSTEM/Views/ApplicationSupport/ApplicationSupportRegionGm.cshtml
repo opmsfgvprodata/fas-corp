@@ -39,9 +39,15 @@
         <div class="well bottom" style="padding-bottom:16px;">
             <div class="row">
                 @*<div class="col-sm-4">
-                        <label for="NamaWilayah">@GlobalResApproval.lblWilayahName</label>
-                        @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
-                    </div>*@
+            <label for="NamaWilayah">@GlobalResApproval.lblWilayahName</label>
+            @Html.DropDownList("WilayahIDList", null, htmlAttributes: new { @class = "form-control" })
+        </div>*@
+                @*fatin added - 30/08/2023*@
+                <div class="col-sm-4">
+                    <label for="NamaLadang">@GlobalResRegion.lblCompany</label>
+                    @Html.DropDownList("SyarikatIDList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                @*end*@
                 <div class="col-sm-4">
                     <label for="NamaLadang">@GlobalResApproval.lblLadangName</label>
                     @Html.DropDownList("LadangIDList", null, htmlAttributes: new { @class = "form-control" })
@@ -94,6 +100,35 @@
     $("table").stickyTableHeaders();
 </script>
 <script>
+
+    //fatin added - 30/08/2023
+    $(document).ready(function () {
+    $("#SyarikatIDList").change(function () {
+        var SyarikatIDList = {};
+        var SyarikatNamaPendek = $("#SyarikatIDList").val();
+        var disableoption = "";
+        debugger
+        SyarikatIDList.url = "@Url.Action("GetLadangbySyarikat", "ApplicationSupport")";
+        SyarikatIDList.type = "POST";
+        SyarikatIDList.data = JSON.stringify({ SyarikatNamaPendek: SyarikatNamaPendek });
+        SyarikatIDList.datatype = "json";
+        SyarikatIDList.contentType = "application/json";
+        SyarikatIDList.success = function (LadangIDReturn) {
+                $("#LadangIDList").empty();
+                $("#LadangIDList").append("<option value=0>Please Select</option>");
+            for (var i = 0; i < LadangIDReturn.length; i++) {
+                    if ($("#SyarikatIDList").val() == 0) {
+                        disableoption = "disabled";
+                    }
+                $("#LadangIDList").append("<option value=" + LadangIDReturn[i].Value + " " + disableoption + ">" + LadangIDReturn[i].Text + "</option>");
+                }
+            };
+        SyarikatIDList.error = function () { $.simplyToast('Sistem masalah', 'danger'); };
+        $.ajax(SyarikatIDList);
+        });
+    });
+    //end
+
     if ($("#WilayahIDList").val() == 0) {
         var WilayahIDList = {};
         var disableoption = "";

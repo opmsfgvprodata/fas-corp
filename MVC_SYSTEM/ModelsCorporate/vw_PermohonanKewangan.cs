@@ -42,6 +42,10 @@ namespace MVC_SYSTEM.ModelsCorporate
         [Column(TypeName = "numeric")]
         public decimal? fld_JumlahEwallet { get; set; }
 
+        //fatin added - 24/10/2023
+        [Column(TypeName = "numeric")]
+        public decimal? fld_JumlahM2EHQ { get; set; }
+
         [Column(TypeName = "numeric")]
         public decimal? fld_JumlahWorkerNet { get; set; }
 

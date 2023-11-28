@@ -36,59 +36,27 @@ namespace MVC_SYSTEM.ModelsSP
         }
     
     
-        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        public virtual IEnumerable<sp_FLAContractorProfile_Result> sp_FLAContractorProfile()
         {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FLAContractorProfile_Result>("sp_FLAContractorProfile");
         }
     
-        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        public virtual IEnumerable<sp_FLAEstateProfile_Result> sp_FLAEstateProfile()
         {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FLAEstateProfile_Result>("sp_FLAEstateProfile");
         }
     
-        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
+        public virtual IEnumerable<sp_FLAWorkerProfile_Result> sp_FLAWorkerProfile(Nullable<int> month, Nullable<int> year)
         {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(int));
     
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FLAWorkerProfile_Result>("sp_FLAWorkerProfile", monthParameter, yearParameter);
         }
     
         public virtual IEnumerable<sp_MyegDetail_Result> sp_MyegDetail(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID)
@@ -110,35 +78,6 @@ namespace MVC_SYSTEM.ModelsSP
                 new ObjectParameter("LadangID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MyegDetail_Result>("sp_MyegDetail", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter);
-        }
-    
-        public virtual IEnumerable<sp_PaymentModeReport_Result> sp_PaymentModeReport(Nullable<int> negaraID, Nullable<int> syarikatID, string company, Nullable<int> month, Nullable<int> year, Nullable<int> userID)
-        {
-            var negaraIDParameter = negaraID.HasValue ?
-                new ObjectParameter("NegaraID", negaraID) :
-                new ObjectParameter("NegaraID", typeof(int));
-    
-            var syarikatIDParameter = syarikatID.HasValue ?
-                new ObjectParameter("SyarikatID", syarikatID) :
-                new ObjectParameter("SyarikatID", typeof(int));
-    
-            var companyParameter = company != null ?
-                new ObjectParameter("Company", company) :
-                new ObjectParameter("Company", typeof(string));
-    
-            var monthParameter = month.HasValue ?
-                new ObjectParameter("Month", month) :
-                new ObjectParameter("Month", typeof(int));
-    
-            var yearParameter = year.HasValue ?
-                new ObjectParameter("Year", year) :
-                new ObjectParameter("Year", typeof(int));
-    
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PaymentModeReport_Result>("sp_PaymentModeReport", negaraIDParameter, syarikatIDParameter, companyParameter, monthParameter, yearParameter, userIDParameter);
         }
     
         public virtual IEnumerable<sp_PermitPassportDetail_Result> sp_PermitPassportDetail(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, string kodAktif)
@@ -164,23 +103,6 @@ namespace MVC_SYSTEM.ModelsSP
                 new ObjectParameter("KodAktif", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PermitPassportDetail_Result>("sp_PermitPassportDetail", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter, kodAktifParameter);
-        }
-    
-        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var new_diagramnameParameter = new_diagramname != null ?
-                new ObjectParameter("new_diagramname", new_diagramname) :
-                new ObjectParameter("new_diagramname", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
         }
     
         public virtual IEnumerable<sp_RptBulPenPekLad_Result> sp_RptBulPenPekLad(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, string kdrytan, Nullable<int> month, Nullable<int> year, Nullable<int> userID)
@@ -422,14 +344,38 @@ namespace MVC_SYSTEM.ModelsSP
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_SocsoFileGen_Result>("sp_SocsoFileGen", negaraIDParameter, syarikatIDParameter, wilayahlistParameter, companyParameter, kerakyatanParameter, employeeCodeParameter, typeContributionParameter, monthParameter, yearParameter, userIDParameter);
         }
     
-        public virtual int sp_upgraddiagrams()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
-        }
-    
         public virtual IEnumerable<sp_WagerateView_Result> sp_WagerateView()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_WagerateView_Result>("sp_WagerateView");
+        }
+    
+        public virtual IEnumerable<sp_MaybankRcms_Result> sp_MaybankRcms(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode)
+        {
+            var negaraIDParameter = negaraID.HasValue ?
+                new ObjectParameter("NegaraID", negaraID) :
+                new ObjectParameter("NegaraID", typeof(int));
+    
+            var syarikatIDParameter = syarikatID.HasValue ?
+                new ObjectParameter("SyarikatID", syarikatID) :
+                new ObjectParameter("SyarikatID", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(int));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var compCodeParameter = compCode != null ?
+                new ObjectParameter("CompCode", compCode) :
+                new ObjectParameter("CompCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankRcms_Result>("sp_MaybankRcms", negaraIDParameter, syarikatIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
         }
     
         public virtual IEnumerable<sp_MaybankRcmsOnlinePaymentRpt_Result> sp_MaybankRcmsOnlinePaymentRpt(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode)
@@ -461,32 +407,6 @@ namespace MVC_SYSTEM.ModelsSP
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankRcmsOnlinePaymentRpt_Result>("sp_MaybankRcmsOnlinePaymentRpt", negaraIDParameter, syarikatIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
         }
     
-        public virtual int sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual int sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
-        }
-    
         public virtual IEnumerable<sp_MaybankRcmsZAP64_Result> sp_MaybankRcmsZAP64(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode)
         {
             var negaraIDParameter = negaraID.HasValue ?
@@ -516,30 +436,7 @@ namespace MVC_SYSTEM.ModelsSP
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankRcmsZAP64_Result>("sp_MaybankRcmsZAP64", negaraIDParameter, syarikatIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
         }
     
-        public virtual IEnumerable<sp_FLAContractorProfile_Result> sp_FLAContractorProfile()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FLAContractorProfile_Result>("sp_FLAContractorProfile");
-        }
-    
-        public virtual IEnumerable<sp_FLAEstateProfile_Result> sp_FLAEstateProfile()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FLAEstateProfile_Result>("sp_FLAEstateProfile");
-        }
-    
-        public virtual IEnumerable<sp_FLAWorkerProfile_Result> sp_FLAWorkerProfile(Nullable<int> month, Nullable<int> year)
-        {
-            var monthParameter = month.HasValue ?
-                new ObjectParameter("Month", month) :
-                new ObjectParameter("Month", typeof(int));
-    
-            var yearParameter = year.HasValue ?
-                new ObjectParameter("Year", year) :
-                new ObjectParameter("Year", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FLAWorkerProfile_Result>("sp_FLAWorkerProfile", monthParameter, yearParameter);
-        }
-    
-        public virtual IEnumerable<sp_MaybankRcms_Result> sp_MaybankRcms(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode)
+        public virtual IEnumerable<sp_PaymentModeReport_Result> sp_PaymentModeReport(Nullable<int> negaraID, Nullable<int> syarikatID, string company, Nullable<int> month, Nullable<int> year, Nullable<int> userID)
         {
             var negaraIDParameter = negaraID.HasValue ?
                 new ObjectParameter("NegaraID", negaraID) :
@@ -549,23 +446,23 @@ namespace MVC_SYSTEM.ModelsSP
                 new ObjectParameter("SyarikatID", syarikatID) :
                 new ObjectParameter("SyarikatID", typeof(int));
     
-            var yearParameter = year.HasValue ?
-                new ObjectParameter("Year", year) :
-                new ObjectParameter("Year", typeof(int));
+            var companyParameter = company != null ?
+                new ObjectParameter("Company", company) :
+                new ObjectParameter("Company", typeof(string));
     
             var monthParameter = month.HasValue ?
                 new ObjectParameter("Month", month) :
                 new ObjectParameter("Month", typeof(int));
     
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
                 new ObjectParameter("UserID", typeof(int));
     
-            var compCodeParameter = compCode != null ?
-                new ObjectParameter("CompCode", compCode) :
-                new ObjectParameter("CompCode", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankRcms_Result>("sp_MaybankRcms", negaraIDParameter, syarikatIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PaymentModeReport_Result>("sp_PaymentModeReport", negaraIDParameter, syarikatIDParameter, companyParameter, monthParameter, yearParameter, userIDParameter);
         }
     }
 }

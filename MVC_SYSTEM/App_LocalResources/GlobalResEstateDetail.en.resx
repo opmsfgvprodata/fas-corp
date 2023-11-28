@@ -237,6 +237,9 @@
   <data name="lblOthersEarning" xml:space="preserve">
     <value>Others Deductions</value>
   </data>
+  <data name="lblPaymentMode" xml:space="preserve">
+    <value>Payment Mode</value>
+  </data>
   <data name="lblPaysheetReport" xml:space="preserve">
     <value>Paysheet Report</value>
   </data>

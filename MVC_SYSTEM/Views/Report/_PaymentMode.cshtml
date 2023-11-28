@@ -12,6 +12,7 @@
     decimal? totalcheque = 0;
     decimal? totalcdmas = 0;
     decimal? totalewallet = 0;
+    decimal? totalm2ehq = 0; //fatin added - 26/10/2023
     decimal? grandtotal = 0;
 }
 
@@ -22,7 +23,7 @@
         <table class="table table-bordered" style="font-size: 11px;" border="0" width="100%">
             <thead>
                 <tr>
-                    <th colspan="8" style="text-align:center;vertical-align:middle;">
+                    <th colspan="9" style="text-align:center;vertical-align:middle;">
                         @ViewBag.NamaSyarikat
                         <br />
                         (@GlobalResLocalWorkerInfo.hdrCmpnyNo : @ViewBag.NoSyarikat)
@@ -38,7 +39,7 @@
                     <th rowspan="2"bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">No</th>
                     <th rowspan="2"bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Estate Code</th>
                     <th rowspan="2"bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Estate Name</th>
-                    <th colspan="4" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Payment Mode</th>
+                    <th colspan="5" bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Payment Mode</th>
                     <th rowspan="2"bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Total (RM)</th>
                 </tr>
                 <tr>
@@ -46,6 +47,7 @@
                     <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">Cheque (RM)</th>
                     <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">CDMAS (RM)</th>
                     <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">EWallet (RM)</th>
+                    <th bgcolor="#ffcc80" style="color:black;text-align:center;vertical-align:middle !important;border:1px solid black;" border="1">M2E-HQ (RM)</th> @*fatin added - 26/10/2023*@
                 </tr>
 
             </thead>
@@ -53,7 +55,7 @@
 
                 @foreach (var item in Model)
                 {
-                    totaleachladang = item.fld_Cash + item.fld_Cheque + item.fld_Cdmas + item.fld_Ewallet;
+                    totaleachladang = item.fld_Cash + item.fld_Cheque + item.fld_Cdmas + item.fld_Ewallet + item.fld_M2E;
                     <tr>
                         <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
                             @bill
@@ -76,6 +78,10 @@
                         <td align="right" style="vertical-align:middle !important;border:1px solid black;" border="1">
                             @item.fld_Ewallet
                         </td>
+                        @*fatin added - 26/10/2023*@
+                        <td align="right" style="vertical-align:middle !important;border:1px solid black;" border="1">
+                            @item.fld_M2E
+                        </td>
                         <td align="right" style="vertical-align:middle !important;border:1px solid black;" border="1">
                             @totaleachladang
                         </td>
@@ -85,9 +91,10 @@
                     totalcheque = totalcheque + item.fld_Cheque;
                     totalcdmas = totalcdmas + item.fld_Cdmas;
                     totalewallet = totalewallet + item.fld_Ewallet;
+                    totalm2ehq = totalm2ehq + item.fld_M2E; @*fatin added - 26/10/2023*@
                 }
-                @{ 
-                    grandtotal = totalcash + totalcheque + totalcdmas + totalewallet;
+                @{
+                    grandtotal = totalcash + totalcheque + totalcdmas + totalewallet + totalm2ehq; @*fatin modified - 26/10/2023*@
                 }
             </tbody>
             <tfoot>
@@ -97,6 +104,7 @@
                     <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@totalcheque</th>
                     <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@totalcdmas</th>
                     <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@totalewallet</th>
+                    <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@totalm2ehq</th> @*fatin added -27/10/2023*@
                     <th bgcolor="#ffcc80" style="color:black;text-align:Right;vertical-align:middle !important;border:1px solid black;" border="1">@grandtotal</th>
                 </tr>
             </tfoot>
