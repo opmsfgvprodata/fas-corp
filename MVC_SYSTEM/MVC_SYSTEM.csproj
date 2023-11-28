@@ -1129,6 +1129,15 @@
     <Compile Include="ModelsSP\sp_FLAWorkerProfile_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelsSP\sp_MaybankRcmsOnlinePaymentRpt_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelsSP\sp_MaybankRcmsZAP64_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelsSP\sp_MaybankRcms_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelsSP\sp_MyegDetail_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>

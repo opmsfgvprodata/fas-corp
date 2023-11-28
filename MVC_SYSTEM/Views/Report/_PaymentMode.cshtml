@@ -55,7 +55,7 @@
 
                 @foreach (var item in Model)
                 {
-                    totaleachladang = item.fld_Cash + item.fld_Cheque + item.fld_Cdmas + item.fld_Ewallet;
+                    totaleachladang = item.fld_Cash + item.fld_Cheque + item.fld_Cdmas + item.fld_Ewallet + item.fld_M2E;
                     <tr>
                         <td align="center" style="vertical-align:middle !important;border:1px solid black;" border="1">
                             @bill
@@ -80,7 +80,7 @@
                         </td>
                         @*fatin added - 26/10/2023*@
                         <td align="right" style="vertical-align:middle !important;border:1px solid black;" border="1">
-                            @item.fld_M2EHQ
+                            @item.fld_M2E
                         </td>
                         <td align="right" style="vertical-align:middle !important;border:1px solid black;" border="1">
                             @totaleachladang
@@ -91,7 +91,7 @@
                     totalcheque = totalcheque + item.fld_Cheque;
                     totalcdmas = totalcdmas + item.fld_Cdmas;
                     totalewallet = totalewallet + item.fld_Ewallet;
-                    totalm2ehq = totalm2ehq + item.fld_M2EHQ; @*fatin added - 26/10/2023*@
+                    totalm2ehq = totalm2ehq + item.fld_M2E; @*fatin added - 26/10/2023*@
                 }
                 @{
                     grandtotal = totalcash + totalcheque + totalcdmas + totalewallet + totalm2ehq; @*fatin modified - 26/10/2023*@
