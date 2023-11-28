@@ -20,6 +20,7 @@ namespace MVC_SYSTEM.ModelsSP
         public Nullable<decimal> fld_Cheque { get; set; }
         public Nullable<decimal> fld_Cdmas { get; set; }
         public Nullable<decimal> fld_Ewallet { get; set; }
+        public Nullable<decimal> fld_M2E { get; set; }
         public Nullable<int> fld_Month { get; set; }
         public Nullable<int> fld_Year { get; set; }
         public Nullable<int> fld_NegaraID { get; set; }

@@ -237,6 +237,9 @@
   <data name="lblOthersEarning" xml:space="preserve">
     <value>Pendapatan Lain-lain</value>
   </data>
+  <data name="lblPaymentMode" xml:space="preserve">
+    <value>Payment Mode</value>
+  </data>
   <data name="lblPaysheetReport" xml:space="preserve">
     <value>Laporan Paysheet</value>
   </data>
