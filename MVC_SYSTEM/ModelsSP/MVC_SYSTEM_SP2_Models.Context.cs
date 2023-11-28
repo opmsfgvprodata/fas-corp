@@ -112,35 +112,6 @@ namespace MVC_SYSTEM.ModelsSP
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MyegDetail_Result>("sp_MyegDetail", negaraIDParameter, syarikatIDParameter, wilayahIDParameter, ladangIDParameter);
         }
     
-        public virtual IEnumerable<sp_PaymentModeReport_Result> sp_PaymentModeReport(Nullable<int> negaraID, Nullable<int> syarikatID, string company, Nullable<int> month, Nullable<int> year, Nullable<int> userID)
-        {
-            var negaraIDParameter = negaraID.HasValue ?
-                new ObjectParameter("NegaraID", negaraID) :
-                new ObjectParameter("NegaraID", typeof(int));
-    
-            var syarikatIDParameter = syarikatID.HasValue ?
-                new ObjectParameter("SyarikatID", syarikatID) :
-                new ObjectParameter("SyarikatID", typeof(int));
-    
-            var companyParameter = company != null ?
-                new ObjectParameter("Company", company) :
-                new ObjectParameter("Company", typeof(string));
-    
-            var monthParameter = month.HasValue ?
-                new ObjectParameter("Month", month) :
-                new ObjectParameter("Month", typeof(int));
-    
-            var yearParameter = year.HasValue ?
-                new ObjectParameter("Year", year) :
-                new ObjectParameter("Year", typeof(int));
-    
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PaymentModeReport_Result>("sp_PaymentModeReport", negaraIDParameter, syarikatIDParameter, companyParameter, monthParameter, yearParameter, userIDParameter);
-        }
-    
         public virtual IEnumerable<sp_PermitPassportDetail_Result> sp_PermitPassportDetail(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> wilayahID, Nullable<int> ladangID, string kodAktif)
         {
             var negaraIDParameter = negaraID.HasValue ?
@@ -566,6 +537,35 @@ namespace MVC_SYSTEM.ModelsSP
                 new ObjectParameter("CompCode", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankRcms_Result>("sp_MaybankRcms", negaraIDParameter, syarikatIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
+        }
+    
+        public virtual IEnumerable<sp_PaymentModeReport_Result> sp_PaymentModeReport(Nullable<int> negaraID, Nullable<int> syarikatID, string company, Nullable<int> month, Nullable<int> year, Nullable<int> userID)
+        {
+            var negaraIDParameter = negaraID.HasValue ?
+                new ObjectParameter("NegaraID", negaraID) :
+                new ObjectParameter("NegaraID", typeof(int));
+    
+            var syarikatIDParameter = syarikatID.HasValue ?
+                new ObjectParameter("SyarikatID", syarikatID) :
+                new ObjectParameter("SyarikatID", typeof(int));
+    
+            var companyParameter = company != null ?
+                new ObjectParameter("Company", company) :
+                new ObjectParameter("Company", typeof(string));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PaymentModeReport_Result>("sp_PaymentModeReport", negaraIDParameter, syarikatIDParameter, companyParameter, monthParameter, yearParameter, userIDParameter);
         }
     }
 }

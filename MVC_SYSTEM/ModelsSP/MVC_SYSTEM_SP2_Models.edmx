@@ -181,14 +181,6 @@
             <Parameter Name="WilayahID" Mode="In" Type="Int32" />
             <Parameter Name="LadangID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_PaymentModeReport" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_PaymentModeReport_Result)">
-            <Parameter Name="NegaraID" Mode="In" Type="Int32" />
-            <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
-            <Parameter Name="Company" Mode="In" Type="String" />
-            <Parameter Name="Month" Mode="In" Type="Int32" />
-            <Parameter Name="Year" Mode="In" Type="Int32" />
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="sp_PermitPassportDetail" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_PermitPassportDetail_Result)">
             <Parameter Name="NegaraID" Mode="In" Type="Int32" />
             <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
@@ -306,6 +298,14 @@
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="CompCode" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_PaymentModeReport" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_PaymentModeReport_Result)">
+            <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+            <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+            <Parameter Name="Company" Mode="In" Type="String" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_MyegDetail_Result">
           <Property Type="Int32" Name="fld_ID" Nullable="false" />
@@ -333,23 +333,6 @@
           <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
           <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
           <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_PaymentModeReport_Result">
-          <Property Type="Guid" Name="fld_Id" Nullable="false" />
-          <Property Type="String" Name="fld_LdgCode" Nullable="true" MaxLength="5" />
-          <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="fld_Cash" Nullable="true" Precision="8" Scale="2" />
-          <Property Type="Decimal" Name="fld_Cheque" Nullable="true" Precision="8" Scale="2" />
-          <Property Type="Decimal" Name="fld_Cdmas" Nullable="true" Precision="8" Scale="2" />
-          <Property Type="Decimal" Name="fld_Ewallet" Nullable="true" Precision="8" Scale="2" />
-          <Property Type="Int32" Name="fld_Month" Nullable="true" />
-          <Property Type="Int32" Name="fld_Year" Nullable="true" />
-          <Property Type="Int32" Name="fld_NegaraID" Nullable="true" />
-          <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
-          <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
-          <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
-          <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
-          <Property Type="Int32" Name="fld_CreatedBy" Nullable="true" />
         </ComplexType>
         <ComplexType Name="sp_PermitPassportDetail_Result">
           <Property Type="Int32" Name="fld_ID" Nullable="false" />
@@ -701,6 +684,24 @@
           <Property Type="String" Name="fld_LdgShortName" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="fld_LdgIndicator" Nullable="true" MaxLength="4" />
         </ComplexType>
+        <ComplexType Name="sp_PaymentModeReport_Result">
+          <Property Type="Guid" Name="fld_Id" Nullable="false" />
+          <Property Type="String" Name="fld_LdgCode" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="fld_Cash" Nullable="true" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="fld_Cheque" Nullable="true" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="fld_Cdmas" Nullable="true" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="fld_Ewallet" Nullable="true" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="fld_M2E" Nullable="true" Precision="8" Scale="2" />
+          <Property Type="Int32" Name="fld_Month" Nullable="true" />
+          <Property Type="Int32" Name="fld_Year" Nullable="true" />
+          <Property Type="Int32" Name="fld_NegaraID" Nullable="true" />
+          <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
+          <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
+          <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
+          <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="fld_CreatedBy" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -738,27 +739,6 @@
                 <ScalarProperty Name="fld_SyarikatID" ColumnName="fld_SyarikatID" />
                 <ScalarProperty Name="fld_WilayahID" ColumnName="fld_WilayahID" />
                 <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_PaymentModeReport" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_PaymentModeReport">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_PaymentModeReport_Result">
-                <ScalarProperty Name="fld_Id" ColumnName="fld_Id" />
-                <ScalarProperty Name="fld_LdgCode" ColumnName="fld_LdgCode" />
-                <ScalarProperty Name="fld_LdgName" ColumnName="fld_LdgName" />
-                <ScalarProperty Name="fld_Cash" ColumnName="fld_Cash" />
-                <ScalarProperty Name="fld_Cheque" ColumnName="fld_Cheque" />
-                <ScalarProperty Name="fld_Cdmas" ColumnName="fld_Cdmas" />
-                <ScalarProperty Name="fld_Ewallet" ColumnName="fld_Ewallet" />
-                <ScalarProperty Name="fld_Month" ColumnName="fld_Month" />
-                <ScalarProperty Name="fld_Year" ColumnName="fld_Year" />
-                <ScalarProperty Name="fld_NegaraID" ColumnName="fld_NegaraID" />
-                <ScalarProperty Name="fld_SyarikatID" ColumnName="fld_SyarikatID" />
-                <ScalarProperty Name="fld_WilayahID" ColumnName="fld_WilayahID" />
-                <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
-                <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
-                <ScalarProperty Name="fld_CreatedBy" ColumnName="fld_CreatedBy" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1172,6 +1152,28 @@
                 <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
                 <ScalarProperty Name="fld_LdgShortName" ColumnName="fld_LdgShortName" />
                 <ScalarProperty Name="fld_LdgIndicator" ColumnName="fld_LdgIndicator" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_PaymentModeReport" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_PaymentModeReport">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_PaymentModeReport_Result">
+                <ScalarProperty Name="fld_Id" ColumnName="fld_Id" />
+                <ScalarProperty Name="fld_LdgCode" ColumnName="fld_LdgCode" />
+                <ScalarProperty Name="fld_LdgName" ColumnName="fld_LdgName" />
+                <ScalarProperty Name="fld_Cash" ColumnName="fld_Cash" />
+                <ScalarProperty Name="fld_Cheque" ColumnName="fld_Cheque" />
+                <ScalarProperty Name="fld_Cdmas" ColumnName="fld_Cdmas" />
+                <ScalarProperty Name="fld_Ewallet" ColumnName="fld_Ewallet" />
+                <ScalarProperty Name="fld_M2E" ColumnName="fld_M2E" />
+                <ScalarProperty Name="fld_Month" ColumnName="fld_Month" />
+                <ScalarProperty Name="fld_Year" ColumnName="fld_Year" />
+                <ScalarProperty Name="fld_NegaraID" ColumnName="fld_NegaraID" />
+                <ScalarProperty Name="fld_SyarikatID" ColumnName="fld_SyarikatID" />
+                <ScalarProperty Name="fld_WilayahID" ColumnName="fld_WilayahID" />
+                <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
+                <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
+                <ScalarProperty Name="fld_CreatedBy" ColumnName="fld_CreatedBy" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
