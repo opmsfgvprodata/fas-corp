@@ -389,6 +389,17 @@ namespace MVC_SYSTEM.Class
                                     Body.Insert(i, WorkerName3 + "|");
                                 }
                             }
+                            //else if (i == 24) //25
+                            //{
+                            //    if (maybankrcms.fld_Kdrkyt == "MA")
+                            //    {
+                            //        Body.Insert(i, maybankrcms.fld_Nokp + "|");
+                            //    }
+                            //    else
+                            //    {
+                            //        Body.Insert(i, "|");
+                            //    }
+                            //}
                             else if (i == 23) //24
                             {
                                Body.Insert(i, maybankrcms.fld_Nopkj + "|");                               
