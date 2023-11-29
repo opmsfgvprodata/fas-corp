@@ -216,6 +216,7 @@ namespace MVC_SYSTEM.Controllers
             string stringmonth = "";
             string CorpID = "";
             string ClientID = "";
+            string ClientIDText = "";
             string AccNo = "";
             string InitialName = "";
             stringyear = Year.ToString();
@@ -244,6 +245,23 @@ namespace MVC_SYSTEM.Controllers
             var SyarikatDetail = dbC.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == CompCode).FirstOrDefault();
             string filename = "M2E LABOR (" + SyarikatDetail.fld_NamaPndkSyarikat.ToUpper() + ") " + "" + stringmonth + stringyear + ".txt";
 
+            if (ClientID == null || ClientID == " ")
+            {
+                if (CompCode == "FASSB")
+                {
+                    ClientIDText = "FGVASB" + stringmonth + stringyear;
+                }
+
+                if (CompCode == "RNDSB")
+                {
+                    ClientIDText = "RNDSB" + stringmonth + stringyear;
+                }               
+            }
+            else
+            {
+                ClientIDText = ClientID;
+            }
+
             if (maybankrcmsList.Count() != 0)
             {
                 TotalGaji = maybankrcmsList.Sum(s => s.fld_GajiBersih);
@@ -257,23 +275,9 @@ namespace MVC_SYSTEM.Controllers
                 statusmsg = "warning";
             }
 
-            //if (GetGaji.Count() != 0)
-            //{
-            //    TotalGaji = GetGaji.Sum(s => s.fld_GajiBersih);
-            //    CountData = GetGaji.Count();
-            //    msg = GlobalResEstate.msgDataFound;
-            //    statusmsg = "success"; 
-            //}
-            //else
-            //{
-            //    msg = GlobalResEstate.msgDataNotFound;
-            //    statusmsg = "warning";
-            //}
-
-
             dbSP.Dispose();
             dbC.Dispose();
-            return Json(new { msg, statusmsg, file = filename, salary = TotalGaji, totaldata = CountData });
+            return Json(new { msg, statusmsg, file = filename, salary = TotalGaji, totaldata = CountData, clientid = ClientIDText});
         }
 
         public FileResult Download(string filePath, string filename)
@@ -350,6 +354,7 @@ namespace MVC_SYSTEM.Controllers
             string host, catalog, user, pass = "";
             //string WilayahName = "";
             string NamaSyarikat = "";
+            string ClientId = "";
             //string LdgCode = "";
 
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
@@ -373,10 +378,27 @@ namespace MVC_SYSTEM.Controllers
                 .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
                 .Select(s => s.fld_CorporateID)
                 .FirstOrDefault();
-            ViewBag.ClientID = dbC.tbl_Syarikat
+            ClientId = dbC.tbl_Syarikat
                 .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
                 .Select(s => s.fld_ClientBatchID)
                 .FirstOrDefault();
+            if (ClientId == null || ClientId == "")
+            {
+                if (CompCodeList == "FASSB")
+                {
+                    ViewBag.clientid = "FGVASB" + MonthList + YearList;
+                }
+
+                if (CompCodeList == "RNDSB")
+                {
+                    ViewBag.clientid = "RNDSB" + MonthList + YearList;
+                }
+            }
+            else
+            {
+                ViewBag.clientid = ClientId;
+            }
+
             ViewBag.AccNo = dbC.tbl_Syarikat
                 .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
                 .Select(s => s.fld_AccountNo)
@@ -500,6 +522,7 @@ namespace MVC_SYSTEM.Controllers
             string host, catalog, user, pass = "";
             //string WilayahName = "";
             string NamaSyarikat = "";
+            string ClientId = "";
             //string LdgCode = "";
 
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
@@ -523,10 +546,27 @@ namespace MVC_SYSTEM.Controllers
                 .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
                 .Select(s => s.fld_CorporateID)
                 .FirstOrDefault();
-            ViewBag.ClientID = dbC.tbl_Syarikat
-                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
-                .Select(s => s.fld_ClientBatchID)
-                .FirstOrDefault();
+            ClientId = dbC.tbl_Syarikat
+                 .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                 .Select(s => s.fld_ClientBatchID)
+                 .FirstOrDefault();
+            if (ClientId == null || ClientId == "")
+            {
+                if (CompCodeList == "FASSB")
+                {
+                    ViewBag.clientid = "FGVASB" + MonthList + YearList;
+                }
+
+                if (CompCodeList == "RNDSB")
+                {
+                    ViewBag.clientid = "RNDSB" + MonthList + YearList;
+                }
+            }
+            else
+            {
+                ViewBag.clientid = ClientId;
+            }
+
             ViewBag.AccNo = dbC.tbl_Syarikat
                 .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
                 .Select(s => s.fld_AccountNo)

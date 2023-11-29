@@ -88,6 +88,7 @@ namespace MVC_SYSTEM.Class
             string AccNo = "";
             string InitialName = "";
             string AccNoWorker = "";
+            string ClientIDText = "";
             char onechar;
             //DateTime? date = timezone.gettimezone();
             //DateTime Today = new DateTime(date.Value.Year, date.Value.Month, date.Value.Day);
@@ -114,7 +115,7 @@ namespace MVC_SYSTEM.Class
                 {
                     TotalGaji = maybankrcmsList.Sum(s => s.fld_GajiBersih);
                     CountData = maybankrcmsList.Count();
-                }
+                }               
 
                 using (StreamWriter writer = new StreamWriter(filecreation, true))
                 {
@@ -141,11 +142,24 @@ namespace MVC_SYSTEM.Class
                             {
                                 Header.Insert(i, filter + "|");
                             }
-                        }
-                        //else if (i == 4)
-                        //{
-                        //    Header.Insert(i, "B|");
-                        //}
+
+                            //if (ClientID == null || ClientID == " ")
+                            //{
+                            //    if (CompCode == "FASSB")
+                            //    {
+                            //        Header.Insert(i, "FGVASB" + bulan + tahun + "|");
+                            //    }
+
+                            //    if (CompCode == "RNDSB")
+                            //    {
+                            //        Header.Insert(i, "RNDSB" + bulan + tahun + "|");
+                            //    }
+                            //}
+                            //else
+                            //{
+                            //    Header.Insert(i, ClientID + "|");
+                            //}
+                        }                       
                         else
                         {
                             Header.Insert(i, "|");
