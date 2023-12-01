@@ -260,14 +260,6 @@
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
           <FunctionImport Name="sp_WagerateView" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_WagerateView_Result)" />
-          <FunctionImport Name="sp_MaybankRcmsOnlinePaymentRpt" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_MaybankRcmsOnlinePaymentRpt_Result)">
-            <Parameter Name="NegaraID" Mode="In" Type="Int32" />
-            <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
-            <Parameter Name="Year" Mode="In" Type="Int32" />
-            <Parameter Name="Month" Mode="In" Type="Int32" />
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="CompCode" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="sp_helpdiagramdefinition">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -305,6 +297,14 @@
             <Parameter Name="Month" Mode="In" Type="Int32" />
             <Parameter Name="Year" Mode="In" Type="Int32" />
             <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_MaybankRcmsOnlinePaymentRpt" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_MaybankRcmsOnlinePaymentRpt_Result)">
+            <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+            <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="CompCode" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_MyegDetail_Result">
@@ -538,15 +538,6 @@
           <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
           <Property Type="String" Name="fld_Paysheet" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <ComplexType Name="sp_MaybankRcmsOnlinePaymentRpt_Result">
-          <Property Type="Guid" Name="fld_ID" Nullable="true" />
-          <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
-          <Property Type="String" Name="fld_LdgCode" Nullable="true" MaxLength="5" />
-          <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="fld_JumlahPekerja" Nullable="true" />
-          <Property Type="Decimal" Name="fld_JumlahGajiBersih" Nullable="true" Precision="8" Scale="2" />
-          <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
-        </ComplexType>
         <ComplexType Name="sp_MaybankRcmsZAP64_Result">
           <Property Type="Guid" Name="fld_ID" Nullable="true" />
           <Property Type="String" Name="fld_Company" Nullable="true" MaxLength="5" />
@@ -701,6 +692,17 @@
           <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
           <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
           <Property Type="Int32" Name="fld_CreatedBy" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_MaybankRcmsOnlinePaymentRpt_Result">
+          <Property Type="Guid" Name="fld_ID" Nullable="true" />
+          <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
+          <Property Type="String" Name="fld_LdgCode" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="fld_LdgBusinessArea" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="fld_JumlahPekerja" Nullable="true" />
+          <Property Type="Decimal" Name="fld_JumlahGajiBersih" Nullable="true" Precision="8" Scale="2" />
+          <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="fld_LdgIndicator" Nullable="true" MaxLength="4" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -981,19 +983,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_MaybankRcmsOnlinePaymentRpt" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_MaybankRcmsOnlinePaymentRpt">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_MaybankRcmsOnlinePaymentRpt_Result">
-                <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
-                <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
-                <ScalarProperty Name="fld_LdgCode" ColumnName="fld_LdgCode" />
-                <ScalarProperty Name="fld_LdgName" ColumnName="fld_LdgName" />
-                <ScalarProperty Name="fld_JumlahPekerja" ColumnName="fld_JumlahPekerja" />
-                <ScalarProperty Name="fld_JumlahGajiBersih" ColumnName="fld_JumlahGajiBersih" />
-                <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_helpdiagramdefinition">
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_helpdiagrams">
@@ -1174,6 +1163,21 @@
                 <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
                 <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
                 <ScalarProperty Name="fld_CreatedBy" ColumnName="fld_CreatedBy" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_MaybankRcmsOnlinePaymentRpt" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_MaybankRcmsOnlinePaymentRpt">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_MaybankRcmsOnlinePaymentRpt_Result">
+                <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
+                <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
+                <ScalarProperty Name="fld_LdgCode" ColumnName="fld_LdgCode" />
+                <ScalarProperty Name="fld_LdgBusinessArea" ColumnName="fld_LdgBusinessArea" />
+                <ScalarProperty Name="fld_LdgName" ColumnName="fld_LdgName" />
+                <ScalarProperty Name="fld_JumlahPekerja" ColumnName="fld_JumlahPekerja" />
+                <ScalarProperty Name="fld_JumlahGajiBersih" ColumnName="fld_JumlahGajiBersih" />
+                <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
+                <ScalarProperty Name="fld_LdgIndicator" ColumnName="fld_LdgIndicator" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

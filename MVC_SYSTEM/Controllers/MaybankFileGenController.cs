@@ -16,6 +16,8 @@ using iTextSharp.text;
 using System.Data.Entity;
 using System.IO;
 using Itenso.TimePeriod;
+using System.Globalization;
+using System.Drawing;
 
 namespace MVC_SYSTEM.Controllers
 {
@@ -813,10 +815,17 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.Date = DateTime.Now.ToShortDateString();
             ViewBag.Time = DateTime.Now.ToShortTimeString();
             ViewBag.Print = print;
-            //DateTime origDT = Convert.ToDateTime("02/10/2011");
-            //DateTime lastDate = new DateTime(YearList.Y, MonthList, 1).AddMonths(1).AddDays(-1);
-            ViewBag.DocDate = DateTime.Now.AddMonths(+1).AddDays(-DateTime.Now.Day).ToString("dd.MM.yyyy");
-            ViewBag.PostingDate = PaymentDate;
+
+            if(YearList == null && MonthList == null)
+            {
+                ViewBag.DocDate = DateTime.Now.AddMonths(+1).AddDays(-DateTime.Now.Day).ToString("dd.MM.yyyy");
+            }
+            else
+            {
+                var lastday = DateTime.DaysInMonth(YearList.Value, MonthList.Value);
+                ViewBag.DocDate = lastday + "." + MonthList + "." + YearList;
+            }
+            ViewBag.PostingDate = Convert.ToDateTime(PaymentDate).ToString("dd.MM.yyyy");
             ViewBag.Description = "Region " + NamaSyarikat + " - Maybank Rcms ZAP64 for " + MonthList + "/" + YearList;
             if (MonthList == null || YearList == null || CompCodeList == "0")
             {
