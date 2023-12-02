@@ -15,9 +15,9 @@ using iTextSharp.text.pdf;
 using iTextSharp.text;
 using System.Data.Entity;
 using System.IO;
-using Itenso.TimePeriod;
-using System.Globalization;
-using System.Drawing;
+//using Itenso.TimePeriod;
+//using System.Globalization;
+//using System.Drawing;
 
 namespace MVC_SYSTEM.Controllers
 {
