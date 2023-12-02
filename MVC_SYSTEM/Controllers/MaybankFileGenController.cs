@@ -890,7 +890,7 @@ namespace MVC_SYSTEM.Controllers
             var logosyarikat = db.tbl_Syarikat.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID).Select(s => s.fld_LogoName).FirstOrDefault();
 
 
-            Document pdfDoc = new Document(new Rectangle(int.Parse(width), int.Parse(height)), 50f, 50f, 50f, 50f);
+            Document pdfDoc = new Document(new iTextSharp.text.Rectangle(int.Parse(width), int.Parse(height)), 50f, 50f, 50f, 50f);
 
             PdfWriter writer = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
             pdfDoc.Open();
@@ -953,7 +953,7 @@ namespace MVC_SYSTEM.Controllers
             var logosyarikat = db.tbl_Syarikat.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID).Select(s => s.fld_LogoName).FirstOrDefault();
 
 
-            Document pdfDoc = new Document(new Rectangle(int.Parse(width), int.Parse(height)), 50f, 50f, 50f, 50f);
+            Document pdfDoc = new Document(new iTextSharp.text.Rectangle(int.Parse(width), int.Parse(height)), 50f, 50f, 50f, 50f);
 
             PdfWriter writer = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
             pdfDoc.Open();
