@@ -911,7 +911,7 @@ namespace MVC_SYSTEM.Controllers
             success = true;
             status = "success";
 
-            return Json(new { success = success, id = tblHtmlReport.fldID, msg = msg, status = status, link = Url.Action("GetPDF", "MaybankFileGen", null, "http") + "/" + tblHtmlReport.fldID });
+            return Json(new { success = success, id = tblHtmlReport.fldID, msg = msg, status = status, link = Url.Action("GetPDF", "MaybankFileGen", null, "https") + "/" + tblHtmlReport.fldID });
         }
 
         public ActionResult GetPDF(int id)
@@ -973,7 +973,7 @@ namespace MVC_SYSTEM.Controllers
             success = true;
             status = "success";
 
-            return Json(new { success = success, id = tblHtmlReport.fldID, msg = msg, status = status, link = Url.Action("GetPDFRpt", "MaybankFileGen", null, "http") + "/" + tblHtmlReport.fldID });
+            return Json(new { success = success, id = tblHtmlReport.fldID, msg = msg, status = status, link = Url.Action("GetPDFRpt", "MaybankFileGen", null, "https") + "/" + tblHtmlReport.fldID });
         }
 
         public ActionResult GetPDFRpt(int id)
