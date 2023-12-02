@@ -17,35 +17,11 @@
       <Parameter Name="diagramname" Mode="In" Type="String" />
       <Parameter Name="owner_id" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_FGVAppWorkerGroup" />
-    <FunctionImport Name="sp_FGVAppWorkerUser" />
-    <FunctionImport Name="sp_FLAContractorProfile" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FLAContractorProfile_Result)" />
-    <FunctionImport Name="sp_FLAEstateProfile" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FLAEstateProfile_Result)" />
-    <FunctionImport Name="sp_FLAWorkerProfile" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FLAWorkerProfile_Result)">
-      <Parameter Name="Month" Mode="In" Type="Int32" />
-      <Parameter Name="Year" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_MaybankRcms" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_MaybankRcms_Result)">
-      <Parameter Name="NegaraID" Mode="In" Type="Int32" />
-      <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
-      <Parameter Name="Year" Mode="In" Type="Int32" />
-      <Parameter Name="Month" Mode="In" Type="Int32" />
-      <Parameter Name="UserID" Mode="In" Type="Int32" />
-      <Parameter Name="CompCode" Mode="In" Type="String" />
-    </FunctionImport>
     <FunctionImport Name="sp_MyegDetail" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_MyegDetail_Result)">
       <Parameter Name="NegaraID" Mode="In" Type="Int32" />
       <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
       <Parameter Name="WilayahID" Mode="In" Type="Int32" />
       <Parameter Name="LadangID" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_PaymentModeReport" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_PaymentModeReport_Result)">
-      <Parameter Name="NegaraID" Mode="In" Type="Int32" />
-      <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
-      <Parameter Name="Company" Mode="In" Type="String" />
-      <Parameter Name="Month" Mode="In" Type="Int32" />
-      <Parameter Name="Year" Mode="In" Type="Int32" />
-      <Parameter Name="UserID" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="sp_PermitPassportDetail" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_PermitPassportDetail_Result)">
       <Parameter Name="NegaraID" Mode="In" Type="Int32" />
@@ -126,21 +102,11 @@
     </FunctionImport>
     <FunctionImport Name="sp_upgraddiagrams" />
     <FunctionImport Name="sp_WagerateView" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_WagerateView_Result)" />
-    <FunctionImport Name="sp_MaybankRcmsOnlinePaymentRpt" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_MaybankRcmsOnlinePaymentRpt_Result)">
-      <Parameter Name="NegaraID" Mode="In" Type="Int32" />
-      <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
-      <Parameter Name="Year" Mode="In" Type="Int32" />
-      <Parameter Name="Month" Mode="In" Type="Int32" />
-      <Parameter Name="UserID" Mode="In" Type="Int32" />
-      <Parameter Name="CompCode" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_FGVAppBackofficeUser" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FGVAppBackofficeUser_Result)" />
-    <FunctionImport Name="sp_FGVAppUserStatus" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FGVAppUserStatus_Result)" />
-    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_helpdiagramdefinition_Result)">
+    <FunctionImport Name="sp_helpdiagramdefinition">
       <Parameter Name="diagramname" Mode="In" Type="String" />
       <Parameter Name="owner_id" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_helpdiagrams_Result)">
+    <FunctionImport Name="sp_helpdiagrams">
       <Parameter Name="diagramname" Mode="In" Type="String" />
       <Parameter Name="owner_id" Mode="In" Type="Int32" />
     </FunctionImport>
@@ -152,120 +118,37 @@
       <Parameter Name="UserID" Mode="In" Type="Int32" />
       <Parameter Name="CompCode" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="sp_FLAContractorProfile" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FLAContractorProfile_Result)" />
+    <FunctionImport Name="sp_FLAEstateProfile" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FLAEstateProfile_Result)" />
+    <FunctionImport Name="sp_FLAWorkerProfile" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_FLAWorkerProfile_Result)">
+      <Parameter Name="Month" Mode="In" Type="Int32" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_MaybankRcms" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_MaybankRcms_Result)">
+      <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+      <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+      <Parameter Name="Month" Mode="In" Type="Int32" />
+      <Parameter Name="UserID" Mode="In" Type="Int32" />
+      <Parameter Name="CompCode" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_PaymentModeReport" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_PaymentModeReport_Result)">
+      <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+      <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+      <Parameter Name="Company" Mode="In" Type="String" />
+      <Parameter Name="Month" Mode="In" Type="Int32" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+      <Parameter Name="UserID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_MaybankRcmsOnlinePaymentRpt" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_MaybankRcmsOnlinePaymentRpt_Result)">
+      <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+      <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+      <Parameter Name="Month" Mode="In" Type="Int32" />
+      <Parameter Name="UserID" Mode="In" Type="Int32" />
+      <Parameter Name="CompCode" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
-  <ComplexType Name="sp_FLAContractorProfile_Result">
-    <Property Type="Int32" Name="fld_ID" Nullable="false" />
-    <Property Type="String" Name="fld_KodPbkl" Nullable="true" MaxLength="5" />
-    <Property Type="String" Name="fld_NamaPbkl" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="Company_Address" Nullable="true" MaxLength="100" />
-    <Property Type="String" Name="Company_Contact" Nullable="true" MaxLength="20" />
-    <Property Type="String" Name="Task" Nullable="true" MaxLength="20" />
-    <Property Type="DateTime" Name="Contract_Start_Date" Nullable="true" />
-    <Property Type="DateTime" Name="Contract_End_Date" Nullable="true" />
-    <Property Type="String" Name="List_of_subcontractor" Nullable="true" MaxLength="20" />
-    <Property Type="Int32" Name="Total_Worker" Nullable="true" />
-    <Property Type="Int32" Name="Total_Worker_Local" Nullable="true" />
-    <Property Type="Int32" Name="Total_Worker_Migrant" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="sp_FLAEstateProfile_Result">
-    <Property Type="Int32" Name="fld_ID" Nullable="false" />
-    <Property Type="String" Name="Estate_Code" Nullable="true" MaxLength="5" />
-    <Property Type="String" Name="Estate_Name" Nullable="true" MaxLength="100" />
-    <Property Type="String" Name="Estate_Address" Nullable="true" MaxLength="100" />
-    <Property Type="String" Name="Manager_Name" Nullable="true" MaxLength="100" />
-    <Property Type="String" Name="GPS_Coordinates" Nullable="true" MaxLength="20" />
-    <Property Type="Decimal" Name="Total_Hectarage" Nullable="true" Precision="8" Scale="2" />
-    <Property Type="Int32" Name="Total_Workers" Nullable="true" />
-    <Property Type="Int32" Name="Total_Workers_Male" Nullable="true" />
-    <Property Type="Int32" Name="Total_Workers_Female" Nullable="true" />
-    <Property Type="Int32" Name="Total_Workers_Nationality" Nullable="true" />
-    <Property Type="Decimal" Name="Hectarage_Per_Worker_Ratio" Nullable="true" Precision="8" Scale="2" />
-    <Property Type="Decimal" Name="FFB_Production" Nullable="true" Precision="8" Scale="2" />
-    <Property Type="Decimal" Name="Housing_Occupancy_Percentage" Nullable="true" Precision="8" Scale="2" />
-    <Property Type="String" Name="Facilities_and_amenities" Nullable="true" MaxLength="50" />
-    <Property Type="Int32" Name="Accident_Record" Nullable="true" />
-    <Property Type="Int32" Name="Grievance_Cases" Nullable="true" />
-    <Property Type="Int32" Name="Total_Contractor" Nullable="true" />
-    <Property Type="String" Name="Sustainability_Certification" Nullable="true" MaxLength="20" />
-    <Property Type="Decimal" Name="Usage_Diesel" Nullable="true" Precision="8" Scale="2" />
-    <Property Type="Decimal" Name="Usage_Petrol" Nullable="true" Precision="8" Scale="2" />
-    <Property Type="Decimal" Name="Usage_Water" Nullable="true" Precision="8" Scale="2" />
-    <Property Type="Decimal" Name="Usage_Electricity" Nullable="true" Precision="8" Scale="2" />
-    <Property Type="Int32" Name="Total_Abscondments" Nullable="true" />
-    <Property Type="Int32" Name="Total_Worker_Vaccinated_Local" Nullable="true" />
-    <Property Type="Int32" Name="Total_Worker_Vaccinated_Migrant" Nullable="true" />
-    <Property Type="Int32" Name="Total_Medical_Leave" Nullable="true" />
-    <Property Type="Int32" Name="Total_Dependent_Spouse" Nullable="true" />
-    <Property Type="Int32" Name="Total_Dependent_Children" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="sp_FLAWorkerProfile_Result">
-    <Property Type="String" Name="fld_Nopkj" Nullable="true" MaxLength="20" />
-    <Property Type="String" Name="fld_Nama" Nullable="true" MaxLength="100" />
-    <Property Type="String" Name="fld_Nokp" Nullable="true" MaxLength="15" />
-    <Property Type="DateTime" Name="fld_T2pspt" Nullable="true" />
-    <Property Type="String" Name="fld_Prmtno" Nullable="true" MaxLength="20" />
-    <Property Type="DateTime" Name="fld_T2prmt" Nullable="true" />
-    <Property Type="String" Name="fld_Kdrkyt" Nullable="true" MaxLength="2" />
-    <Property Type="String" Name="fld_KdrkytDesc" Nullable="true" MaxLength="50" />
-    <Property Type="Int32" Name="Language_Used" Nullable="true" />
-    <Property Type="DateTime" Name="fld_Trlhr" Nullable="true" />
-    <Property Type="Int32" Name="Age" Nullable="true" />
-    <Property Type="String" Name="fld_Kdjnt" Nullable="true" MaxLength="1" />
-    <Property Type="String" Name="fld_Ktgpkj" Nullable="true" MaxLength="2" />
-    <Property Type="String" Name="fld_KtgpkjDesc" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="fld_Kodbkl" Nullable="true" MaxLength="3" />
-    <Property Type="String" Name="fld_NamaPbkl" Nullable="true" MaxLength="50" />
-    <Property Type="DateTime" Name="fld_Trshjw" Nullable="true" />
-    <Property Type="String" Name="fld_Jenispekerja" Nullable="true" MaxLength="2" />
-    <Property Type="String" Name="fld_JenispekerjaDesc" Nullable="true" MaxLength="50" />
-    <Property Type="Int32" Name="Total_Services" Nullable="true" />
-    <Property Type="Decimal" Name="fld_GajiKasar" Nullable="true" Precision="8" Scale="2" />
-    <Property Type="String" Name="fld_PaymentMode" Nullable="true" MaxLength="15" />
-    <Property Type="String" Name="fld_PaymentModeDesc" Nullable="true" MaxLength="50" />
-    <Property Type="Int32" Name="Working_Hours" Nullable="true" />
-    <Property Type="Decimal" Name="fld_JamOT" Nullable="true" Precision="38" Scale="2" />
-    <Property Type="Int32" Name="Monthly_Wage_Deduction" Nullable="true" />
-    <Property Type="Int32" Name="fld_JumlahCuti" Nullable="true" />
-    <Property Type="Int32" Name="Medical_Benefit" Nullable="true" />
-    <Property Type="Int32" Name="Vaccination_Status" Nullable="true" />
-    <Property Type="Int32" Name="Union_Member_Name" Nullable="true" />
-    <Property Type="String" Name="fld_NamaKeluarga" Nullable="true" MaxLength="40" />
-    <Property Type="String" Name="fld_Hubungan" Nullable="true" MaxLength="30" />
-    <Property Type="String" Name="fld_NoTel" Nullable="true" MaxLength="20" />
-    <Property Type="Int32" Name="Dependent_Age" Nullable="true" />
-    <Property Type="Int32" Name="Dependent_Gender" Nullable="true" />
-    <Property Type="Int32" Name="No_of_Children" Nullable="true" />
-    <Property Type="String" Name="fld_Kdaktf" Nullable="true" MaxLength="1" />
-    <Property Type="String" Name="fld_KdaktfDesc" Nullable="true" MaxLength="50" />
-    <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
-    <Property Type="String" Name="fld_WlyhName" Nullable="true" MaxLength="50" />
-    <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
-    <Property Type="String" Name="fld_LdgCode" Nullable="true" MaxLength="5" />
-    <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="50" />
-    <Property Type="Int32" Name="fld_Month" Nullable="true" />
-    <Property Type="Int32" Name="fld_Year" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="sp_MaybankRcms_Result">
-    <Property Type="Guid" Name="fld_ID" Nullable="true" />
-    <Property Type="String" Name="fld_Nokp" Nullable="true" MaxLength="15" />
-    <Property Type="String" Name="fld_Nopkj" Nullable="true" MaxLength="20" />
-    <Property Type="String" Name="fld_Nama" Nullable="true" MaxLength="100" />
-    <Property Type="String" Name="fld_RcmsBankCode" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="fld_NamaBank" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="fld_NoAkaun" Nullable="true" MaxLength="50" />
-    <Property Type="Decimal" Name="fld_GajiBersih" Nullable="true" Precision="8" Scale="2" />
-    <Property Type="Int32" Name="fld_Year" Nullable="true" />
-    <Property Type="Int32" Name="fld_Month" Nullable="true" />
-    <Property Type="Int32" Name="fld_NegaraID" Nullable="true" />
-    <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
-    <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
-    <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
-    <Property Type="String" Name="fld_LdgCode" Nullable="true" MaxLength="5" />
-    <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="fld_Kdrkyt" Nullable="true" MaxLength="2" />
-    <Property Type="String" Name="fld_PaymentMode" Nullable="true" MaxLength="15" />
-    <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
-  </ComplexType>
   <ComplexType Name="sp_MyegDetail_Result">
     <Property Type="Int32" Name="fld_ID" Nullable="false" />
     <Property Type="String" Name="fld_Nopkj" Nullable="true" MaxLength="20" />
@@ -292,23 +175,6 @@
     <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
     <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
     <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="sp_PaymentModeReport_Result">
-    <Property Type="Guid" Name="fld_Id" Nullable="false" />
-    <Property Type="String" Name="fld_LdgCode" Nullable="true" MaxLength="5" />
-    <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="50" />
-    <Property Type="Decimal" Name="fld_Cash" Nullable="true" Precision="8" Scale="2" />
-    <Property Type="Decimal" Name="fld_Cheque" Nullable="true" Precision="8" Scale="2" />
-    <Property Type="Decimal" Name="fld_Cdmas" Nullable="true" Precision="8" Scale="2" />
-    <Property Type="Decimal" Name="fld_Ewallet" Nullable="true" Precision="8" Scale="2" />
-    <Property Type="Int32" Name="fld_Month" Nullable="true" />
-    <Property Type="Int32" Name="fld_Year" Nullable="true" />
-    <Property Type="Int32" Name="fld_NegaraID" Nullable="true" />
-    <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
-    <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
-    <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
-    <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
-    <Property Type="Int32" Name="fld_CreatedBy" Nullable="true" />
   </ComplexType>
   <ComplexType Name="sp_PermitPassportDetail_Result">
     <Property Type="Int32" Name="fld_ID" Nullable="false" />
@@ -514,54 +380,6 @@
     <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
     <Property Type="String" Name="fld_Paysheet" Nullable="true" MaxLength="50" />
   </ComplexType>
-  <ComplexType Name="sp_MaybankRcmsOnlinePaymentRpt_Result">
-    <Property Type="Guid" Name="fld_ID" Nullable="true" />
-    <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
-    <Property Type="String" Name="fld_LdgCode" Nullable="true" MaxLength="5" />
-    <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="50" />
-    <Property Type="Int32" Name="fld_JumlahPekerja" Nullable="true" />
-    <Property Type="Decimal" Name="fld_JumlahGajiBersih" Nullable="true" Precision="8" Scale="2" />
-    <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
-  </ComplexType>
-  <ComplexType Name="sp_FGVAppBackofficeUser_Result">
-    <Property Type="String" Name="employee_id" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="name" Nullable="true" MaxLength="200" />
-    <Property Type="String" Name="id_type" Nullable="true" MaxLength="10" />
-    <Property Type="String" Name="id_number" Nullable="true" MaxLength="20" />
-    <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="mobile_number" Nullable="true" MaxLength="20" />
-    <Property Type="String" Name="office_number" Nullable="true" MaxLength="20" />
-    <Property Type="String" Name="source" Nullable="true" MaxLength="4" />
-    <Property Type="String" Name="company" Nullable="true" MaxLength="20" />
-    <Property Type="String" Name="is_hq" Nullable="false" MaxLength="5" />
-    <Property Type="String" Name="designation" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="department" Nullable="true" MaxLength="6" />
-    <Property Type="String" Name="role_mapping" Nullable="true" />
-    <Property Type="String" Name="status" Nullable="true" MaxLength="6" />
-    <Property Type="Int32" Name="zone_code" Nullable="true" />
-    <Property Type="Int32" Name="region_code" Nullable="true" />
-    <Property Type="String" Name="estate_code" Nullable="true" MaxLength="6" />
-    <Property Type="String" Name="division_code" Nullable="true" MaxLength="6" />
-    <Property Type="String" Name="block_code" Nullable="true" MaxLength="6" />
-    <Property Type="String" Name="worker_group_id" Nullable="true" MaxLength="6" />
-    <Property Type="String" Name="worker_group_name" Nullable="true" MaxLength="6" />
-    <Property Type="String" Name="all_estate" Nullable="false" MaxLength="5" />
-  </ComplexType>
-  <ComplexType Name="sp_FGVAppUserStatus_Result">
-    <Property Type="String" Name="employee_id" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="status" Nullable="false" MaxLength="8" />
-  </ComplexType>
-  <ComplexType Name="sp_helpdiagramdefinition_Result">
-    <Property Type="Int32" Name="version" Nullable="true" />
-    <Property Type="Binary" Name="definition" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="sp_helpdiagrams_Result">
-    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-    <Property Type="Int32" Name="ID" Nullable="false" />
-    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-    <Property Type="Int32" Name="OwnerID" Nullable="false" />
-  </ComplexType>
   <ComplexType Name="sp_MaybankRcmsZAP64_Result">
     <Property Type="Guid" Name="fld_ID" Nullable="true" />
     <Property Type="String" Name="fld_Company" Nullable="true" MaxLength="5" />
@@ -582,6 +400,150 @@
     <Property Type="String" Name="fld_InternalOrder" Nullable="true" MaxLength="4" />
     <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
     <Property Type="String" Name="fld_LdgShortName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="fld_LdgIndicator" Nullable="true" MaxLength="4" />
+  </ComplexType>
+  <ComplexType Name="sp_FLAContractorProfile_Result">
+    <Property Type="Int32" Name="fld_ID" Nullable="false" />
+    <Property Type="String" Name="fld_KodPbkl" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="fld_NamaPbkl" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Company_Address" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Company_Contact" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Task" Nullable="true" MaxLength="20" />
+    <Property Type="DateTime" Name="Contract_Start_Date" Nullable="true" />
+    <Property Type="DateTime" Name="Contract_End_Date" Nullable="true" />
+    <Property Type="String" Name="List_of_subcontractor" Nullable="true" MaxLength="20" />
+    <Property Type="Int32" Name="Total_Worker" Nullable="true" />
+    <Property Type="Int32" Name="Total_Worker_Local" Nullable="true" />
+    <Property Type="Int32" Name="Total_Worker_Migrant" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_FLAEstateProfile_Result">
+    <Property Type="Int32" Name="fld_ID" Nullable="false" />
+    <Property Type="String" Name="Estate_Code" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="Estate_Name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Estate_Address" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="Manager_Name" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="GPS_Coordinates" Nullable="true" MaxLength="20" />
+    <Property Type="Decimal" Name="Total_Hectarage" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Int32" Name="Total_Workers" Nullable="true" />
+    <Property Type="Int32" Name="Total_Workers_Male" Nullable="true" />
+    <Property Type="Int32" Name="Total_Workers_Female" Nullable="true" />
+    <Property Type="Int32" Name="Total_Workers_Nationality" Nullable="true" />
+    <Property Type="Decimal" Name="Hectarage_Per_Worker_Ratio" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Decimal" Name="FFB_Production" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Decimal" Name="Housing_Occupancy_Percentage" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="String" Name="Facilities_and_amenities" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="Accident_Record" Nullable="true" />
+    <Property Type="Int32" Name="Grievance_Cases" Nullable="true" />
+    <Property Type="Int32" Name="Total_Contractor" Nullable="true" />
+    <Property Type="String" Name="Sustainability_Certification" Nullable="true" MaxLength="20" />
+    <Property Type="Decimal" Name="Usage_Diesel" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Decimal" Name="Usage_Petrol" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Decimal" Name="Usage_Water" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Decimal" Name="Usage_Electricity" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Int32" Name="Total_Abscondments" Nullable="true" />
+    <Property Type="Int32" Name="Total_Worker_Vaccinated_Local" Nullable="true" />
+    <Property Type="Int32" Name="Total_Worker_Vaccinated_Migrant" Nullable="true" />
+    <Property Type="Int32" Name="Total_Medical_Leave" Nullable="true" />
+    <Property Type="Int32" Name="Total_Dependent_Spouse" Nullable="true" />
+    <Property Type="Int32" Name="Total_Dependent_Children" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_FLAWorkerProfile_Result">
+    <Property Type="String" Name="fld_Nopkj" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="fld_Nama" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="fld_Nokp" Nullable="true" MaxLength="15" />
+    <Property Type="DateTime" Name="fld_T2pspt" Nullable="true" />
+    <Property Type="String" Name="fld_Prmtno" Nullable="true" MaxLength="20" />
+    <Property Type="DateTime" Name="fld_T2prmt" Nullable="true" />
+    <Property Type="String" Name="fld_Kdrkyt" Nullable="true" MaxLength="2" />
+    <Property Type="String" Name="fld_KdrkytDesc" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="Language_Used" Nullable="true" />
+    <Property Type="DateTime" Name="fld_Trlhr" Nullable="true" />
+    <Property Type="Int32" Name="Age" Nullable="true" />
+    <Property Type="String" Name="fld_Kdjnt" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="fld_Ktgpkj" Nullable="true" MaxLength="2" />
+    <Property Type="String" Name="fld_KtgpkjDesc" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="fld_Kodbkl" Nullable="true" MaxLength="3" />
+    <Property Type="String" Name="fld_NamaPbkl" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="fld_Trshjw" Nullable="true" />
+    <Property Type="String" Name="fld_Jenispekerja" Nullable="true" MaxLength="2" />
+    <Property Type="String" Name="fld_JenispekerjaDesc" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="Total_Services" Nullable="true" />
+    <Property Type="Decimal" Name="fld_GajiKasar" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="String" Name="fld_PaymentMode" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="fld_PaymentModeDesc" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="Working_Hours" Nullable="true" />
+    <Property Type="Decimal" Name="fld_JamOT" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Int32" Name="Monthly_Wage_Deduction" Nullable="true" />
+    <Property Type="Int32" Name="fld_JumlahCuti" Nullable="true" />
+    <Property Type="Int32" Name="Medical_Benefit" Nullable="true" />
+    <Property Type="Int32" Name="Vaccination_Status" Nullable="true" />
+    <Property Type="Int32" Name="Union_Member_Name" Nullable="true" />
+    <Property Type="String" Name="fld_NamaKeluarga" Nullable="true" MaxLength="40" />
+    <Property Type="String" Name="fld_Hubungan" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="fld_NoTel" Nullable="true" MaxLength="20" />
+    <Property Type="Int32" Name="Dependent_Age" Nullable="true" />
+    <Property Type="Int32" Name="Dependent_Gender" Nullable="true" />
+    <Property Type="Int32" Name="No_of_Children" Nullable="true" />
+    <Property Type="String" Name="fld_Kdaktf" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="fld_KdaktfDesc" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
+    <Property Type="String" Name="fld_WlyhName" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
+    <Property Type="String" Name="fld_LdgCode" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="fld_Month" Nullable="true" />
+    <Property Type="Int32" Name="fld_Year" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_MaybankRcms_Result">
+    <Property Type="Guid" Name="fld_ID" Nullable="true" />
+    <Property Type="String" Name="fld_Nokp" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="fld_Nopkj" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="fld_Nama" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="fld_RcmsBankCode" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="fld_NamaBank" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="fld_NoAkaun" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="fld_GajiBersih" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Int32" Name="fld_Year" Nullable="true" />
+    <Property Type="Int32" Name="fld_Month" Nullable="true" />
+    <Property Type="Int32" Name="fld_NegaraID" Nullable="true" />
+    <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
+    <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
+    <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
+    <Property Type="String" Name="fld_LdgCode" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="fld_Kdrkyt" Nullable="true" MaxLength="2" />
+    <Property Type="String" Name="fld_PaymentMode" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="fld_LdgShortName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="fld_LdgIndicator" Nullable="true" MaxLength="4" />
+  </ComplexType>
+  <ComplexType Name="sp_PaymentModeReport_Result">
+    <Property Type="Guid" Name="fld_Id" Nullable="false" />
+    <Property Type="String" Name="fld_LdgCode" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="fld_Cash" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Decimal" Name="fld_Cheque" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Decimal" Name="fld_Cdmas" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Decimal" Name="fld_Ewallet" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Decimal" Name="fld_M2E" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="Int32" Name="fld_Month" Nullable="true" />
+    <Property Type="Int32" Name="fld_Year" Nullable="true" />
+    <Property Type="Int32" Name="fld_NegaraID" Nullable="true" />
+    <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
+    <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
+    <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
+    <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
+    <Property Type="Int32" Name="fld_CreatedBy" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_MaybankRcmsOnlinePaymentRpt_Result">
+    <Property Type="Guid" Name="fld_ID" Nullable="true" />
+    <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
+    <Property Type="String" Name="fld_LdgCode" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="fld_LdgBusinessArea" Nullable="true" MaxLength="5" />
+    <Property Type="String" Name="fld_LdgName" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="fld_JumlahPekerja" Nullable="true" />
+    <Property Type="Decimal" Name="fld_JumlahGajiBersih" Nullable="true" Precision="8" Scale="2" />
+    <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
     <Property Type="String" Name="fld_LdgIndicator" Nullable="true" MaxLength="4" />
   </ComplexType>
 </Schema>

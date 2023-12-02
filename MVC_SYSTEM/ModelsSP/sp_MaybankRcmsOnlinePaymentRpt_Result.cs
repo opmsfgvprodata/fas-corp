@@ -16,9 +16,11 @@ namespace MVC_SYSTEM.ModelsSP
         public Nullable<System.Guid> fld_ID { get; set; }
         public Nullable<int> fld_LadangID { get; set; }
         public string fld_LdgCode { get; set; }
+        public string fld_LdgBusinessArea { get; set; }
         public string fld_LdgName { get; set; }
         public Nullable<int> fld_JumlahPekerja { get; set; }
         public Nullable<decimal> fld_JumlahGajiBersih { get; set; }
         public string fld_CostCentre { get; set; }
+        public string fld_LdgIndicator { get; set; }
     }
 }

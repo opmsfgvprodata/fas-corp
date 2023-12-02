@@ -23,8 +23,16 @@
 
         <table id="page" class="table" style="font-size: 11px; margin-bottom: 0px" border="0">
             <thead>
+                @if (ViewBag.AccNo == null)
+                {
+                    accNo = accNo;
+                }
+                else
+                {
+                    accNo = ViewBag.AccNo;
+                }
                 <tr>
-                    <th colspan="5" style="text-align: center; vertical-align: middle; border: none;">
+                    <th colspan="6" style="text-align: center; vertical-align: middle; border: none;">
                         @ViewBag.NamaSyarikat
                         <br />
                         (@*@GlobalResCorp.lblCompanyNo :*@@ViewBag.NoSyarikat)
@@ -35,49 +43,63 @@
                         <br />
                     </th>
                 </tr>
+                <tr>
+                    <th colspan="6" style="text-align: left; vertical-align: middle; border: none;">
+                        <b>Company Name</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: @ViewBag.NamaSyarikat
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>Company Account No</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: @accNo
+                        <br />
+                        <b>Payment Reference</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  Workers Salary
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>Payment Desc</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: @ViewBag.MonthList/@ViewBag.YearList
+                        <br />
+                        <br />
+                    </th>
+                </tr>
             </thead>
-            <tbody>
+            <!--<tbody>-->
 
-                @if (ViewBag.AccNo == null)
+                @*@if (ViewBag.AccNo == null)
                 {
                     accNo = accNo;
                 }
                 else
                 {
                     accNo = ViewBag.AccNo;
-                }
+                }*@
 
-                <tr>
-                    <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">Company Name</td>
-                    <td width="4%" style="vertical-align: middle !important; border:none;">: @ViewBag.NamaSyarikat
-                    <td width="4%" style="vertical-align: middle !important; border:none;"></td>
-                    <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">Company Account No</td>
-                    <td width="4%" style="vertical-align: middle !important; border:none;">: @accNo</td>
+                <!--<tr>
+                    <td style="font-weight: bold; vertical-align: middle !important; border:none;">Company Name</td>
+                    <td style="vertical-align: middle !important; border:none;">: @ViewBag.NamaSyarikat-->
+                    @*<td style="vertical-align: middle !important; border:none;"></td>*@
+                    <!--<td style="font-weight: bold; vertical-align: middle !important; border:none;">Company Account No</td>
+                    <td style="vertical-align: middle !important; border:none;">: @accNo</td>
                 </tr>
                 <tr>
-                    <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">Payment Reference</td>
-                    <td width="4%" style="vertical-align: middle !important; border:none;">: WORKERS SALARY</td>
-                    <td width="4%" style="vertical-align: middle !important; border:none;"></td>
-                    <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">Payment Desc</td>
-                    <td width="4%" style="vertical-align: middle !important; border:none;">: @ViewBag.MonthList/@ViewBag.YearList</td>
+                    <td style="font-weight: bold; vertical-align: middle !important; border:none;">Payment Reference</td>
+                    <td style="vertical-align: middle !important; border:none;">: WORKERS SALARY</td>-->
+                    @*<td style="vertical-align: middle !important; border:none;"></td>*@
+                    <!--<td style="font-weight: bold; vertical-align: middle !important; border:none;">Payment Desc</td>
+                    <td style="vertical-align: middle !important; border:none;">: @ViewBag.MonthList/@ViewBag.YearList</td>
                 </tr>
                 <tr>
-                    <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;">&nbsp;</td>
-                    <td width="4%" style="vertical-align: middle !important; border:none;"></td>
-                    <td width="4%" style="vertical-align: middle !important; border:none;"></td>
-                    <td width="4%" style="font-weight: bold; vertical-align: middle !important; border:none;"></td>
-                    <td width="4%" style="vertical-align: middle !important; border:none;"></td>
+                    <td style="font-weight: bold; vertical-align: middle !important; border:none;">&nbsp;</td>
+                    <td style="vertical-align: middle !important; border:none;"></td>-->
+                    @*<td style="vertical-align: middle !important; border:none;"></td>*@
+                    <!--<td style="font-weight: bold; vertical-align: middle !important; border:none;"></td>
+                    <td style="vertical-align: middle !important; border:none;"></td>
                 </tr>
-            </tbody>
+            </tbody>-->
         </table>
         <table id="page" class="table" style="font-size: 11px; margin-bottom: 0px" border="0">
             <thead>
                 <tr>
-                    <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResCorp.hdrNo</th>
-                    <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Estate Code</th>
-                    <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Estate Name</th>
-                    <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Total Worker</th>
-                    <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Amount (RM)</th>
+                    <th rowspan="1" style="margin: 1px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResCorp.hdrNo</th>
+                    <th rowspan="1" style="margin: 1px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Estate Code</th>
+                    <th rowspan="1" style="margin: 1px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Business Area</th>
+                    <th rowspan="1" style="margin: 4px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Estate Name</th>
+                    <th rowspan="1" style="margin: 1px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Total Worker</th>
+                    <th rowspan="1" style="margin: 1px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Amount (RM)</th>
                 </tr>
             </thead>
             <tbody>
@@ -90,21 +112,23 @@
                     totalWorkers += item.fld_JumlahPekerja;
 
                     <tr>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: center; border-right: none; border-left: none">@bil.</td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: center; border-right: none; border-left: none">@item.fld_LdgCode</td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_LdgName</td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: center; border-right: none; border-left: none">@item.fld_JumlahPekerja</td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.fld_JumlahGajiBersih</td>
+                        <td align="center" style="margin: 1px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: center; border-right: none; border-left: none">@bil.</td>
+                        <td align="center" style="margin: 1px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: center; border-right: none; border-left: none">@item.fld_LdgCode</td>
+                        <td align="center" style="margin: 1px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: center; border-right: none; border-left: none">@item.fld_LdgBusinessArea</td>
+                        <td align="center" style="margin: 4px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@item.fld_LdgName.ToUpper()</td>
+                        <td align="center" style="margin: 1px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: center; border-right: none; border-left: none">@item.fld_JumlahPekerja</td>
+                        <td align="center" style="margin: 1px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.fld_JumlahGajiBersih</td>
                     </tr>
 
                 }
 
                 <tr>
-                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">Total:</td>
-                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: none; text-align: center; border-right: none; border-left: none; font-weight:bold">@totalWorkers</td>
-                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: none; text-align: right; border-right: none; border-left: none; font-weight: bold"> @totalNetPay</td>
+                    <td align="center" style="margin: 1px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 1px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 1px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                    <td align="center" style="margin: 4px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">Total:</td>
+                    <td align="center" style="margin: 1px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: none; text-align: center; border-right: none; border-left: none; font-weight:bold">@totalWorkers</td>
+                    <td align="center" style="margin: 1px !important; padding: 4px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: none; text-align: right; border-right: none; border-left: none; font-weight: bold"> @totalNetPay</td>
                 </tr>
 
             </tbody>
@@ -122,6 +146,9 @@
             </a>
             <a class="btn btn-default btn-sm" href="#" id="downloadpdf">
                 <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+            </a>
+            <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+                <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
             </a>
         </div>
     }
