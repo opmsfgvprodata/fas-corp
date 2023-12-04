@@ -951,7 +951,7 @@ namespace MVC_SYSTEM.Controllers
             //string LdgCode = "";
 
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
-            List<sp_MaybankRcmsZAP64_Result> maybankrcmsZAP64 = new List<sp_MaybankRcmsZAP64_Result>();
+            List<sp_MaybankRcmsOnlinePaymentRpt_Result> maybankrcms = new List<sp_MaybankRcmsOnlinePaymentRpt_Result>();
 
 
             ViewBag.MonthList = MonthList;
@@ -987,6 +987,7 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.UserName = User.Identity.Name;
             ViewBag.Date = DateTime.Now.ToShortDateString();
             ViewBag.Time = DateTime.Now.ToShortTimeString();
+            ViewBag.DateNow = Convert.ToDateTime(DateTime.Now).ToString("dd.MM.yyyy");
             ViewBag.Print = print;
 
             if (YearList == null && MonthList == null)
@@ -999,30 +1000,31 @@ namespace MVC_SYSTEM.Controllers
                 ViewBag.DocDate = lastday + "." + MonthList + "." + YearList;
             }
             ViewBag.PostingDate = Convert.ToDateTime(PaymentDate).ToString("dd.MM.yyyy");
-            ViewBag.Description = "Region " + NamaSyarikat + " - Maybank Rcms ZAP64 for " + MonthList + "/" + YearList;
+            //ViewBag.Description = "Region " + NamaSyarikat + " - Maybank Rcms ZAP64 for " + MonthList + "/" + YearList;
             if (MonthList == null || YearList == null || CompCodeList == "0")
             {
                 ViewBag.Message = "Please select month, year, company and payment date";
-                return View(maybankrcmsZAP64);
+                return View(maybankrcms);
             }
             else
             {
                 dbSP.SetCommandTimeout(2400);
-                maybankrcmsZAP64 = dbSP.sp_MaybankRcmsZAP64(NegaraID, SyarikatID, YearList, MonthList, getuserid, CompCodeList).ToList();
+                maybankrcms = dbSP.sp_MaybankRcmsOnlinePaymentRpt(NegaraID, SyarikatID, YearList, MonthList, getuserid, CompCodeList).ToList();
 
                 var BankList = dbC.tbl_Bank
                     .Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_Deleted == false)
                     .ToList();
 
-                ViewBag.RecordNo = maybankrcmsZAP64.Count();
+                ViewBag.RecordNo = maybankrcms.Sum(s => s.fld_JumlahPekerja);
+                ViewBag.GajiBersih = maybankrcms.Sum(s => s.fld_JumlahGajiBersih);
 
-                if (maybankrcmsZAP64.Count() == 0)
+                if (maybankrcms.Count() == 0)
                 {
                     ViewBag.Message = GlobalResCorp.msgNoRecord;
                 }
 
 
-                return View(maybankrcmsZAP64);
+                return View(maybankrcms);
             }
         }
 
@@ -1045,7 +1047,7 @@ namespace MVC_SYSTEM.Controllers
             success = true;
             status = "success";
 
-            return Json(new { success = success, id = tblHtmlReport.fldID, msg = msg, status = status, link = Url.Action("GetPDF", "MaybankFileGen", null, "https") + "/" + tblHtmlReport.fldID });
+            return Json(new { success = success, id = tblHtmlReport.fldID, msg = msg, status = status, link = Url.Action("GetPDF", "MaybankFileGen", null, "http") + "/" + tblHtmlReport.fldID });
         }
 
         public ActionResult GetPDF(int id)
@@ -1107,7 +1109,7 @@ namespace MVC_SYSTEM.Controllers
             success = true;
             status = "success";
 
-            return Json(new { success = success, id = tblHtmlReport.fldID, msg = msg, status = status, link = Url.Action("GetPDFRpt", "MaybankFileGen", null, "https") + "/" + tblHtmlReport.fldID });
+            return Json(new { success = success, id = tblHtmlReport.fldID, msg = msg, status = status, link = Url.Action("GetPDFRpt", "MaybankFileGen", null, "http") + "/" + tblHtmlReport.fldID });
         }
 
         public ActionResult GetPDFRpt(int id)

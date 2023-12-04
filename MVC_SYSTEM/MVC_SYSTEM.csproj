@@ -3538,6 +3538,8 @@
     <Content Include="Views\MaybankFileGen\_SSCOnlinePayment.cshtml" />
     <Content Include="Views\MaybankFileGen\RcmsZAP64.cshtml" />
     <Content Include="Views\MaybankFileGen\_RcmsZAP64.cshtml" />
+    <Content Include="Views\MaybankFileGen\_RcmsInstructionLetter.cshtml" />
+    <Content Include="Views\MaybankFileGen\RcmsInstructionLetter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
