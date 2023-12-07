@@ -23,7 +23,7 @@
     <div id="scrollArea">
 
         <p><header style="text-align:center"><h5>M2E Payroll Payment Instruction Letter</h5></header><br /><br /></p>
-        <p>
+        <p  style="font-size:medium">
             Date : @ViewBag.DateNow<br /><br />
 
             The Manager<br />
@@ -34,7 +34,7 @@
             Kindly please approve payroll webcycle for salary payment as follow :<br /><br />
 
             <table>
-                <tbody>
+                <tbody style="font-size:medium">
                     <tr>
                         <td>Payment Reference</td>
                         <td>: MONTHLY SALARY CREDITING</td>
@@ -61,7 +61,7 @@
             <br /><br />
 
             <table border="1">
-                <tbody>
+                <tbody style="font-size:medium">
                     <tr style="height: 20px;">
                         <td style="width: 100px; height: 20px;" colspan="3">Salary Crediting</td>
                     </tr>
@@ -95,7 +95,7 @@
 
             <br /><br />
 
-            <table style="Table-Layout:fixed">
+            <table style="Table-Layout:fixed;font-size:medium">
                 <tr>
                     @*<td>&nbsp;</td>*@
                     <td>Crediting Date</td>
@@ -114,12 +114,12 @@
             </table>
 
             <br />
-
+            <p style="font-size:medium">
             Your cooperation is highly appreciated.<br />
-            Thank you.
+            Thank you.</p>
             <br /><br /><br />
 
-            <table>
+            <table  style="font-size:medium">
                 <tbody>
                     <tr>
                         <td>Prepared By,</td>
@@ -197,26 +197,14 @@
         });
 
         $("#downloadpdf").click(function () {
-            var myHtml = document.getElementById('scrollArea').innerHTML;
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("ConvertPDFRpt", "MaybankFileGen")',
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "MaybankRcmsZAP64" }),
-                success: function (result) {
-                    if (result.success) {
-                        var win = window.open(result.link, '_blank');
-                        win.focus();
-                    } else {
-                        $.simplyToast(result.msg, result.status);
-                    }
-                },
-                error: function (error) {
-                    $.simplyToast('Sorry to many data', 'danger');
-                }
-            });
-            return false;
+                    var MonthList = $("#MonthList").val();
+                    var YearList = $("#YearList").val();
+                    var CompCodeList = $("#CompCodeList").val();
+                    var PaymentDate = $("#PaymentDate").val();
+
+                    var param = '/?MonthList=' + MonthList + '&YearList=' + YearList + '&CompCodeList=' + CompCodeList + '&PaymentDate=' + PaymentDate;
+                    PDFObject.embed("@Url.Action("MaybankFIleGenPdf", "MaybankFileGenPdf")" + param, "#searchResultRcmsZAP64RptInfo", { height: "450px" });
         });
+
     });
 </script>
