@@ -1,0 +1,104 @@
+﻿@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "M2E Payroll Payment Instruction Letter";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "searchResultRcmsZAP64RptInfo",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "divLoading"
+    };
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<div id="divLoading" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResCorp.msgWait
+        </label>
+    </div>
+</div>
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom" style="padding-bottom:16px;">
+        @using (Ajax.BeginForm("_RcmsInstructionLetter", "MaybankFileGen", null, options, new { @id = "rcmsInstructionLetter" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <label>@GlobalResCorp.lblMonth</label>
+                        @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2">
+                        <label>@GlobalResCorp.lblYear</label>
+                        @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-3">
+                        <label>@GlobalResRegion.lblCompany</label>
+                        @Html.DropDownList("CompCodeList", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2">
+                        <label>Payment Date</label>
+                        @*<div class='input-group date' id='datetimepicker1'>*@
+                        <input type="date" class="form-control" name="PaymentDate" id="PaymentDate" onkeydown="return false" required />
+                        @*</div>*@
+                    </div>
+                    <div class="col-sm-2" style="padding-top:25px;">
+                        <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="btnSubmit" value="View" />
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+    <div class="well" style="margin-top:7px;">
+        <div class="panel panel-primary">
+            <div class="panel-heading">M2E Payroll Payment Instruction Letter</div>
+            <div class="panel-body">
+                <div id="searchResultRcmsZAP64RptInfo">
+                    @Html.Action("_RcmsInstructionLetter")
+                </div>
+            </div>
+        </div>
+
+        @*<div class="modal-footer col-md-12">
+                <a href=@Url.Action("Index", "GenTextFile") class="btn btn-warning" role="button" onclick="return DisplayProgressMessage(this);">@GlobalResCorp.btnBack</a>
+            </div>*@
+
+    </div>
+</section>
+
+
+<!-- modal placeholder-->
+<div id='myModal1' class='modal fade in'>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div id='myModalContent1'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<script>
+    $(document).ready(function () {
+    
+    });
+
+
+
+</script>

@@ -1,0 +1,255 @@
+﻿
+@using MVC_SYSTEM.Class
+@using MVC_SYSTEM.Models
+@model IEnumerable<MVC_SYSTEM.ModelsSP.sp_MaybankRcmsOnlinePaymentRpt_Result>
+
+
+@{
+    int? month = ViewBag.MonthList;
+    int? year = ViewBag.YearList;
+    int bil = 0;
+    decimal? totalNetPay = 0;
+    decimal? totalWorkers = 0;
+    string accNo = "-";
+    //var tahun = String.Format("{0:dd.MM.yyy}", @ViewBag.PostingDate);
+    //string postingDate = ViewBag.PostingDate.toString("dd.MM.yyyy");
+
+    string uniquefilename = "Instruction Letter SSC RCMS (" + ViewBag.NamaPendekSyarikat + ") " + ViewBag.MonthList + ViewBag.YearList;
+}
+
+
+@if (Model != null && Model.Count() != 0)
+{
+    <div id="scrollArea">
+
+        <p><header style="text-align:center"><h5>M2E Payroll Payment Instruction Letter</h5></header><br /><br /></p>
+        <p>
+            Date : @ViewBag.DateNow<br /><br />
+
+            The Manager<br />
+            MALAYAN BANKING BERHAD<br />
+            14217 - MAYBANK JALAN MAKTAB<br /><br />
+
+            Dear Sir<br />
+            Kindly please approve payroll webcycle for salary payment as follow :<br /><br />
+
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Payment Reference</td>
+                        <td>: MONTHLY SALARY CREDITING</td>
+                    </tr>
+                    <tr>
+                        <td>Payment Desctription</td>
+                        <td>: SALARY @month/@year</td>
+                    </tr>
+                    <tr>
+                        <td>Client Code</td>
+                        <td>: @ViewBag.CorpID</td>
+                    </tr>
+                    <tr>
+                        <td>Originator Name</td>
+                        <td>: @ViewBag.NamaSyarikat</td>
+                    </tr>
+                    <tr>
+                        <td>Originator Account for Debit</td>
+                        <td>: @ViewBag.AccNo</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br /><br />
+
+            <table border="1">
+                <tbody>
+                    <tr style="height: 20px;">
+                        <td style="width: 100px; height: 20px;" colspan="3">Salary Crediting</td>
+                    </tr>
+                    <tr style="height: 20px;">
+                        <td style="width: 170px; height: 20px;">&nbsp;</td>
+                        <td style="width: 90px; height: 20px;">Amount (RM)</td>
+                        <td style="width: 80px; height: 20px;">Head Count</td>
+                    </tr>
+                    <tr style="height: 20px;">
+                        <td style="width: 170px; height: 20px;">(A) Amount to be Credited</td>
+                        <td style="width: 90px; height: 20px;">&nbsp;</td>
+                        <td style="width: 80px; height: 20px;">@ViewBag.RecordNo</td>
+                    </tr>
+                    <tr style="height: 20px;">
+                        <td style="width: 170px; height: 20px;">&nbsp; &nbsp; &nbsp; a. Total Bank</td>
+                        <td style="width: 90px; height: 20px;">@ViewBag.GajiBersih</td>
+                        <td style="width: 80px; height: 20px;">@ViewBag.RecordNo</td>
+                    </tr>
+                    <tr style="height: 20px;">
+                        <td style="width: 170px; height: 20px;">&nbsp; &nbsp; &nbsp; b. Total Cheque</td>
+                        <td style="width: 90px; height: 20px;">0.00</td>
+                        <td style="width: 80px; height: 20px;">&nbsp;</td>
+                    </tr>
+                    <tr style="height: 20px;">
+                        <td style="width: 170px; height: 20px;">&nbsp; &nbsp; &nbsp; c. Total Cash</td>
+                        <td style="width: 90px; height: 20px;">0.00</td>
+                        <td style="width: 80px; height: 20px;">&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br /><br />
+
+            <table style="Table-Layout:fixed">
+                <tr>
+                    @*<td>&nbsp;</td>*@
+                    <td>Crediting Date</td>
+                    <td>: @ViewBag.PostingDate</td>
+                </tr>
+                <tr>
+                    @*<td>&nbsp;</td>*@
+                    <td>Highest to be credited</td>
+                    <td>: </td>
+                </tr>
+                <tr>
+                    @*<td>&nbsp;</td>*@
+                    <td>Lowest to be credited</td>
+                    <td>: </td>
+                </tr>
+            </table>
+
+            <br />
+
+            Your cooperation is highly appreciated.<br />
+            Thank you.
+            <br /><br /><br />
+
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Prepared By,</td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>Approved By,</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>____________________</td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>____________________</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br /><br /><br />
+        </p>
+       
+
+        @*<newpage />*@
+
+    </div>
+
+    if (ViewBag.Print == null)
+    {
+        <div style="text-align:right; margin-top:10px">
+            @*<a class="btn btn-default btn-sm" href="#" id="printpage">
+                <span class="glyphicon glyphicon-print"> </span> @GlobalResCorp.btnPrint
+            </a>*@
+            <a class="btn btn-default btn-sm" href="#" id="downloadpdf">
+                <span><img src="~/Asset/Images/pdf-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadPdf
+            </a>
+            <a class="btn btn-default btn-sm" href="#" onclick="HTMLtoExcel('@uniquefilename')">
+                <span><img src="~/Asset/Images/excel-icon.png" width="20px" height="20px" /></span> @GlobalResCorp.btnDownloadExcel
+            </a>
+        </div>
+    }
+}
+
+@if (Model.Count() == 0)
+{
+    <div id="scrollArea2" class="modal-body" style="text-align: center">
+        <p style="color: red">@ViewBag.Message</p>
+
+    </div>
+}
+<script src="~/Asset/Scripts/FromHTML.js"></script>
+<script src="~/Asset/Scripts/FileSaver.js"></script>
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+<style>
+    #page td {
+        padding: 2px;
+        margin: 2px;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $("#printpage").click(function () {
+            var DivElement = document.getElementById("scrollArea").innerHTML;
+            var oldPage = document.body.innerHTML;
+            document.body.innerHTML = DivElement;
+            window.print();
+            document.body.innerHTML = oldPage;
+        });
+
+        @*$("#downloadpdf").click(function () {
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDFRpt", "MaybankFileGen")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "MaybankRcmsZAP64" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });*@
+    });
+</script>
+<script>
+     $("#downloadpdf").click(function () {
+                    var MonthList = $("#MonthList").val();
+                    var YearList = $("#YearList").val();
+                    var CompCodeList = $("#CompCodeList").val();
+                    var PaymentDate = $("#PaymentDate").val();
+
+                    var param = '/?MonthList=' + MonthList + '&YearList=' + YearList + '&CompCodeList=' + CompCodeList + '&PaymentDate=' + PaymentDate;
+                    PDFObject.embed("@Url.Action("MaybankFIleGenPdf", "MaybankFileGenPdf")" + param, "#searchResultRcmsZAP64RptInfo", { height: "450px" });
+            var myHtml = document.getElementById('scrollArea').innerHTML;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ConvertPDFRpt", "MaybankFileGen")',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "MaybankRcmsZAP64" }),
+                success: function (result) {
+                    if (result.success) {
+                        var win = window.open(result.link, '_blank');
+                        win.focus();
+                    } else {
+                        $.simplyToast(result.msg, result.status);
+                    }
+                },
+                error: function (error) {
+                    $.simplyToast('Sorry to many data', 'danger');
+                }
+            });
+            return false;
+        });
+
+
+</script>
