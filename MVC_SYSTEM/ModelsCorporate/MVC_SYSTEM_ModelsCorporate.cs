@@ -137,6 +137,7 @@ namespace MVC_SYSTEM.ModelsCorporate
         public virtual DbSet<tbl_Division> tbl_Division { get; set; }
         public virtual DbSet<tbl_ModulesUrl> tbl_ModulesUrl { get; set; }
         public virtual DbSet<tbl_EstateDivisionSelection> tbl_EstateDivisionSelection { get; set; }
+        public virtual DbSet<tbl_TaxRelief> tbl_TaxRelief { get; set; }
 
         //Added by Shazana on 20/10
         public virtual DbSet<tbl_CustomerVendorGLMap> tbl_CustomerVendorGLMap { get; set; }

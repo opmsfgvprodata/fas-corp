@@ -30627,6 +30627,386 @@ namespace MVC_SYSTEM.Controllers
             }
         }
 
+        public ActionResult ContributionTaxreliefTableMaintenance(string filter, int page = 1, string sort = "fld_TaxReliefCode",string sortdir = "ASC")
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            ViewBag.Maintenance = "class = active";
+
+            return View();
+        }
+
+        public ActionResult _ContributionTaxreliefTableMaintenance(string filter, int page = 1,string sort = "fld_TaxReliefCode", string sortdir = "ASC")
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            int pageSize = int.Parse(GetConfig.GetData("paging"));
+            var records = new PagedList<ModelsCorporate.tbl_TaxRelief>();
+            int role = GetIdentity.RoleID(getuserid).Value;
+
+            var TaxReliefData = db.tbl_TaxRelief
+                .Where(x => x.fld_NegaraID == NegaraID &&
+                            x.fld_SyarikatID == SyarikatID);
+
+            records.Content = TaxReliefData.OrderBy(sort + " " + sortdir)
+                 .Skip((page - 1) * pageSize)
+                 .Take(pageSize)
+                 .ToList();
+
+            records.TotalRecords = TaxReliefData
+                .Count();
+
+            records.CurrentPage = page;
+            records.PageSize = pageSize;
+            ViewBag.RoleID = role;
+            ViewBag.pageSize = 1;
+            ViewBag.TotalRecords = TaxReliefData
+                .Count();
+
+            if (TaxReliefData.Count() <= 0)
+            {
+                ViewBag.Message = "No Data";
+            }
+
+
+            return View(records);
+        }
+
+        public ActionResult _ContributionTaxreliefTableMaintenanceCreate()
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+
+            MVC_SYSTEM_Viewing dbview = new MVC_SYSTEM_Viewing();
+
+            ModelsCorporate.tbl_TaxRelief taxRelief = new ModelsCorporate.tbl_TaxRelief();
+
+            var taxReliefCode = db.tblOptionConfigsWebs
+                .SingleOrDefault(
+                    x => x.fldOptConfFlag1 == "taxReliefCode" &&
+                         x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+                         x.fldDeleted == false)
+                .fldOptConfValue;
+
+            var getTaxreliefeRunningNo = db.tbl_TaxRelief
+                    .Where(x => x.fld_TaxReliefCode.Contains(taxReliefCode) && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID)
+                    .OrderByDescending(o => o.fld_TaxReliefCode)
+                    .FirstOrDefault();
+
+            if (getTaxreliefeRunningNo == null)
+            {
+                taxRelief.fld_TaxReliefCode = db.tblOptionConfigsWebs
+                                               .SingleOrDefault(
+                                                   x => x.fldOptConfFlag1 == "taxReliefCode" &&
+                                                        x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID &&
+                                                        x.fldDeleted == false)
+                                               .fldOptConfValue + "01";
+            }
+
+            else
+            {
+                
+                var generateCurrentRunningTaxReliefCode = Convert.ToInt32(
+                                                          getTaxreliefeRunningNo.fld_TaxReliefCode
+                                                              .Substring(db
+                                                                  .tblOptionConfigsWebs
+                                                                  .SingleOrDefault(
+                                                                      x => x.fldOptConfFlag1 == "taxReliefCode" &&
+                                                                           x.fld_NegaraID == NegaraID &&
+                                                                           x.fld_SyarikatID == SyarikatID &&
+                                                                           x.fldDeleted == false)
+                                                                  .fldOptConfValue.Length)) + 1;
+
+                taxRelief.fld_TaxReliefCode = taxReliefCode + generateCurrentRunningTaxReliefCode.ToString("00");
+
+            }
+
+            return PartialView(taxRelief);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _ContributionTaxreliefTableMaintenanceCreate(ModelsCorporate.tbl_TaxRelief taxRelief)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    //jadualCarumanTambahan.fld_KodSubCaruman = SubContributionList;
+                    taxRelief.fld_NegaraID = (int)NegaraID;
+                    taxRelief.fld_SyarikatID = (int)SyarikatID;
+                    taxRelief.fld_Deleted = false;
+
+                    db.tbl_TaxRelief.Add(taxRelief);
+                    db.SaveChanges();
+
+                    string appname = Request.ApplicationPath;
+                    string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                    var lang = Request.RequestContext.RouteData.Values["lang"];
+
+                    if (appname != "/")
+                    {
+                        domain = domain + appname;
+                    }
+
+                    return Json(new
+                    {
+                        success = true,
+                        msg = GlobalResCorp.msgAdd,
+                        status = "success",
+                        checkingdata = "0",
+                        method = "2",
+                        div = "TaxReliefMaintenanceDetails",
+                        rootUrl = domain,
+                        action = "_ContributionTaxreliefTableMaintenance",
+                        controller = "Maintenance",
+                    });
+                }
+
+                else
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        msg = GlobalResCorp.msgErrorData,
+                        status = "danger",
+                        checkingdata = "0"
+                    });
+                }
+            }
+
+            catch (Exception ex)
+            {
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                return Json(new
+                {
+                    success = false,
+                    msg = GlobalResCorp.msgError,
+                    status = "danger",
+                    checkingdata = "0"
+                });
+            }
+
+            finally
+            {
+                db.Dispose();
+            }
+        }
+
+        public ActionResult _ContributionTaxreliefTableMaintenanceEdit(int id)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+
+            var contributionTaxreliefData = db.tbl_TaxRelief
+                .SingleOrDefault(x => x.fld_TaxReliefID == id && x.fld_NegaraID == NegaraID &&
+                                      x.fld_SyarikatID == SyarikatID);
+
+            return PartialView(contributionTaxreliefData);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _ContributionTaxreliefTableMaintenanceEdit(ModelsCorporate.tbl_TaxRelief taxRelief)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var contributionTaxreliefData = db.tbl_TaxRelief.SingleOrDefault(
+                        x => x.fld_TaxReliefID == taxRelief.fld_TaxReliefID &&
+                             x.fld_NegaraID == NegaraID &&
+                             x.fld_SyarikatID == SyarikatID);
+
+                    contributionTaxreliefData.fld_TaxReliefItem = taxRelief.fld_TaxReliefItem;
+                    contributionTaxreliefData.fld_TaxReliefLimit = taxRelief.fld_TaxReliefLimit;
+
+                    db.SaveChanges();
+
+                    string appname = Request.ApplicationPath;
+                    string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                    var lang = Request.RequestContext.RouteData.Values["lang"];
+
+                    if (appname != "/")
+                    {
+                        domain = domain + appname;
+                    }
+
+                    return Json(new
+                    {
+                        success = true,
+                        msg = GlobalResCorp.msgUpdate,
+                        status = "success",
+                        checkingdata = "0",
+                        method = "2",
+                        div = "TaxReliefMaintenanceDetails",
+                        rootUrl = domain,
+                        action = "_ContributionTaxreliefTableMaintenance",
+                        controller = "Maintenance",
+                    });
+                }
+
+                else
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        msg = GlobalResCorp.msgErrorData,
+                        status = "danger",
+                        checkingdata = "0"
+                    });
+                }
+            }
+
+            catch (Exception ex)
+            {
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                return Json(new
+                {
+                    success = false,
+                    msg = GlobalResCorp.msgError,
+                    status = "danger",
+                    checkingdata = "0"
+                });
+            }
+
+            finally
+            {
+                db.Dispose();
+            }
+        }
+
+        public ActionResult _ContributionTaxreliefTableMaintenanceDelete(int id, string status)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+
+            var contributionTaxreliefData = db.tbl_TaxRelief.SingleOrDefault(
+                      x => x.fld_TaxReliefID == id &&
+                           x.fld_NegaraID == NegaraID &&
+                           x.fld_SyarikatID == SyarikatID);
+
+            if (status == "false")
+            {
+                ViewBag.Title = GlobalResCorp.lblContributionTaxreliefUndelete;
+                ViewBag.Msg = GlobalResCorp.msgUndelete2;
+                
+            }
+            else
+            {
+                ViewBag.Title = GlobalResCorp.lblContributionTaxreliefDelete;
+                ViewBag.Msg = GlobalResCorp.msgDelete;
+            }
+
+            ViewBag.Status = status;
+
+            return PartialView(contributionTaxreliefData);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _ContributionTaxreliefTableMaintenanceDelete(ModelsCorporate.tbl_TaxRelief taxRelief)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+
+            try
+            {
+                var contributionTaxreliefData = db.tbl_TaxRelief.SingleOrDefault(
+                        x => x.fld_TaxReliefID == taxRelief.fld_TaxReliefID &&
+                             x.fld_NegaraID == NegaraID &&
+                             x.fld_SyarikatID == SyarikatID);
+
+                bool status = true;
+
+                var message = "";
+                if (contributionTaxreliefData.fld_Deleted == false)
+                {
+                    status = true;
+                    message = GlobalResCorp.msgDelete2;
+                }
+
+                else
+                {
+                    status = false;
+                    message = GlobalResCorp.msgUndelete;
+                }
+
+                contributionTaxreliefData.fld_Deleted = status;
+
+                db.SaveChanges();
+
+                string appname = Request.ApplicationPath;
+                string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                var lang = Request.RequestContext.RouteData.Values["lang"];
+
+                if (appname != "/")
+                {
+                    domain = domain + appname;
+                }
+
+                return Json(new
+                {
+                    success = true,
+                    msg = message,
+                    status = "success",
+                    checkingdata = "0",
+                    method = "2",
+                    div = "TaxReliefMaintenanceDetails",
+                    rootUrl = domain,
+                    action = "_ContributionTaxreliefTableMaintenance",
+                    controller = "Maintenance"
+                });
+            }
+
+            catch (Exception ex)
+            {
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                return Json(new
+                {
+                    success = false,
+                    msg = GlobalResCorp.msgError,
+                    status = "danger",
+                    checkingdata = "0"
+                });
+            }
+
+            finally
+            {
+                db.Dispose();
+            }
+        }
 
     }
 }

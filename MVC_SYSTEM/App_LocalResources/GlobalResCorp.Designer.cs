@@ -19,7 +19,7 @@ namespace MVC_SYSTEM.App_LocalResources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class GlobalResCorp {
@@ -2640,6 +2640,69 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblContributionTableUpdate {
             get {
                 return ResourceManager.GetString("lblContributionTableUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kod Pelepasan Cukai.
+        /// </summary>
+        public static string lblContributionTaxreliefCode {
+            get {
+                return ResourceManager.GetString("lblContributionTaxreliefCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PADAM PELEPASAN CUKAI.
+        /// </summary>
+        public static string lblContributionTaxreliefDelete {
+            get {
+                return ResourceManager.GetString("lblContributionTaxreliefDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Butiran Pelepasan Cukai.
+        /// </summary>
+        public static string lblContributionTaxreliefItem {
+            get {
+                return ResourceManager.GetString("lblContributionTaxreliefItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Had Pelepasan Cukai (RM).
+        /// </summary>
+        public static string lblContributionTaxreliefLimit {
+            get {
+                return ResourceManager.GetString("lblContributionTaxreliefLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to maklumat jadual pelepasan cukai.
+        /// </summary>
+        public static string lblContributionTaxreliefTableCount {
+            get {
+                return ResourceManager.GetString("lblContributionTaxreliefTableCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AKTIFKAN PELEPASAN CUKAI.
+        /// </summary>
+        public static string lblContributionTaxreliefUndelete {
+            get {
+                return ResourceManager.GetString("lblContributionTaxreliefUndelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KEMASKINI PELEPASAN CUKAI.
+        /// </summary>
+        public static string lblContributionTaxreliefUpdate {
+            get {
+                return ResourceManager.GetString("lblContributionTaxreliefUpdate", resourceCulture);
             }
         }
         
@@ -7954,6 +8017,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TAMBAH PELEPASAN CUKAI.
+        /// </summary>
+        public static string lblTaxReliefTableAdd {
+            get {
+                return ResourceManager.GetString("lblTaxReliefTableAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kod Bangsa.
         /// </summary>
         public static string lblTblBangsaData {
@@ -8517,6 +8589,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblTitleStateWeeklyLeaveMaintenance {
             get {
                 return ResourceManager.GetString("lblTitleStateWeeklyLeaveMaintenance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to JADUAL PELEPASAN CUKAI.
+        /// </summary>
+        public static string lblTitleTaxReliefMaintenance {
+            get {
+                return ResourceManager.GetString("lblTitleTaxReliefMaintenance", resourceCulture);
             }
         }
         
@@ -10258,6 +10339,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adakah anda pasti untuk mengaktifkan maklumat berikut?.
+        /// </summary>
+        public static string msgUndelete2 {
+            get {
+                return ResourceManager.GetString("msgUndelete2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sila pilih unit.
         /// </summary>
         public static string msgUnit {
@@ -10488,6 +10578,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string titleRegisterGroupProductvt {
             get {
                 return ResourceManager.GetString("titleRegisterGroupProductvt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAKLUMAT PELEPASAN CUKAI.
+        /// </summary>
+        public static string titleTaxReliefTable {
+            get {
+                return ResourceManager.GetString("titleTaxReliefTable", resourceCulture);
             }
         }
         

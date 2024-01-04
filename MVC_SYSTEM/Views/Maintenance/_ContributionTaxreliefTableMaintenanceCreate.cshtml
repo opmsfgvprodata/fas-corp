@@ -1,0 +1,62 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_TaxRelief
+@{
+    Layout = null;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="modal-title">@GlobalResCorp.lblTaxReliefTableAdd</h3>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="panel panel-primary">
+                <div class="panel-heading">@GlobalResCorp.titleTaxReliefTable</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblContributionTaxreliefCode:</label>
+                            <div class="col-sm-2">
+                                @Html.TextBoxFor(model => model.fld_TaxReliefCode, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.fld_TaxReliefCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblContributionTaxreliefItem:</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(model => model.fld_TaxReliefItem, htmlAttributes: new { @class = "form-control", @required = "required" })
+                                @Html.ValidationMessageFor(model => model.fld_TaxReliefItem, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">@GlobalResCorp.lblContributionTaxreliefLimit:</label>
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(model => model.fld_TaxReliefLimit, htmlAttributes: new { @class = "form-control", @required = "required" })
+                                @Html.ValidationMessageFor(model => model.fld_TaxReliefLimit, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnAdd />
+        <button class="btn btn-danger" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+    </div>
+}
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+</script>
+
+
+

@@ -3624,4 +3624,37 @@
   <data name="lblGLCodePT" xml:space="preserve">
     <value>Kod GL(Pekerja Tempatan)</value>
   </data>
+  <data name="lblContributionTaxreliefCode" xml:space="preserve">
+    <value>Kod Pelepasan Cukai</value>
+  </data>
+  <data name="lblContributionTaxreliefDelete" xml:space="preserve">
+    <value>PADAM PELEPASAN CUKAI</value>
+  </data>
+  <data name="lblContributionTaxreliefItem" xml:space="preserve">
+    <value>Butiran Pelepasan Cukai</value>
+  </data>
+  <data name="lblContributionTaxreliefLimit" xml:space="preserve">
+    <value>Had Pelepasan Cukai (RM)</value>
+  </data>
+  <data name="lblContributionTaxreliefTableCount" xml:space="preserve">
+    <value>maklumat jadual pelepasan cukai</value>
+  </data>
+  <data name="lblContributionTaxreliefUndelete" xml:space="preserve">
+    <value>AKTIFKAN PELEPASAN CUKAI</value>
+  </data>
+  <data name="lblContributionTaxreliefUpdate" xml:space="preserve">
+    <value>KEMASKINI PELEPASAN CUKAI</value>
+  </data>
+  <data name="lblTaxReliefTableAdd" xml:space="preserve">
+    <value>TAMBAH PELEPASAN CUKAI</value>
+  </data>
+  <data name="lblTitleTaxReliefMaintenance" xml:space="preserve">
+    <value>JADUAL PELEPASAN CUKAI</value>
+  </data>
+  <data name="msgUndelete2" xml:space="preserve">
+    <value>Adakah anda pasti untuk mengaktifkan maklumat berikut?</value>
+  </data>
+  <data name="titleTaxReliefTable" xml:space="preserve">
+    <value>MAKLUMAT PELEPASAN CUKAI</value>
+  </data>
 </root>
