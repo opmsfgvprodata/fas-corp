@@ -11,53 +11,96 @@
     grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
 
     <div class="text-center">@grid.TotalRowCount @Html.Label(GlobalResCorp.lblContributionTableCount)</div>
-
+    if (ViewBag.SubContributionCode == "PCB02")
+    { 
     @grid.GetHtml(htmlAttributes: new { id = "grid" }, // id for ajaxUpdateontainerId parameter
-        tableStyle: "table table-bordered table-striped table-list table-hover",
-        headerStyle: "header_table",
-        alternatingRowStyle: "Grid-alt",
-        selectedRowStyle: "Grid-selected",
-        rowStyle: "Grid-rowstyle",
-        footerStyle: "table-pager",
-        mode: WebGridPagerModes.All,
-        columns: grid.Columns(
-            grid.Column(header: "No."
-                , format: item => item.WebGrid.Rows.IndexOf(item) + 1
-                                  + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage)
-                                  * grid.RowsPerPage * grid.PageIndex, style: "count"),
-            grid.Column(columnName: "fld_KodSubCaruman", header: GlobalResCorp.lblContributionSubCategoryCode, style: "kod"),
-            grid.Column(columnName: "fld_GajiLower", header: GlobalResCorp.lblContributionTableMinWage, style: "tetapan1"),
-            grid.Column(columnName: "fld_GajiUpper", header: GlobalResCorp.lblContributionTableMaxWage, style: "tetapan1"),
-            grid.Column(columnName: "fld_CarumanPekerja", header: GlobalResCorp.lblContributionTableEmpyeeCont, style: "tetapan1"),
-            grid.Column(columnName: "fld_CarumanMajikan", header: GlobalResCorp.lblContributionTableEmpyerCont, style: "tetapan1"),
+    tableStyle: "table table-bordered table-striped table-list table-hover",
+    headerStyle: "header_table",
+    alternatingRowStyle: "Grid-alt",
+    selectedRowStyle: "Grid-selected",
+    rowStyle: "Grid-rowstyle",
+    footerStyle: "table-pager",
+    mode: WebGridPagerModes.All,
+    columns: grid.Columns(
+        grid.Column(header: "No."
+            , format: item => item.WebGrid.Rows.IndexOf(item) + 1
+                              + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage)
+                              * grid.RowsPerPage * grid.PageIndex, style: "count"),
+        grid.Column(columnName: "fld_KodSubCaruman", header: GlobalResCorp.lblContributionSubCategoryCode, style: "kod"),
+        grid.Column(columnName: "fld_GajiLower", header: GlobalResCorp.lblContributionTableMinWage, style: "tetapan1"),
+        grid.Column(columnName: "fld_GajiUpper", header: GlobalResCorp.lblContributionTableMaxWage, style: "tetapan1"),
+        grid.Column(columnName: "fld_CarumanPekerja", header: GlobalResCorp.lblContributionTableEmpyeeCont, style: "tetapan1"),
+                    grid.Column(columnName: "fld_TaxPercent_R", header: "R (%)", style: "tetapan1"),
+                    grid.Column(columnName: "fld_Category1_B", header: "B Category 1 & 3 (RM)", style: "tetapan1"),
+                    grid.Column(columnName: "fld_Category2_B", header: "B Category 2(RM)", style: "tetapan1"),
 
-            grid.Column(GlobalResCorp.hdrAction, format: (item) =>
+        grid.Column(GlobalResCorp.hdrAction, format: (item) =>
+        {
+            if (item.fld_Deleted == false)
             {
-                if (item.fld_Deleted == false)
-                {
-                    var tindakan = "<a data-modal1='' href='" + @Url.Action("_ContributionTableMaintenanceEdit", "Maintenance") + "/?id=" + item.fld_JadualCarumanTambahanID + "' class='btn btn-success' role='button' title='" + GlobalResCorp.btnUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-pencil-square-o  fa-lg'></i></a>&nbsp;" +
-                                   "<a data-modal1='' href='" + @Url.Action("_ContributionTableMaintenanceDelete", "Maintenance") + "/?id=" + item.fld_JadualCarumanTambahanID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-trash fa-lg'></i></a>&nbsp;";
-                    return @Html.Raw(tindakan);
-                }
+                var tindakan = "<a data-modal1='' href='" + @Url.Action("_ContributionTableMaintenanceEdit", "Maintenance") + "/?id=" + item.fld_JadualCarumanTambahanID + "' class='btn btn-success' role='button' title='" + GlobalResCorp.btnUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-pencil-square-o  fa-lg'></i></a>&nbsp;" +
+                               "<a data-modal1='' href='" + @Url.Action("_ContributionTableMaintenanceDelete", "Maintenance") + "/?id=" + item.fld_JadualCarumanTambahanID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-trash fa-lg'></i></a>&nbsp;";
+                return @Html.Raw(tindakan);
+            }
 
-                else
-                {
-                    var tindakan = "<a data-modal1='' href='" + @Url.Action("_ContributionTableMaintenanceDelete", "Maintenance") + "/?id=" + item.fld_JadualCarumanTambahanID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnUnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-undo fa-lg'></i></a>&nbsp;";
-                    return @Html.Raw(tindakan);
-                }
+            else
+            {
+                var tindakan = "<a data-modal1='' href='" + @Url.Action("_ContributionTableMaintenanceDelete", "Maintenance") + "/?id=" + item.fld_JadualCarumanTambahanID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnUnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-undo fa-lg'></i></a>&nbsp;";
+                return @Html.Raw(tindakan);
+            }
 
-            }, canSort: false, style: "tindakan")
-            ))
+        }, canSort: false, style: "tindakan")
+        ))}
+else
+{
+    @grid.GetHtml(htmlAttributes: new { id = "grid" }, // id for ajaxUpdateontainerId parameter
+                tableStyle: "table table-bordered table-striped table-list table-hover",
+                headerStyle: "header_table",
+                alternatingRowStyle: "Grid-alt",
+                selectedRowStyle: "Grid-selected",
+                rowStyle: "Grid-rowstyle",
+                footerStyle: "table-pager",
+                mode: WebGridPagerModes.All,
+                columns: grid.Columns(
+                    grid.Column(header: "No."
+                        , format: item => item.WebGrid.Rows.IndexOf(item) + 1
+                                          + Math.Round(Convert.ToDouble(grid.TotalRowCount / grid.PageCount) / grid.RowsPerPage)
+                                          * grid.RowsPerPage * grid.PageIndex, style: "count"),
+                    grid.Column(columnName: "fld_KodSubCaruman", header: GlobalResCorp.lblContributionSubCategoryCode, style: "kod"),
+                    grid.Column(columnName: "fld_GajiLower", header: GlobalResCorp.lblContributionTableMinWage, style: "tetapan1"),
+                    grid.Column(columnName: "fld_GajiUpper", header: GlobalResCorp.lblContributionTableMaxWage, style: "tetapan1"),
+                    grid.Column(columnName: "fld_CarumanPekerja", header: GlobalResCorp.lblContributionTableEmpyeeCont, style: "tetapan1"),
+                    grid.Column(columnName: "fld_CarumanMajikan", header: GlobalResCorp.lblContributionTableEmpyerCont, style: "tetapan1"),
+
+                    grid.Column(GlobalResCorp.hdrAction, format: (item) =>
+                    {
+                        if (item.fld_Deleted == false)
+                        {
+                            var tindakan = "<a data-modal1='' href='" + @Url.Action("_ContributionTableMaintenanceEdit", "Maintenance") + "/?id=" + item.fld_JadualCarumanTambahanID + "' class='btn btn-success' role='button' title='" + GlobalResCorp.btnUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-pencil-square-o  fa-lg'></i></a>&nbsp;" +
+                                           "<a data-modal1='' href='" + @Url.Action("_ContributionTableMaintenanceDelete", "Maintenance") + "/?id=" + item.fld_JadualCarumanTambahanID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-trash fa-lg'></i></a>&nbsp;";
+                            return @Html.Raw(tindakan);
+                        }
+
+                        else
+                        {
+                            var tindakan = "<a data-modal1='' href='" + @Url.Action("_ContributionTableMaintenanceDelete", "Maintenance") + "/?id=" + item.fld_JadualCarumanTambahanID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnUnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-undo fa-lg'></i></a>&nbsp;";
+                            return @Html.Raw(tindakan);
+                        }
+
+                    }, canSort: false, style: "tindakan")
+                    ))
+}
+
 }
 
 else
 {
-    <hr/>
-    <div class="text-center">
-        @ViewBag.Message
-    </div>
+<hr />
+<div class="text-center">
+    @ViewBag.Message
+</div>
 
-    <hr/>
+<hr />
 }
 
 

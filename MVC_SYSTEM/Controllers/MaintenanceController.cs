@@ -10637,7 +10637,7 @@ namespace MVC_SYSTEM.Controllers
 
             var contributionTableData = db.tbl_JadualCarumanTambahan
                 .Where(x => x.fld_KodSubCaruman == SubContributionList && x.fld_NegaraID == NegaraID &&
-                            x.fld_SyarikatID == SyarikatID);
+                            x.fld_SyarikatID == SyarikatID).OrderBy(x=>x.fld_GajiLower);
 
             records.Content = contributionTableData.OrderBy(sort + " " + sortdir)
                  .Skip((page - 1) * pageSize)
@@ -10704,39 +10704,65 @@ namespace MVC_SYSTEM.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    //jadualCarumanTambahan.fld_KodSubCaruman = SubContributionList;
-                    jadualCarumanTambahan.fld_NegaraID = (int)NegaraID;
-                    jadualCarumanTambahan.fld_SyarikatID = (int)SyarikatID;
-                    jadualCarumanTambahan.fld_Deleted = false;
-
-                    db.tbl_JadualCarumanTambahan.Add(jadualCarumanTambahan);
-                    db.SaveChanges();
-
-                    string appname = Request.ApplicationPath;
-                    string domain = Request.Url.GetLeftPart(UriPartial.Authority);
-                    var lang = Request.RequestContext.RouteData.Values["lang"];
-
-                    if (appname != "/")
+                    if (jadualCarumanTambahan.fld_KodSubCaruman == "PCB02" && (jadualCarumanTambahan.fld_TaxPercent_R == null || jadualCarumanTambahan.fld_Category2_B == null || jadualCarumanTambahan.fld_Category1_B == null || jadualCarumanTambahan.fld_GajiLower == null || jadualCarumanTambahan.fld_GajiUpper == null || jadualCarumanTambahan.fld_CarumanPekerja == null))
                     {
-                        domain = domain + appname;
+                        return Json(new
+                        {
+                            success = false,
+                            msg = GlobalResCorp.msgAllFieldsMandatory,
+                            status = "danger",
+                            checkingdata = "0"
+                        });
                     }
-
-                    return Json(new
+                    else
                     {
-                        success = true,
-                        msg = GlobalResCorp.msgAdd,
-                        status = "success",
-                        checkingdata = "0",
-                        method = "2",
-                        div = "contributionTableMaintenanceDetails",
-                        rootUrl = domain,
-                        action = "_ContributionTableMaintenance",
-                        controller = "Maintenance",
-                        paramName = "SubContributionList",
-                        paramValue = jadualCarumanTambahan.fld_KodSubCaruman
-                    });
-                }
+                        //jadualCarumanTambahan.fld_KodSubCaruman = SubContributionList;
+                        jadualCarumanTambahan.fld_NegaraID = (int)NegaraID;
+                        jadualCarumanTambahan.fld_SyarikatID = (int)SyarikatID;
+                        jadualCarumanTambahan.fld_Deleted = false;
+                        jadualCarumanTambahan.fld_CarumanMajikan = jadualCarumanTambahan.fld_CarumanMajikan;
 
+                        if (jadualCarumanTambahan.fld_KodSubCaruman == "PCB02")
+                        {
+                            jadualCarumanTambahan.fld_TaxPercent_R = jadualCarumanTambahan.fld_TaxPercent_R;
+                            jadualCarumanTambahan.fld_Category1_B = jadualCarumanTambahan.fld_Category1_B;
+                            jadualCarumanTambahan.fld_Category2_B = jadualCarumanTambahan.fld_Category2_B;
+                            jadualCarumanTambahan.fld_CarumanMajikan = 0;
+                        }
+                        else
+                        {
+                            jadualCarumanTambahan.fld_TaxPercent_R = 0;
+                            jadualCarumanTambahan.fld_Category1_B = 0;
+                            jadualCarumanTambahan.fld_Category2_B = 0;
+                        }
+                        db.tbl_JadualCarumanTambahan.Add(jadualCarumanTambahan);
+                        db.SaveChanges();
+
+                        string appname = Request.ApplicationPath;
+                        string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                        var lang = Request.RequestContext.RouteData.Values["lang"];
+
+                        if (appname != "/")
+                        {
+                            domain = domain + appname;
+                        }
+
+                        return Json(new
+                        {
+                            success = true,
+                            msg = GlobalResCorp.msgAdd,
+                            status = "success",
+                            checkingdata = "0",
+                            method = "2",
+                            div = "contributionTableMaintenanceDetails",
+                            rootUrl = domain,
+                            action = "_ContributionTableMaintenance",
+                            controller = "Maintenance",
+                            paramName = "SubContributionList",
+                            paramValue = jadualCarumanTambahan.fld_KodSubCaruman
+                        });
+                    }
+                }
                 else
                 {
                     return Json(new
@@ -10805,7 +10831,12 @@ namespace MVC_SYSTEM.Controllers
                     contributionTableData.fld_GajiUpper = jadualCarumanTambahan.fld_GajiUpper;
                     contributionTableData.fld_CarumanPekerja = jadualCarumanTambahan.fld_CarumanPekerja;
                     contributionTableData.fld_CarumanMajikan = jadualCarumanTambahan.fld_CarumanMajikan;
-
+                    if (contributionTableData.fld_KodSubCaruman == "PCB02")
+                    {
+                        contributionTableData.fld_TaxPercent_R = jadualCarumanTambahan.fld_TaxPercent_R;
+                        contributionTableData.fld_Category1_B = jadualCarumanTambahan.fld_Category1_B;
+                        contributionTableData.fld_Category2_B = jadualCarumanTambahan.fld_Category2_B;
+                    }
                     db.SaveChanges();
 
                     string appname = Request.ApplicationPath;
@@ -10874,7 +10905,15 @@ namespace MVC_SYSTEM.Controllers
             var contributionTableData = db.tbl_JadualCarumanTambahan
                 .SingleOrDefault(x => x.fld_JadualCarumanTambahanID == id && x.fld_NegaraID == NegaraID &&
                                       x.fld_SyarikatID == SyarikatID);
-
+            
+            if (contributionTableData.fld_Deleted == true)
+            {
+                ViewBag.StatusJenisKodSubCaruman = "undelete";
+            }
+            else
+            {
+                ViewBag.StatusJenisKodSubCaruman = "delete";
+            }
             return PartialView(contributionTableData);
         }
 
