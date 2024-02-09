@@ -20,6 +20,8 @@
     decimal? totalNetPay = 0;
     decimal? grandTotalSIPMjk = 0;
     decimal? grandTotalSIPPjk = 0;
+    decimal? grandTotalPCBMjk = 0m; //Added by Shazana 8/2/2024
+    decimal? grandTotalPCBPkj = 0m; //Added by Shazana 8/2/2024
     string uniquefilename = "PaySheet";
     //fatin added - 24/10/2023
     string paymentmode = "";
@@ -28,6 +30,11 @@
     decimal? totalNetPayEwallet = 0;
     decimal? totalNetPayCdmas = 0;
     decimal? totalNetPayM2eHQ = 0;
+    decimal? totalSocsoNSBKPMjk = 0m;//Added by Shazana 8/2/2024
+    decimal? totalSocsoNSBKPPkj = 0m;//Added by Shazana 8/2/2024
+    decimal? grandTotalSBKPMjk = 0m;
+    decimal? grandTotalSBKPPkj = 0m;
+    decimal? grandTotalSIPPkj = 0m;
 
 }
 
@@ -39,106 +46,161 @@
 
 @if (Model != null && Model.Count() != 0)
 {
-    <div id="scrollArea2" class="modal-body">
+<div id="scrollArea2" class="modal-body">
 
-        <p style="font-size: 11px" align="right">Tarikh : @ViewBag.Date</p>
+    <p style="font-size: 11px" align="right">Tarikh : @ViewBag.Date</p>
 
-        <table id="page" class="table" style="font-size: 11px; margin-bottom: 0px" border="0">
-            <thead>
-                <tr>
-                    <th colspan="18" style="text-align: center; vertical-align: middle; border: none;">
-                        @ViewBag.NamaSyarikat
-                        <br />
-                        (@GlobalResEstateDetail.lblCompanyNo : @ViewBag.NoSyarikat)
-                        <br />
-                        (@GlobalResEstateDetail.lblEstateName : @ViewBag.Ladang)
-                        <br />
-                        @GlobalResEstateDetail.lblPaysheetReport @GlobalResEstateDetail.hdrForMonth @ViewBag.MonthList/@ViewBag.YearList
-                    </th>
-                </tr>
-                <tr>
-                    <th rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrNo</th>
-                    <th rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrNoPkj</th>
-                    <th rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrName</th>
-                    <th rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrNoKp</th>
-                    <th rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblNoAcc</th>
-                    <th rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblPaymentMode</th> @*fatin added - 24/10/2023*@ 
-                    <th colspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrEarning</th>
-                    <th colspan="3" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblEmployerContribution</th>
-                    <th width="1%" rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblTotalEarning</th>
-                    <th colspan="4" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrDeduction</th>
-                    <th width="1%" rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblTotalDeduction</th>
-                    <th width="2%" rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblNetTotal</th>
-                    <th width="1%" rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblWorkerSign</th>
-                </tr>
-                <tr>
-                    <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrGrossSalary (RM)</th>
-                    <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblOthersEarning (RM)</th>
-                    <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrEmployerKwsp (RM)</th>
-                    <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrEmployerSocso (RM)</th>
-                    <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">SIP (Employer) (RM)</th>
-                    <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblOthersDeduction (RM)</th>
-                    <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrEmployeeKwsp (RM)</th>
-                    <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrEmployeeSocso (RM)</th>
-                    <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">SIP (Employee) (RM)</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
+    <table id="page" class="table" style="font-size: 11px; margin-bottom: 0px" border="0">
+        <thead>
+            <tr>
+                <th colspan="20" style="text-align: center; vertical-align: middle; border: none;">
+                    @ViewBag.NamaSyarikat
+                    <br />
+                    (@GlobalResEstateDetail.lblCompanyNo : @ViewBag.NoSyarikat)
+                    <br />
+                    (@GlobalResEstateDetail.lblEstateName : @ViewBag.Ladang)
+                    <br />
+                    @GlobalResEstateDetail.lblPaysheetReport @GlobalResEstateDetail.hdrForMonth @ViewBag.MonthList/@ViewBag.YearList
+                </th>
+            </tr>
+            <tr>
+                <th rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrNo</th>
+                <th rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrNoPkj</th>
+                <th rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrName</th>
+                <th rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrNoKp</th>
+                <th rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblNoAcc</th>
+                <th rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblPaymentMode</th> @*fatin added - 24/10/2023*@
+                <th colspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrEarning</th>
+                <th colspan="4" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblEmployerContribution</th>
+                <th width="1%" rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblTotalEarning</th>
+                <th colspan="5" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrDeduction</th>
+                <th width="1%" rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblTotalDeduction</th>
+                <th width="2%" rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblNetTotal</th>
+                <th width="1%" rowspan="2" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblWorkerSign</th>
+            </tr>
+            <tr>
+                <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrGrossSalary (RM)</th>
+                <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblOthersEarning (RM)</th>
+                <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrEmployerKwsp (RM)</th>
+                <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrEmployerSocso (RM)</th>
+                <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">SIP (Employer) (RM)</th>
+                <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">PCB (Employer) (RM)</th>
+                <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.lblOthersDeduction (RM)</th>
+                <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrEmployeeKwsp (RM)</th>
+                <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">@GlobalResEstateDetail.hdrEmployeeSocso (RM)</th>
+                <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">SIP (Employee) (RM)</th>
+                <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">PCB (Employee) (RM)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                decimal? totalSBKPMjk = 0;
+                decimal? totalSBKPPkj = 0;
+                decimal? totalSIPMjk = 0;
+                decimal? totalSIPPkj = 0;
+                decimal? totalPCBMjk = 0;
+                decimal? totalPCBPkj = 0;
+                decimal? sbkpMjk = 0m;
+                decimal? sbkpPkj = 0m;
+                decimal? sipMjk = 0m;
+                decimal? sipPkj = 0m;
+                decimal? pcbMjk = 0m;
+                decimal? pcbPkj = 0m;
+
+                bil = bil + 1;
+                if (item.CarumanTambahan.Count > 0)
                 {
-                    decimal? totalSIPMjk = 0;
-                    decimal? totalSIPPkj = 0;
-
-                    bil = bil + 1;
-
                     foreach (var caruman in item.CarumanTambahan)
                     {
-                        totalSIPPkj += caruman.fld_CarumanPekerja;
-                        totalSIPMjk += caruman.fld_CarumanMajikan;
-                        grandTotalSIPPjk += totalSIPPkj;
-                        grandTotalSIPMjk += totalSIPMjk;
-                    }
+                        switch (caruman.fld_KodCarumanTambahan)
+                        {
+                            case "SBKP01":
+                                sbkpMjk = caruman.fld_CarumanMajikan;
+                                sbkpPkj = caruman.fld_CarumanPekerja;
+                                grandTotalSBKPMjk += sbkpMjk;
+                                grandTotalSBKPPkj += sbkpPkj;
+                                break;
 
-                    decimal? totalIncome = 0;
-                    decimal? totalDeduction = 0;
-                    totalIncome = item.PaySheetPekerja.fld_LainInsentif + item.PaySheetPekerja.fld_OT + item.PaySheetPekerja.fld_ByrCuti + item.PaySheetPekerja.fld_BonusHarian + item.PaySheetPekerja.fld_AIPS;
-                    totalDeduction = item.PaySheetPekerja.fld_LainPotongan + item.PaySheetPekerja.fld_KWSPPkj + item.PaySheetPekerja.fld_SocsoPkj + totalSIPPkj;
-                    totalBayarKerja += item.PaySheetPekerja.fld_ByrKerja;
-                    totalOtherIncome += totalIncome;
-                    totalKWSPMjk += item.PaySheetPekerja.fld_KWSPMjk;
-                    totalSocsoMjk += item.PaySheetPekerja.fld_SocsoMjk;
-                    totalIncomeOverall += item.PaySheetPekerja.fld_GajiKasar;
-                    totalOtherDeduction += item.PaySheetPekerja.fld_LainPotongan;
-                    totalKWSPPkj += item.PaySheetPekerja.fld_KWSPPkj;
-                    totalSocsoPkj += item.PaySheetPekerja.fld_SocsoPkj;
-                    totalDeductionOverall += totalDeduction;
-                    totalNetPay += item.PaySheetPekerja.fld_GajiBersih;
+                            case "SIP01":
+                                sipMjk = caruman.fld_CarumanMajikan;
+                                sipPkj = caruman.fld_CarumanPekerja;
+                                grandTotalSIPMjk += sipMjk;
+                                grandTotalSIPPkj += sipPkj;
+                                break;
 
-                    //fatin added - 24/10/2023
-                    if (item.PaySheetPekerja.fld_PaymentMode == "1")
-                    {
-                        totalNetPayCash += item.PaySheetPekerja.fld_GajiBersih;
-                    }
+                            case "PCB02":
+                                pcbMjk = caruman.fld_CarumanMajikan;
+                                pcbPkj = caruman.fld_CarumanPekerja;
+                                grandTotalPCBMjk += pcbMjk;
+                                grandTotalPCBPkj += pcbPkj;
+                                break;
+                        }
 
-                    if (item.PaySheetPekerja.fld_PaymentMode == "2")
-                    {
-                        totalNetPayCheque += item.PaySheetPekerja.fld_GajiBersih;
                     }
+                }
+                else
+                {
+                    sbkpMjk = 0m;
+                    sbkpPkj = 0m;
+                    grandTotalSBKPMjk += sbkpMjk;
+                    grandTotalSBKPPkj += sbkpPkj;
 
-                    if (item.PaySheetPekerja.fld_PaymentMode == "3")
-                    {
-                        totalNetPayEwallet += item.PaySheetPekerja.fld_GajiBersih;
-                    }
+                    sipMjk = 0m;
+                    sipPkj = 0m;
+                    grandTotalSIPMjk += sipMjk;
+                    grandTotalSIPPkj += sipPkj;
 
-                    if (item.PaySheetPekerja.fld_PaymentMode == "4")
-                    {
-                        totalNetPayCdmas += item.PaySheetPekerja.fld_GajiBersih;
-                    }
+                    pcbMjk = 0m;
+                    pcbPkj = 0m;
+                    grandTotalPCBMjk += pcbMjk;
+                    grandTotalPCBPkj += pcbPkj;
+                }
 
-                    if (item.PaySheetPekerja.fld_PaymentMode == "5")
-                    {
-                        totalNetPayM2eHQ += item.PaySheetPekerja.fld_GajiBersih;
-                    }
+                decimal? totalIncome = 0;
+                decimal? totalDeduction = 0;
+                totalIncome = item.PaySheetPekerja.fld_LainInsentif + item.PaySheetPekerja.fld_OT + item.PaySheetPekerja.fld_ByrCuti + item.PaySheetPekerja.fld_BonusHarian + item.PaySheetPekerja.fld_AIPS;
+                totalDeduction = item.PaySheetPekerja.fld_LainPotongan + item.PaySheetPekerja.fld_KWSPPkj + item.PaySheetPekerja.fld_SocsoPkj + sipPkj + pcbPkj;
+                //totalBayarKerja += item.PaySheetPekerja.fld_ByrKerja;
+                //totalOtherIncome += totalIncome;
+                totalBayarKerja += item.PaySheetPekerja.basicincome;
+                totalOtherIncome += item.PaySheetPekerja.othersincome;
+                totalKWSPMjk += item.PaySheetPekerja.fld_KWSPMjk;
+                totalSocsoMjk += item.PaySheetPekerja.fld_SocsoMjk;
+                totalIncomeOverall += item.PaySheetPekerja.fld_GajiKasar;
+                totalOtherDeduction += item.PaySheetPekerja.fld_LainPotongan;
+                totalKWSPPkj += item.PaySheetPekerja.fld_KWSPPkj;
+                totalSocsoPkj += item.PaySheetPekerja.fld_SocsoPkj;
+                totalDeductionOverall += totalDeduction;
+                totalNetPay += item.PaySheetPekerja.fld_GajiBersih;
+                //totalSocsoNSBKPMjk = totalSocsoMjk + grandTotalSBKPMjk;
+                //totalSocsoNSBKPPkj = totalSocsoPkj + grandTotalSBKPPkj;
+
+                //fatin added - 24/10/2023
+                if (item.PaySheetPekerja.fld_PaymentMode == "1")
+                {
+                    totalNetPayCash += item.PaySheetPekerja.fld_GajiBersih;
+                }
+
+                if (item.PaySheetPekerja.fld_PaymentMode == "2")
+                {
+                    totalNetPayCheque += item.PaySheetPekerja.fld_GajiBersih;
+                }
+
+                if (item.PaySheetPekerja.fld_PaymentMode == "3")
+                {
+                    totalNetPayEwallet += item.PaySheetPekerja.fld_GajiBersih;
+                }
+
+                if (item.PaySheetPekerja.fld_PaymentMode == "4")
+                {
+                    totalNetPayCdmas += item.PaySheetPekerja.fld_GajiBersih;
+                }
+
+                if (item.PaySheetPekerja.fld_PaymentMode == "5")
+                {
+                    totalNetPayM2eHQ += item.PaySheetPekerja.fld_GajiBersih;
+                }
 
 
                     <tr>
@@ -180,174 +242,333 @@
                         }
 
                         <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: center; border-right: none; border-left: none">@paymentmode</td>
-                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.PaySheetPekerja.fld_ByrKerja</td>
-                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@totalIncome</td>
+                        @*Commented by Shazana 8/2/2024*@
+                        @*<td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.PaySheetPekerja.fld_ByrKerja</td>
+                            <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@totalIncome</td>*@
+                        @*Added by Shazana 8/2/2024*@
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.PaySheetPekerja.basicincome</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.PaySheetPekerja.othersincome</td>
                         <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.PaySheetPekerja.fld_KWSPMjk</td>
-                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.PaySheetPekerja.fld_SocsoMjk</td>
+                        @*<td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.PaySheetPekerja.fld_SocsoMjk</td>*@
 
-                        @if (item.CarumanTambahan.Count > 0)
+                        @if (item.PaySheetPekerja.fld_Kdrkyt == "MA")
                         {
-                            foreach (var caruman in item.CarumanTambahan)
-                            {
-                                <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@caruman.fld_CarumanMajikan</td>
-                            }
+                            <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.PaySheetPekerja.fld_SocsoMjk</td>
+                        }
+                        else
+                        {
+                            <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@sbkpMjk</td>
                         }
 
-                        @if (item.CarumanTambahan.Count == 0)
+                        @if (item.PaySheetPekerja.fld_Kdrkyt == "MA")
+                        {
+                            <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@sipMjk</td>
+                        }
+                        else
                         {
                             <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">0.00</td>
                         }
-
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@pcbMjk</td>
                         <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.PaySheetPekerja.fld_GajiKasar</td>
                         <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.PaySheetPekerja.fld_LainPotongan</td>
                         <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.PaySheetPekerja.fld_KWSPPkj</td>
-                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.PaySheetPekerja.fld_SocsoPkj</td>
-                        @if (item.CarumanTambahan.Count > 0)
+                        @*<td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.PaySheetPekerja.fld_SocsoPkj</td>*@
+                        @if (item.PaySheetPekerja.fld_Kdrkyt == "MA")
                         {
-                            foreach (var caruman in item.CarumanTambahan)
-                            {
-                                <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@caruman.fld_CarumanPekerja</td>
-                            }
+                            <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.PaySheetPekerja.fld_SocsoPkj</td>
+                        }
+                        else
+                        {
+                            <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@sbkpPkj</td>
                         }
 
-                        @if (item.CarumanTambahan.Count == 0)
+                        @if (item.PaySheetPekerja.fld_Kdrkyt == "MA")
+                        {
+                            <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@sipPkj</td>
+                        }
+                        else
                         {
                             <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">0.00</td>
                         }
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@pcbPkj</td>
                         <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@totalDeduction</td>
                         <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">@item.PaySheetPekerja.fld_GajiBersih</td>
                         <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none">__________</td>
                     </tr>
                 }
 
-                @* fatin added - 24/10/2023*@
-                <tr>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">Total-Cash</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: none; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalNetPayCash</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                </tr>
-                <tr>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none; font-weight:bold">Total-Cheque</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; border-bottom: none; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalNetPayCheque</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                </tr>
-                <tr>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none; font-weight:bold">Total-eWallet</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; border-bottom: none; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalNetPayEwallet</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                </tr>
-                <tr>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none; font-weight:bold">Total-CDMAS</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; border-bottom: none; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalNetPayCdmas</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                </tr>
-                <tr>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none; font-weight:bold">Total-M2E-HQ</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; border-bottom: none; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalNetPayM2eHQ</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
-                </tr>
-                <tr>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@GlobalResEstateDetail.lblTotal</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalBayarKerja</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalOtherIncome</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalKWSPMjk</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoMjk</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalSIPMjk</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalIncomeOverall</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalOtherDeduction</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalKWSPPkj</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoPkj</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalSIPPjk</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalDeductionOverall</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalNetPay</td>
-                    <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
-                </tr>
+                @if (ViewBag.PaymentModeSelection == "0")
+                {
+                    @* fatin added - 24/10/2023*@
+                    <tr>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">Total-Cash</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: none; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalNetPayCash</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none; font-weight:bold">Total-Cheque</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; border-bottom: none; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalNetPayCheque</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none; font-weight:bold">Total-eWallet</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; border-bottom: none; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalNetPayEwallet</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none; font-weight:bold">Total-CDMAS</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; border-bottom: none; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalNetPayCdmas</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none; font-weight:bold">Total-M2E-HQ</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; border-bottom: none; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalNetPayM2eHQ</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 2px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: none; text-align: right; border-right: none; border-left: none"></td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@GlobalResEstateDetail.lblTotal</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalBayarKerja</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalOtherIncome</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalKWSPMjk</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoNSBKPMjk</td>
+                        @*<td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoMjk</td>*@
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalSIPMjk</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalPCBMjk</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalIncomeOverall</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalOtherDeduction</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalKWSPPkj</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoNSBKPPkj</td>
+                        @*<td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoPkj</td>*@
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalSIPPjk</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalPCBPkj</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalDeductionOverall</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalNetPay</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 10px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@GlobalResCorp.lblTotal</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalBayarKerja</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalOtherIncome</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalKWSPMjk</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoNSBKPMjk</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalSIPMjk</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalPCBMjk</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalIncomeOverall</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalOtherDeduction</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalKWSPPkj</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoNSBKPPkj</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalSIPPkj</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalPCBPkj</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalDeductionOverall</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalNetPay</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                    </tr>
 
+                }
+
+                @* commented by faeza *@
+                @*<tr>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@GlobalResEstate.lblTotal</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalBayarKerja</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalOtherIncome</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalKWSPMjk</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoMjk</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalSIPMjk</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalIncomeOverall</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalOtherDeduction</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalKWSPPkj</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalSocsoPkj</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@grandTotalSIPPjk</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalDeductionOverall</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; border-bottom: 1px solid gray; text-align: right; border-right: none; border-left: none; font-weight:bold">@totalNetPay</td>
+                        <td align="center" style="margin: 2px !important; padding-top: 60px !important; padding-bottom: 2px !important; vertical-align: middle !important; border-top: 1px solid gray; text-align: right; border-right: none; border-left: none"></td>
+                    </tr>*@
+
+            </tbody>
+        </table>
+
+        <br />
+        <br />
+        <table style="float: left; width: 100%; font-size: 11px; margin-bottom: 5px" class="table" border="0">
+            <thead>
+                <tr>
+                    <th colspan="2" style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-top: 2px solid gray; border-bottom: none; border-left: none;"></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <table style="float: left; width: 100%; font-size: 11px; margin-bottom: 5px" class="table" border="0">
+            <thead>
+                <tr>
+                    <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none !important;">@GlobalResCorp.lblSupervisor</th>
+                    <th width="2%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none !important;"></th>
+                    <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none !important;">@GlobalResCorp.lblPayer</th>
+                    <th width="2%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none !important;"></th>
+                    <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none !important;">@GlobalResCorp.lblWitness</th>
+                    <th width="2%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none !important;"></th>
+                    <th width="1%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none !important;">@GlobalResCorp.lblManager</th>
+                    <th width="2%" style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none !important;"></th>
+                </tr>
+                <tr>
+                    <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
+                    <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
+                    <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
+                    <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
+                    <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
+                    <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
+                    <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
+                    <th style="margin: 2px !important; padding: 2px !important; text-align: right; vertical-align: middle !important; border-bottom: 2px dotted gray; border-top: none;">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResCorp.lblID</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: @ViewBag.IDPenyelia</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResCorp.lblID</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResCorp.lblID</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResCorp.lblID</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
+                </tr>
+                <tr>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResCorp.lblName</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: @ViewBag.NamaPenyelia</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResCorp.lblName</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResCorp.lblName</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResCorp.lblName</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: @*@ViewBag.NamaPengurus*@</td>
+                </tr>
+                <tr>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResCorp.lblPosition</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: @GlobalResCorp.lblSupervisor.ToUpper()</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResCorp.lblPosition</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResCorp.lblPosition</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResCorp.lblPosition</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: @*@GlobalResEstate.lblManager.ToUpper()*@</td>
+                </tr>
+                <tr>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResCorp.lblDate</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: @ViewBag.Date</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResCorp.lblDate</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResCorp.lblDate</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">:</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">@GlobalResCorp.lblDate</td>
+                    <td style="margin: 2px !important; padding: 2px !important; text-align: left; vertical-align: middle !important; border-bottom: none; border-top: none;">: @ViewBag.Date</td>
+                </tr>
             </tbody>
         </table>
 

@@ -1427,7 +1427,7 @@ namespace MVC_SYSTEM.Controllers
             //JnsPkjList2.Insert(0, (new SelectListItem { Text = GlobalResEstate.lblAll, Value = "0" }));
             //ViewBag.JnsPkjList = JnsPkjList2;
             //ViewBag.Print = print;
-
+            ViewBag.PaymentModeSelection = "0";
             IOrderedQueryable<ViewingModelsOPMS.vw_PaySheetPekerja> salaryData;
             salaryData = dbest.vw_PaySheetPekerja
                 .Where(x => x.fld_NegaraID == NegaraID &&
