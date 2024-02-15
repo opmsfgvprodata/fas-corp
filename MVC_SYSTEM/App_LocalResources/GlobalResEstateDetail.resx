@@ -189,6 +189,9 @@
   <data name="hdrGrossSalary" xml:space="preserve">
     <value>Gaji Kasar</value>
   </data>
+  <data name="hdrIncome" xml:space="preserve">
+    <value>Pendapatan</value>
+  </data>
   <data name="hdrKredit" xml:space="preserve">
     <value>Kredit</value>
   </data>
@@ -225,8 +228,11 @@
   <data name="lblEstateName" xml:space="preserve">
     <value>Ladang</value>
   </data>
+  <data name="lblGrossIncome" xml:space="preserve">
+    <value>Pendapatan Kasar(RM)</value>
+  </data>
   <data name="lblNetTotal" xml:space="preserve">
-    <value>Jumlah Bersih</value>
+    <value>Jumlah Bersih(RM)</value>
   </data>
   <data name="lblNoAcc" xml:space="preserve">
     <value>No Akaun</value>
@@ -281,5 +287,8 @@
   </data>
   <data name="msgNoRecord" xml:space="preserve">
     <value>Tiada Rekod</value>
+  </data>
+  <data name="workerName" xml:space="preserve">
+    <value>Nama Pekerja</value>
   </data>
 </root>

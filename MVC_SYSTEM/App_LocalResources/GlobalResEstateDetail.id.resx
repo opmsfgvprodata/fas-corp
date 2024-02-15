@@ -159,6 +159,9 @@
   <data name="hdrGL" xml:space="preserve">
     <value>No GL</value>
   </data>
+  <data name="hdrIncome" xml:space="preserve">
+    <value>Pendapatan</value>
+  </data>
   <data name="hdrName" xml:space="preserve">
     <value>Nama Ladang</value>
   </data>
@@ -170,6 +173,15 @@
   </data>
   <data name="lblCountry" xml:space="preserve">
     <value>Country</value>
+  </data>
+  <data name="lblGrossIncome" xml:space="preserve">
+    <value>Pendapatan Kasar</value>
+  </data>
+  <data name="lblNetTotal" xml:space="preserve">
+    <value>Pendapatan Bersih</value>
+  </data>
+  <data name="lblOthersEarning" xml:space="preserve">
+    <value>Pendapatan Lain</value>
   </data>
   <data name="lblState" xml:space="preserve">
     <value>State</value>
@@ -183,7 +195,13 @@
   <data name="lblTitleUpdate" xml:space="preserve">
     <value>Kemaskini Data</value>
   </data>
+  <data name="lblTotalDeduction" xml:space="preserve">
+    <value>Jumlah Potongan(RM)</value>
+  </data>
   <data name="lblWilayah" xml:space="preserve">
     <value>Wilayah</value>
+  </data>
+  <data name="workerName" xml:space="preserve">
+    <value>Nama Pekerja</value>
   </data>
 </root>

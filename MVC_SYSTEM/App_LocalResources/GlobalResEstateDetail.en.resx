@@ -187,7 +187,10 @@
     <value>GL No</value>
   </data>
   <data name="hdrGrossSalary" xml:space="preserve">
-    <value>Gross Salary</value>
+    <value>Basic Income</value>
+  </data>
+  <data name="hdrIncome" xml:space="preserve">
+    <value>Income</value>
   </data>
   <data name="hdrKredit" xml:space="preserve">
     <value>Credit</value>
@@ -225,8 +228,11 @@
   <data name="lblEstateName" xml:space="preserve">
     <value>Estate Name</value>
   </data>
+  <data name="lblGrossIncome" xml:space="preserve">
+    <value>Gross Income (RM)</value>
+  </data>
   <data name="lblNetTotal" xml:space="preserve">
-    <value>Net Total</value>
+    <value>Net Income(RM)</value>
   </data>
   <data name="lblNoAcc" xml:space="preserve">
     <value>Account No</value>
@@ -235,7 +241,7 @@
     <value>Others Deductions</value>
   </data>
   <data name="lblOthersEarning" xml:space="preserve">
-    <value>Others Deductions</value>
+    <value>Others Income</value>
   </data>
   <data name="lblPaymentMode" xml:space="preserve">
     <value>Payment Mode</value>
@@ -259,7 +265,7 @@
     <value>Total</value>
   </data>
   <data name="lblTotalDeduction" xml:space="preserve">
-    <value>Total Deductions</value>
+    <value>Deduction Total(RM)</value>
   </data>
   <data name="lblTotalEarning" xml:space="preserve">
     <value>Total Earnings</value>
@@ -281,5 +287,8 @@
   </data>
   <data name="msgNoRecord" xml:space="preserve">
     <value>No Record</value>
+  </data>
+  <data name="workerName" xml:space="preserve">
+    <value>Worker Name</value>
   </data>
 </root>
