@@ -12,6 +12,9 @@ namespace MVC_SYSTEM.ModelsSAPPUP
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public Guid fld_ID { get; set; }
 
+        //idzham tambah
+        public int? fld_Year { get; set; }
+
         [StringLength(4)]
         public string fld_CompanyCode { get; set; }
 
@@ -69,6 +72,9 @@ namespace MVC_SYSTEM.ModelsSAPPUP
 
     public partial class CUSTOMITEM
     {
+        //idzham tambah
+        public int? ZGJAHR { get; set; }
+
         //[StringLength(4)]
         public int ZBUKRS { get; set; }
 
