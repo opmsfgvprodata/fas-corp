@@ -2466,4 +2466,25 @@
   <data name="lblIncentiveUnDelete" xml:space="preserve">
     <value>RESTORE INCENTIVE</value>
   </data>
+  <data name="lblContributionBCategory2" xml:space="preserve">
+    <value>B-Category 2 (RM)</value>
+  </data>
+  <data name="lblContributionCategory1" xml:space="preserve">
+    <value>B-Category 1 &amp; 3 (RM)</value>
+  </data>
+  <data name="msgAllFieldsMandatory" xml:space="preserve">
+    <value>All fields are mandatory</value>
+  </data>
+  <data name="lblContributionCategory2" xml:space="preserve">
+    <value>B-Kategori 2 (RM)</value>
+  </data>
+  <data name="lblContributionTableEmpyeeM" xml:space="preserve">
+    <value>M (RM)</value>
+  </data>
+  <data name="msgUndeleteContribution" xml:space="preserve">
+    <value>Are you sure to re active the following information?</value>
+  </data>
+  <data name="lblContributiontableUnDelete" xml:space="preserve">
+    <value>Reuse Contribution Table</value>
+  </data>
 </root>

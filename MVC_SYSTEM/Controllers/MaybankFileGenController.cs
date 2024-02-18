@@ -15,7 +15,9 @@ using iTextSharp.text.pdf;
 using iTextSharp.text;
 using System.Data.Entity;
 using System.IO;
-using Itenso.TimePeriod;
+//using Itenso.TimePeriod;
+//using System.Globalization;
+//using System.Drawing;
 
 namespace MVC_SYSTEM.Controllers
 {
@@ -216,6 +218,7 @@ namespace MVC_SYSTEM.Controllers
             string stringmonth = "";
             string CorpID = "";
             string ClientID = "";
+            string ClientIDText = "";
             string AccNo = "";
             string InitialName = "";
             stringyear = Year.ToString();
@@ -244,6 +247,23 @@ namespace MVC_SYSTEM.Controllers
             var SyarikatDetail = dbC.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == CompCode).FirstOrDefault();
             string filename = "M2E LABOR (" + SyarikatDetail.fld_NamaPndkSyarikat.ToUpper() + ") " + "" + stringmonth + stringyear + ".txt";
 
+            if (ClientID == null || ClientID == " ")
+            {
+                if (CompCode == "FASSB")
+                {
+                    ClientIDText = "FGVASB" + stringmonth + stringyear;
+                }
+
+                if (CompCode == "RNDSB")
+                {
+                    ClientIDText = "RNDSB" + stringmonth + stringyear;
+                }               
+            }
+            else
+            {
+                ClientIDText = ClientID;
+            }
+
             if (maybankrcmsList.Count() != 0)
             {
                 TotalGaji = maybankrcmsList.Sum(s => s.fld_GajiBersih);
@@ -257,23 +277,9 @@ namespace MVC_SYSTEM.Controllers
                 statusmsg = "warning";
             }
 
-            //if (GetGaji.Count() != 0)
-            //{
-            //    TotalGaji = GetGaji.Sum(s => s.fld_GajiBersih);
-            //    CountData = GetGaji.Count();
-            //    msg = GlobalResEstate.msgDataFound;
-            //    statusmsg = "success"; 
-            //}
-            //else
-            //{
-            //    msg = GlobalResEstate.msgDataNotFound;
-            //    statusmsg = "warning";
-            //}
-
-
             dbSP.Dispose();
             dbC.Dispose();
-            return Json(new { msg, statusmsg, file = filename, salary = TotalGaji, totaldata = CountData });
+            return Json(new { msg, statusmsg, file = filename, salary = TotalGaji, totaldata = CountData, clientid = ClientIDText});
         }
 
         public FileResult Download(string filePath, string filename)
@@ -350,6 +356,7 @@ namespace MVC_SYSTEM.Controllers
             string host, catalog, user, pass = "";
             //string WilayahName = "";
             string NamaSyarikat = "";
+            string ClientId = "";
             //string LdgCode = "";
 
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
@@ -373,10 +380,27 @@ namespace MVC_SYSTEM.Controllers
                 .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
                 .Select(s => s.fld_CorporateID)
                 .FirstOrDefault();
-            ViewBag.ClientID = dbC.tbl_Syarikat
+            ClientId = dbC.tbl_Syarikat
                 .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
                 .Select(s => s.fld_ClientBatchID)
                 .FirstOrDefault();
+            if (ClientId == null || ClientId == "")
+            {
+                if (CompCodeList == "FASSB")
+                {
+                    ViewBag.clientid = "FGVASB" + MonthList + YearList;
+                }
+
+                if (CompCodeList == "RNDSB")
+                {
+                    ViewBag.clientid = "RNDSB" + MonthList + YearList;
+                }
+            }
+            else
+            {
+                ViewBag.clientid = ClientId;
+            }
+
             ViewBag.AccNo = dbC.tbl_Syarikat
                 .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
                 .Select(s => s.fld_AccountNo)
@@ -500,6 +524,7 @@ namespace MVC_SYSTEM.Controllers
             string host, catalog, user, pass = "";
             //string WilayahName = "";
             string NamaSyarikat = "";
+            string ClientId = "";
             //string LdgCode = "";
 
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
@@ -523,10 +548,27 @@ namespace MVC_SYSTEM.Controllers
                 .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
                 .Select(s => s.fld_CorporateID)
                 .FirstOrDefault();
-            ViewBag.ClientID = dbC.tbl_Syarikat
-                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
-                .Select(s => s.fld_ClientBatchID)
-                .FirstOrDefault();
+            ClientId = dbC.tbl_Syarikat
+                 .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                 .Select(s => s.fld_ClientBatchID)
+                 .FirstOrDefault();
+            if (ClientId == null || ClientId == "")
+            {
+                if (CompCodeList == "FASSB")
+                {
+                    ViewBag.clientid = "FGVASB" + MonthList + YearList;
+                }
+
+                if (CompCodeList == "RNDSB")
+                {
+                    ViewBag.clientid = "RNDSB" + MonthList + YearList;
+                }
+            }
+            else
+            {
+                ViewBag.clientid = ClientId;
+            }
+
             ViewBag.AccNo = dbC.tbl_Syarikat
                 .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
                 .Select(s => s.fld_AccountNo)
@@ -813,10 +855,17 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.Date = DateTime.Now.ToShortDateString();
             ViewBag.Time = DateTime.Now.ToShortTimeString();
             ViewBag.Print = print;
-            //DateTime origDT = Convert.ToDateTime("02/10/2011");
-            //DateTime lastDate = new DateTime(YearList.Y, MonthList, 1).AddMonths(1).AddDays(-1);
-            ViewBag.DocDate = DateTime.Now.AddMonths(+1).AddDays(-DateTime.Now.Day).ToString("dd.MM.yyyy");
-            ViewBag.PostingDate = PaymentDate;
+
+            if(YearList == null && MonthList == null)
+            {
+                ViewBag.DocDate = DateTime.Now.AddMonths(+1).AddDays(-DateTime.Now.Day).ToString("dd.MM.yyyy");
+            }
+            else
+            {
+                var lastday = DateTime.DaysInMonth(YearList.Value, MonthList.Value);
+                ViewBag.DocDate = lastday + "." + MonthList + "." + YearList;
+            }
+            ViewBag.PostingDate = Convert.ToDateTime(PaymentDate).ToString("dd.MM.yyyy");
             ViewBag.Description = "Region " + NamaSyarikat + " - Maybank Rcms ZAP64 for " + MonthList + "/" + YearList;
             if (MonthList == null || YearList == null || CompCodeList == "0")
             {
@@ -862,7 +911,7 @@ namespace MVC_SYSTEM.Controllers
             success = true;
             status = "success";
 
-            return Json(new { success = success, id = tblHtmlReport.fldID, msg = msg, status = status, link = Url.Action("GetPDF", "MaybankFileGen", null, "http") + "/" + tblHtmlReport.fldID });
+            return Json(new { success = success, id = tblHtmlReport.fldID, msg = msg, status = status, link = Url.Action("GetPDF", "MaybankFileGen", null, "https") + "/" + tblHtmlReport.fldID });
         }
 
         public ActionResult GetPDF(int id)
@@ -881,7 +930,7 @@ namespace MVC_SYSTEM.Controllers
             var logosyarikat = db.tbl_Syarikat.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID).Select(s => s.fld_LogoName).FirstOrDefault();
 
 
-            Document pdfDoc = new Document(new Rectangle(int.Parse(width), int.Parse(height)), 50f, 50f, 50f, 50f);
+            Document pdfDoc = new Document(new iTextSharp.text.Rectangle(int.Parse(width), int.Parse(height)), 50f, 50f, 50f, 50f);
 
             PdfWriter writer = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
             pdfDoc.Open();
@@ -924,7 +973,7 @@ namespace MVC_SYSTEM.Controllers
             success = true;
             status = "success";
 
-            return Json(new { success = success, id = tblHtmlReport.fldID, msg = msg, status = status, link = Url.Action("GetPDFRpt", "MaybankFileGen", null, "http") + "/" + tblHtmlReport.fldID });
+            return Json(new { success = success, id = tblHtmlReport.fldID, msg = msg, status = status, link = Url.Action("GetPDFRpt", "MaybankFileGen", null, "https") + "/" + tblHtmlReport.fldID });
         }
 
         public ActionResult GetPDFRpt(int id)
@@ -944,7 +993,7 @@ namespace MVC_SYSTEM.Controllers
             var logosyarikat = db.tbl_Syarikat.Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID).Select(s => s.fld_LogoName).FirstOrDefault();
 
 
-            Document pdfDoc = new Document(new Rectangle(int.Parse(width), int.Parse(height)), 50f, 50f, 50f, 50f);
+            Document pdfDoc = new Document(new iTextSharp.text.Rectangle(int.Parse(width), int.Parse(height)), 50f, 50f, 50f, 50f);
 
             PdfWriter writer = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
             pdfDoc.Open();

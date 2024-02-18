@@ -47,9 +47,13 @@
                         <label>@GlobalResCorp.lblRegion</label>
                         @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
                     </div>*@
-                    <div class="col-sm-2">
+                    @*<div class="col-sm-2">
                         @Html.Label("Client ID")
                         @Html.TextBox("filter", null, htmlAttributes: new { @class = "form-control" })
+                    </div>*@
+                    <div class="col-sm-2">
+                        <label for="ClientId">Client ID</label>
+                        <input type="text" name="filter" id="filter" class="form-control" value="" disabled />
                     </div>
                     <div class="col-sm-2">
                         <label>Payment Date</label>
@@ -150,6 +154,7 @@
                 $('#RecordNo').val(result.totaldata);
                 $('#TotalSalary').val(result.salary);
                 $('#FileName').val(result.file);
+                $('#filter').val(result.clientid);
                 $.simplyToast(result.msg, result.statusmsg);
                 $("#UpdateProgress1").css("display", "none");
             };

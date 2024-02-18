@@ -2374,6 +2374,33 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to B Kategori 2 (RM).
+        /// </summary>
+        public static string lblContributionBCategory2 {
+            get {
+                return ResourceManager.GetString("lblContributionBCategory2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to B Kategori 1 &amp; 3 (RM).
+        /// </summary>
+        public static string lblContributionCategory1 {
+            get {
+                return ResourceManager.GetString("lblContributionCategory1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to B-Kategori 2 (RM).
+        /// </summary>
+        public static string lblContributionCategory2 {
+            get {
+                return ResourceManager.GetString("lblContributionCategory2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tambah Kategori Caruman.
         /// </summary>
         public static string lblContributionCategoryAdd {
@@ -2599,6 +2626,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to M (RM).
+        /// </summary>
+        public static string lblContributionTableEmpyeeM {
+            get {
+                return ResourceManager.GetString("lblContributionTableEmpyeeM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Caruman Majikan (RM).
         /// </summary>
         public static string lblContributionTableEmpyerCont {
@@ -2631,6 +2667,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblContributionTableMinWage {
             get {
                 return ResourceManager.GetString("lblContributionTableMinWage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GUNA SEMULA JADUAL CARUMAN.
+        /// </summary>
+        public static string lblContributiontableUnDelete {
+            get {
+                return ResourceManager.GetString("lblContributiontableUnDelete", resourceCulture);
             }
         }
         
@@ -9511,6 +9556,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Semua maklumat wajib diisi.
+        /// </summary>
+        public static string msgAllFieldsMandatory {
+            get {
+                return ResourceManager.GetString("msgAllFieldsMandatory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sila masukkan nilai luas sama atau tidak melebihi luas yang telah ditetapkan.
         /// </summary>
         public static string msgArea {
@@ -10254,6 +10308,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string msgUndelete {
             get {
                 return ResourceManager.GetString("msgUndelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Anda pasti untuk guna semula?.
+        /// </summary>
+        public static string msgUndeleteContribution {
+            get {
+                return ResourceManager.GetString("msgUndeleteContribution", resourceCulture);
             }
         }
         

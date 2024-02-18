@@ -29,11 +29,11 @@
             @Html.AntiForgeryToken()
             <div class="row">
                 <div class="form-group">
-                    <div class="col-sm-1">
+                    <div class="col-sm-2">
                         <label>@GlobalResCorp.lblMonth</label>
                         @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-2">
                         <label>@GlobalResCorp.lblYear</label>
                         @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
                     </div>
@@ -42,12 +42,16 @@
                         @Html.DropDownList("CompCodeList", null, htmlAttributes: new { @class = "form-control" })
                     </div>
                     @*<div class="col-sm-2">
-                        <label>@GlobalResCorp.lblRegion</label>
-                        @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
-                    </div>*@
-                    <div class="col-sm-2">
+            <label>@GlobalResCorp.lblRegion</label>
+            @Html.DropDownList("WilayahList", null, htmlAttributes: new { @class = "form-control" })
+        </div>*@
+                    @*<div class="col-sm-2">
                         @Html.Label("Client ID")
                         @Html.TextBox("filter", null, htmlAttributes: new { @class = "form-control" })
+                    </div>*@
+                    <div class="col-sm-2">
+                        <label for="ClientId">Client ID</label>
+                        <input type="text" name="filter" id="filter" class="form-control" value="" disabled />
                     </div>
                     <div class="col-sm-2">
                         <label>Payment Date</label>
@@ -139,6 +143,7 @@
                 $('#RecordNo').val(result.totaldata);
                 $('#TotalSalary').val(result.salary);
                 $('#FileName').val(result.file);
+                $('#filter').val(result.clientid);
                 $.simplyToast(result.msg, result.statusmsg);
                 $("#UpdateProgress1").css("display", "none");
             };

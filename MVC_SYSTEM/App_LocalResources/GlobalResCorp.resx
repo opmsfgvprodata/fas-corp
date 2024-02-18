@@ -3624,4 +3624,25 @@
   <data name="lblGLCodePT" xml:space="preserve">
     <value>Kod GL(Pekerja Tempatan)</value>
   </data>
+  <data name="lblContributionBCategory2" xml:space="preserve">
+    <value>B Kategori 2 (RM)</value>
+  </data>
+  <data name="lblContributionCategory1" xml:space="preserve">
+    <value>B Kategori 1 &amp; 3 (RM)</value>
+  </data>
+  <data name="msgAllFieldsMandatory" xml:space="preserve">
+    <value>Semua maklumat wajib diisi</value>
+  </data>
+  <data name="lblContributionCategory2" xml:space="preserve">
+    <value>B-Kategori 2 (RM)</value>
+  </data>
+  <data name="lblContributionTableEmpyeeM" xml:space="preserve">
+    <value>M (RM)</value>
+  </data>
+  <data name="msgUndeleteContribution" xml:space="preserve">
+    <value>Anda pasti untuk guna semula?</value>
+  </data>
+  <data name="lblContributiontableUnDelete" xml:space="preserve">
+    <value>GUNA SEMULA JADUAL CARUMAN</value>
+  </data>
 </root>
