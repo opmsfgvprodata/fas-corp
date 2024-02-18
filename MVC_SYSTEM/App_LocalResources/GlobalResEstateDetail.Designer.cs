@@ -19,7 +19,7 @@ namespace MVC_SYSTEM.App_LocalResources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class GlobalResEstateDetail {
@@ -277,6 +277,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pendapatan.
+        /// </summary>
+        public static string hdrIncome {
+            get {
+                return ResourceManager.GetString("hdrIncome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kredit.
         /// </summary>
         public static string hdrKredit {
@@ -385,7 +394,16 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Jumlah Bersih.
+        ///   Looks up a localized string similar to Pendapatan Kasar(RM).
+        /// </summary>
+        public static string lblGrossIncome {
+            get {
+                return ResourceManager.GetString("lblGrossIncome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jumlah Bersih(RM).
         /// </summary>
         public static string lblNetTotal {
             get {
@@ -401,7 +419,7 @@ namespace MVC_SYSTEM.App_LocalResources {
                 return ResourceManager.GetString("lblNoAcc", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Potongan Lain-lain.
         /// </summary>
@@ -552,6 +570,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string msgNoRecord {
             get {
                 return ResourceManager.GetString("msgNoRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nama Pekerja.
+        /// </summary>
+        public static string workerName {
+            get {
+                return ResourceManager.GetString("workerName", resourceCulture);
             }
         }
     }
