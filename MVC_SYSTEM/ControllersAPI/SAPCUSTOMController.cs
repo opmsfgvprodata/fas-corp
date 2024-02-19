@@ -102,6 +102,9 @@ namespace MVC_SYSTEM.ControllersAPI
                             newSAPCustomPUP.fld_Deleted = false;
                         }
 
+                        //idzham tambah
+                        newSAPCustomPUP.fld_Year = objData.ZGJAHR;
+
                         newSAPCustomPUP.fld_CompanyCode = objData.ZBUKRS.ToString().Trim();
                         newSAPCustomPUP.fld_WilayahCode = objData.ZREGIO.Trim();
                         newSAPCustomPUP.fld_PktUtama = objData.ZDIVID.Trim();
@@ -150,6 +153,8 @@ namespace MVC_SYSTEM.ControllersAPI
                     else
                     {
                         updateRecordCount++;
+                        //idzham tambah
+                        customData.fld_Year = objData.ZGJAHR;
 
                         customData.fld_LsPktUtama = objData.ZHECTA;
                         customData.fld_DirianPokok = objData.ZSPHEC;
