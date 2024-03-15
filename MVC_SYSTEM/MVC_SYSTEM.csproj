@@ -810,6 +810,7 @@
     <Compile Include="ConfigModels\tblSystemConfig.cs" />
     <Compile Include="ControllersAPI\OPMSPOSTTOSAPController.cs" />
     <Compile Include="ControllersAPI\SAPCCController.cs" />
+    <Compile Include="ControllersAPI\SAPEstateInfoController.cs" />
     <Compile Include="ControllersAPI\SAPCUSTOMERController.cs" />
     <Compile Include="ControllersAPI\SAPCUSTOMController.cs" />
     <Compile Include="ControllersAPI\SAPGLController.cs" />
