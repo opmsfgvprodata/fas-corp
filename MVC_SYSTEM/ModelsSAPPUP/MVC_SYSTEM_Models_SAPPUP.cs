@@ -23,6 +23,8 @@ namespace MVC_SYSTEM.ModelsSAPPUP
         public virtual DbSet<tbl_SAPCUSTOMPUP> tbl_SAPCUSTOMPUP { get; set; }
         public virtual DbSet<tbl_SAPLogPUP> tbl_SAPLogPUP { get; set; }
         public virtual DbSet<tbl_SAPOPMSCCLdgMapping> tbl_SAPOPMSCCLdgMapping { get; set; }
+        public virtual DbSet<tbl_SAPMasterAsset> tbl_SAPMasterAssetMapping { get; set; }
+        public virtual DbSet<tbl_SAPMasterAsset> tbl_SAPMasterAsset { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
