@@ -130,6 +130,10 @@ namespace MVC_SYSTEM.ControllersAPI
                         CCData.fld_CostCenterDesc = objData.CSKT_LTEXT.Trim();
                         CCData.fld_ModifiedBy = "SAP";
                         CCData.fld_ModifiedDT = timezone.gettimezone();
+                        //tambahan
+                        CCData.fld_CompanyCode = objData.CSKS_BUKRS.ToString().Trim();
+                        CCData.fld_CostCenter = objData.CSKS_KOSTL.Trim();
+                        CCData.fld_CostCenterDesc = objData.CSKT_LTEXT.Trim();
 
                         if (!String.IsNullOrEmpty(objData.CSKS_BKZKP))
                         {
