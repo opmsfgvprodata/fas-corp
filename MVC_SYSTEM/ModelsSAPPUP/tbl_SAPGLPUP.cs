@@ -21,6 +21,11 @@ namespace MVC_SYSTEM.ModelsSAPPUP
         [StringLength(50)]
         public string fld_GLDesc { get; set; }
 
+        public string fld_AccType { get; set; }
+        public string fld_BSAcc { get; set; }
+        public string fld_BlockPost { get; set; }
+        public string fld_Status { get; set; }
+
         public int? fld_NegaraID { get; set; }
 
         public int? fld_SyarikatID { get; set; }
@@ -56,6 +61,9 @@ namespace MVC_SYSTEM.ModelsSAPPUP
         public string SKAT_TXT50 { get; set; }
 
         public string SKB1_XLOEB { get; set; }
+        public string SKA1_GVTYP { get; set; }
+        public string SKA1_XBILK { get; set; }
+        public string SKAB1_XSPEB { get; set; }
     }
 
     public partial class GLITEMS

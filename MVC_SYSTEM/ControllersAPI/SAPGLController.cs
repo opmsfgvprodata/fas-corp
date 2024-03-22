@@ -92,6 +92,13 @@ namespace MVC_SYSTEM.ControllersAPI
                         newSAPGLPUP.fld_CompanyCode = objData.SKB1_BUKRS.ToString().Trim();
                         newSAPGLPUP.fld_GLCode = objData.SKB1_SAKNR.Trim().PadLeft(10, '0');
                         newSAPGLPUP.fld_GLDesc = objData.SKAT_TXT50.Trim();
+
+                        //tambahan
+                        newSAPGLPUP.fld_Status = objData.SKB1_XLOEB.ToString().Trim();
+                        newSAPGLPUP.fld_AccType = objData.SKA1_GVTYP.ToString().Trim();
+                        newSAPGLPUP.fld_BSAcc = objData.SKA1_XBILK.ToString().Trim();
+                        newSAPGLPUP.fld_BlockPost = objData.SKAB1_XSPEB.ToString().Trim();
+
                         newSAPGLPUP.fld_NegaraID = estateInfo.fld_NegaraID;
                         newSAPGLPUP.fld_SyarikatID = estateInfo.fld_SyarikatID;
                         newSAPGLPUP.fld_WilayahID = 0;
@@ -132,6 +139,12 @@ namespace MVC_SYSTEM.ControllersAPI
                         updateRecordCount++;
 
                         GLData.fld_GLDesc = objData.SKAT_TXT50.Trim();
+                        //tambahan
+                        GLData.fld_Status = objData.SKB1_XLOEB.ToString().Trim();
+                        GLData.fld_AccType = objData.SKA1_GVTYP.ToString().Trim();
+                        GLData.fld_BSAcc = objData.SKA1_XBILK.ToString().Trim();
+                        GLData.fld_BlockPost = objData.SKAB1_XSPEB.ToString().Trim();
+
                         GLData.fld_ModifiedBy = "SAP";
                         GLData.fld_ModifiedDT = timezone.gettimezone();
 
