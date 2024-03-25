@@ -810,6 +810,7 @@
     <Compile Include="ConfigModels\tblSystemConfig.cs" />
     <Compile Include="ControllersAPI\OPMSPOSTTOSAPController.cs" />
     <Compile Include="ControllersAPI\SAPCCController.cs" />
+    <Compile Include="ControllersAPI\SAPMasterAssetController.cs" />
     <Compile Include="ControllersAPI\SAPEstateInfoController.cs" />
     <Compile Include="ControllersAPI\SAPCUSTOMERController.cs" />
     <Compile Include="ControllersAPI\SAPCUSTOMController.cs" />
@@ -1098,10 +1099,12 @@
     <Compile Include="ModelsSAPPUP\tbl_Ladang.cs" />
     <Compile Include="ModelsSAPPUP\tbl_Negara.cs" />
     <Compile Include="ModelsSAPPUP\tbl_SAPCCPUP.cs" />
+    <Compile Include="ModelsSAPPUP\tbl_SAPMasterAsset.cs" />
     <Compile Include="ModelsSAPPUP\tbl_SAPCustomerPUP.cs" />
     <Compile Include="ModelsSAPPUP\tbl_SAPCUSTOMPUP.cs" />
     <Compile Include="ModelsSAPPUP\tbl_SAPGLPUP.cs" />
     <Compile Include="ModelsSAPPUP\tbl_SAPLogPUP.cs" />
+    <Compile Include="ModelsSAPPUP\tbl_SAPMasterAssetMapping.cs" />
     <Compile Include="ModelsSAPPUP\tbl_SAPOPMSCCLdgMapping.cs" />
     <Compile Include="ModelsSAPPUP\tbl_SAPPDPUP.cs" />
     <Compile Include="ModelsSAPPUP\tbl_SAPVendorPUP.cs" />
