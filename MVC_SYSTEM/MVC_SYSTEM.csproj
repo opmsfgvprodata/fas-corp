@@ -1003,6 +1003,7 @@
     <Compile Include="ModelsCorporate\vw_TKADetail.cs" />
     <Compile Include="ModelsCorporate\vw_UserIDDetail.cs" />
     <Compile Include="ModelsCustom\CusMod_tbl_JenisInsentif.cs" />
+    <Compile Include="ModelsCustom\CustMod_DataEntryReport.cs" />
     <Compile Include="ModelsCustom\CusMod_tbl_UpahAktiviti.cs" />
     <Compile Include="ModelsCustom\CustMod_DesignationIncentiveEligibility.cs" />
     <Compile Include="ModelsCustom\CustMod_TransferPkt.cs" />
@@ -3538,6 +3539,8 @@
     <Content Include="Views\MaybankFileGen\_SSCOnlinePayment.cshtml" />
     <Content Include="Views\MaybankFileGen\RcmsZAP64.cshtml" />
     <Content Include="Views\MaybankFileGen\_RcmsZAP64.cshtml" />
+    <Content Include="Views\Report\DataEntryReport.cshtml" />
+    <Content Include="Views\Report\_DataEntryReportSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
