@@ -567,5 +567,104 @@ namespace MVC_SYSTEM.ModelsSP
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankRcmsOnlinePaymentRpt_Result>("sp_MaybankRcmsOnlinePaymentRpt", negaraIDParameter, syarikatIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
         }
+    
+        public virtual IEnumerable<sp_MaybankRcmsOnlinePaymentRptOthers_Result> sp_MaybankRcmsOnlinePaymentRptOthers(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode, string incentive)
+        {
+            var negaraIDParameter = negaraID.HasValue ?
+                new ObjectParameter("NegaraID", negaraID) :
+                new ObjectParameter("NegaraID", typeof(int));
+    
+            var syarikatIDParameter = syarikatID.HasValue ?
+                new ObjectParameter("SyarikatID", syarikatID) :
+                new ObjectParameter("SyarikatID", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(int));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var compCodeParameter = compCode != null ?
+                new ObjectParameter("CompCode", compCode) :
+                new ObjectParameter("CompCode", typeof(string));
+    
+            var incentiveParameter = incentive != null ?
+                new ObjectParameter("Incentive", incentive) :
+                new ObjectParameter("Incentive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankRcmsOnlinePaymentRptOthers_Result>("sp_MaybankRcmsOnlinePaymentRptOthers", negaraIDParameter, syarikatIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter, incentiveParameter);
+        }
+    
+        public virtual IEnumerable<sp_MaybankRcmsOthers_Result> sp_MaybankRcmsOthers(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode, string incentive)
+        {
+            var negaraIDParameter = negaraID.HasValue ?
+                new ObjectParameter("NegaraID", negaraID) :
+                new ObjectParameter("NegaraID", typeof(int));
+    
+            var syarikatIDParameter = syarikatID.HasValue ?
+                new ObjectParameter("SyarikatID", syarikatID) :
+                new ObjectParameter("SyarikatID", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(int));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var compCodeParameter = compCode != null ?
+                new ObjectParameter("CompCode", compCode) :
+                new ObjectParameter("CompCode", typeof(string));
+    
+            var incentiveParameter = incentive != null ?
+                new ObjectParameter("Incentive", incentive) :
+                new ObjectParameter("Incentive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankRcmsOthers_Result>("sp_MaybankRcmsOthers", negaraIDParameter, syarikatIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter, incentiveParameter);
+        }
+    
+        public virtual IEnumerable<sp_MaybankRcmsZAP64Others_Result> sp_MaybankRcmsZAP64Others(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode, string incentive)
+        {
+            var negaraIDParameter = negaraID.HasValue ?
+                new ObjectParameter("NegaraID", negaraID) :
+                new ObjectParameter("NegaraID", typeof(int));
+    
+            var syarikatIDParameter = syarikatID.HasValue ?
+                new ObjectParameter("SyarikatID", syarikatID) :
+                new ObjectParameter("SyarikatID", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(int));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var compCodeParameter = compCode != null ?
+                new ObjectParameter("CompCode", compCode) :
+                new ObjectParameter("CompCode", typeof(string));
+    
+            var incentiveParameter = incentive != null ?
+                new ObjectParameter("Incentive", incentive) :
+                new ObjectParameter("Incentive", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankRcmsZAP64Others_Result>("sp_MaybankRcmsZAP64Others", negaraIDParameter, syarikatIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter, incentiveParameter);
+        }
     }
 }
