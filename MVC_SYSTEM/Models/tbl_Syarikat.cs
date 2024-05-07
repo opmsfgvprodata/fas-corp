@@ -29,5 +29,12 @@ namespace MVC_SYSTEM.Models
 
         [StringLength(100)]
         public string fld_SyarikatEmail { get; set; }
+
+        [StringLength(15)]
+        public string fld_EmployerTaxNo { get; set; }
+
+        [StringLength(20)]
+        public string fld_AccountNo { get; set; }
+
     }
 }

@@ -178,6 +178,14 @@
           <Parameter Name="Year" Type="int" Mode="In" />
           <Parameter Name="UserID" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_TaxCP39Prev" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NegaraID" Type="int" Mode="In" />
+          <Parameter Name="SyarikatID" Type="int" Mode="In" />
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <Parameter Name="Month" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="CompCode" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_WagerateView" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="MVC_SYSTEM_SP2_ModelsStoreContainer" />
@@ -359,6 +367,14 @@
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="CompCode" Mode="In" Type="String" />
             <Parameter Name="Incentive" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_TaxCP39Prev" ReturnType="Collection(MVC_SYSTEM_SP2_Models.sp_TaxCP39Prev_Result)">
+            <Parameter Name="NegaraID" Mode="In" Type="Int32" />
+            <Parameter Name="SyarikatID" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="CompCode" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_MyegDetail_Result">
@@ -813,6 +829,24 @@
           <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
           <Property Type="String" Name="fld_LdgShortName" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="fld_LdgIndicator" Nullable="true" MaxLength="4" />
+        </ComplexType>
+        <ComplexType Name="sp_TaxCP39Prev_Result">
+          <Property Type="Int32" Name="fld_ID" Nullable="true" />
+          <Property Type="String" Name="fld_TaxNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="fld_WifeCode" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="fld_WorkerName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="fld_Citizen" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="fld_NoKp" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="fld_MTDAmount" Nullable="true" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="fld_CP38Amount" Nullable="true" Precision="8" Scale="2" />
+          <Property Type="String" Name="fld_NoPkj" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="fld_Year" Nullable="true" />
+          <Property Type="Int32" Name="fld_Month" Nullable="true" />
+          <Property Type="Int32" Name="fld_NegaraID" Nullable="true" />
+          <Property Type="Int32" Name="fld_SyarikatID" Nullable="true" />
+          <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
+          <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
+          <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1356,6 +1390,28 @@
                 <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
                 <ScalarProperty Name="fld_LdgShortName" ColumnName="fld_LdgShortName" />
                 <ScalarProperty Name="fld_LdgIndicator" ColumnName="fld_LdgIndicator" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_TaxCP39Prev" FunctionName="MVC_SYSTEM_SP2_Models.Store.sp_TaxCP39Prev">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MVC_SYSTEM_SP2_Models.sp_TaxCP39Prev_Result">
+                <ScalarProperty Name="fld_ID" ColumnName="fld_ID" />
+                <ScalarProperty Name="fld_TaxNo" ColumnName="fld_TaxNo" />
+                <ScalarProperty Name="fld_WifeCode" ColumnName="fld_WifeCode" />
+                <ScalarProperty Name="fld_WorkerName" ColumnName="fld_WorkerName" />
+                <ScalarProperty Name="fld_Citizen" ColumnName="fld_Citizen" />
+                <ScalarProperty Name="fld_NoKp" ColumnName="fld_NoKp" />
+                <ScalarProperty Name="fld_MTDAmount" ColumnName="fld_MTDAmount" />
+                <ScalarProperty Name="fld_CP38Amount" ColumnName="fld_CP38Amount" />
+                <ScalarProperty Name="fld_NoPkj" ColumnName="fld_NoPkj" />
+                <ScalarProperty Name="fld_Year" ColumnName="fld_Year" />
+                <ScalarProperty Name="fld_Month" ColumnName="fld_Month" />
+                <ScalarProperty Name="fld_NegaraID" ColumnName="fld_NegaraID" />
+                <ScalarProperty Name="fld_SyarikatID" ColumnName="fld_SyarikatID" />
+                <ScalarProperty Name="fld_WilayahID" ColumnName="fld_WilayahID" />
+                <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
+                <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

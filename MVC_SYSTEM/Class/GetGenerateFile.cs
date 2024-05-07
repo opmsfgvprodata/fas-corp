@@ -499,6 +499,321 @@ namespace MVC_SYSTEM.Class
             return filePath;
         }
 
+        public static string GenerateFileMaybankTaxCP39Prev(List<ModelsSP.sp_TaxCP39Prev_Result> maybankrcmsList, tbl_Syarikat tbl_Syarikat, string bulan, string tahun, int? NegaraID, int? SyarikatID, /*int? WilayahID,*/ string CompCode, string filter, DateTime PaymentDate, out string filename)
+        {
+            decimal? TotalMTDAmount = 0;
+            decimal? TotalCP38Amount = 0;
+            decimal? TotalAllAmount = 0;
+            int CountAllData = 0;
+            int CountMTDData = 0;
+            int CountCP38Data = 0;
+            int rowno = 1;
+            long TotalHash = 0;
+            long SumAllTotalHash = 0;
+            long TaxNoFirst8Digit = 0;
+            long TaxNoLast2Digit = 0;
+            int WifeCodeInt = 0;
+            int MTDAmountInt = 0;
+            int CP38AmountInt = 0;
+            string statusmsg = "";
+            string CorpID = "";
+            string ClientID = "";
+            string AccNo = "";
+            string InitialName = "";
+            string AccNoWorker = "";
+            string ClientIDText = "";
+            string EmployerTaxNo = "";
+            string day = PaymentDate.ToString("dd");
+            string month = PaymentDate.ToString("MM");
+            string year = PaymentDate.ToString("yyyy");
+            //DateTime? date = timezone.gettimezone();
+            //DateTime Today = new DateTime(date.Value.Year, date.Value.Month, date.Value.Day);
+            //DateTime? PaymentDate = new DateTime(Today.Year, Today.Month, 5);
+            DateTime? PaymentDateFormat = new DateTime(PaymentDate.Year, PaymentDate.Month, PaymentDate.Day);
+
+            GetNSWL.GetSyarikatRCMSDetail(CompCode, out CorpID, out ClientID, out AccNo, out InitialName);
+            string filePath = "~/MaybankFile/" + tahun + "/" + bulan + "/" + NegaraID.ToString() + "_" + SyarikatID.ToString() + "/" /*+ WilayahID.ToString() + "/"*/;
+            string path = HttpContext.Current.Server.MapPath(filePath);
+
+            EmployerTaxNo = tbl_Syarikat.fld_EmployerTaxNo.ToUpper();
+            filename = "Tax CP39 (" + tbl_Syarikat.fld_NamaPndkSyarikat.ToUpper() + ") " + " " + bulan + tahun + ".txt";
+            string filecreation = path + filename;
+
+            try
+            {
+                TryToDelete(filecreation);
+                if (!Directory.Exists(path))
+                {
+                    //If No any such directory then creates the new one
+                    Directory.CreateDirectory(path);
+                }
+
+                if (maybankrcmsList.Count() != 0)
+                {
+                    TotalMTDAmount = maybankrcmsList.Sum(s => s.fld_MTDAmount);
+                    TotalCP38Amount = maybankrcmsList.Sum(s => s.fld_CP38Amount);
+                    TotalAllAmount = TotalMTDAmount + TotalCP38Amount;
+                    CountMTDData = maybankrcmsList.Where(x => x.fld_MTDAmount > 0).Count();
+                    CountCP38Data = maybankrcmsList.Where(x => x.fld_CP38Amount > 0).Count();
+                    CountAllData = maybankrcmsList.Count();
+                }
+
+                using (StreamWriter writer = new StreamWriter(filecreation, true))
+                {
+                    //header
+                    int HeaderLoop = 41;
+                    ArrayList Header = new ArrayList();
+                    for (int i = 0; i <= HeaderLoop; i++)
+                    {
+                        if (i == 0)
+                        {
+                            Header.Insert(i, "00|");
+                        }
+                        else if (i == 1)
+                        {
+                            Header.Insert(i, "Statutory Body|");
+                        }
+                        else if (i == 2) //Statutory body type
+                        {                            
+                            Header.Insert(i, "4|");                                                       
+                        }
+                        else if (i == 3) //payment indicator
+                        {
+                            Header.Insert(i, "02|");
+                        }
+                        else if (i == 4) //Employer Reference No.
+                        {
+                            Header.Insert(i, EmployerTaxNo + "|");
+                        }
+                        else if (i == 5) //Employer Name
+                        {
+                            Header.Insert(i, tbl_Syarikat.fld_NamaSyarikat.ToUpper() + "|");                           
+                        }
+                        else if (i == 6) //contribution month year
+                        {
+                            Header.Insert(i, bulan + tahun + "|");
+                        }
+                        else if (i == 7) //account no
+                        {
+                            Header.Insert(i, AccNo + "|");
+                        }
+                        else if (i == 8) //value date
+                        {
+                            Header.Insert(i, PaymentDate.ToString("dd") + PaymentDate.ToString("MM") + PaymentDate.ToString("yyyy") + "|");
+                        }
+                        else if (i == 9) //tax payment option
+                        {
+                            Header.Insert(i, "2|");
+                        }
+                        else if (i == 12) //reference
+                        {
+                            Header.Insert(i, "RCMS Tax " + bulan + "/" + tahun + "|");
+                        }
+                        else if (i == 13) //reference
+                        {
+                            Header.Insert(i, CompCode + "-Tax " + bulan + "/" + tahun + "|");
+                        }
+                        else if (i == 20) //client id
+                        {
+                            if (filter == "" || filter == null)
+                            {
+                                Header.Insert(i, ClientID + "|");
+                            }
+                            else
+                            {
+                                Header.Insert(i, filter + "|");
+                            }
+                        }
+                        else if (i == 21) //corporate id
+                        {
+                            Header.Insert(i, CorpID + "|");
+                        }
+                        else
+                        {
+                            Header.Insert(i, "|");
+                        }
+                    }
+
+                    for (int i = 0; i <= HeaderLoop; i++)
+                    {
+                        if (i == HeaderLoop)
+                        {
+                            writer.WriteLine(Header[i]);
+                        }
+                        else
+                        {
+                            writer.Write(Header[i]);
+                        }
+                    }
+
+                    //body                
+                    foreach (var maybankrcms in maybankrcmsList)
+                    {
+                        int TaxNoLength = 0;
+                        int WorkerNameLength = 0;
+                        string WorkerName1 = "";
+
+                        WorkerNameLength = maybankrcms.fld_WorkerName.Length;
+                        if (WorkerNameLength <= 80)
+                        {
+                            WorkerName1 = maybankrcms.fld_WorkerName.Substring(0, WorkerNameLength);
+                        }
+
+                        //***Hashing***
+                        TaxNoLength = maybankrcms.fld_TaxNo.Length;
+                        TaxNoFirst8Digit = Int64.Parse(maybankrcms.fld_TaxNo.Substring(0, 8));
+                        TaxNoLast2Digit = Int64.Parse(maybankrcms.fld_TaxNo.Substring(TaxNoLength-2, 2));
+
+                        WifeCodeInt = Int32.Parse(maybankrcms.fld_WifeCode);
+
+                        MTDAmountInt = (int)(maybankrcms.fld_MTDAmount * 100);
+                        CP38AmountInt = (int)(maybankrcms.fld_CP38Amount * 100);
+
+                        //**TotalHash***
+                        TotalHash = TaxNoFirst8Digit + TaxNoLast2Digit + WifeCodeInt + MTDAmountInt + CP38AmountInt;
+
+                        if (TotalHash < 0)
+                        {
+                            int s = 0;
+                        }
+
+                        SumAllTotalHash = SumAllTotalHash + TotalHash;
+
+                        if(SumAllTotalHash < 0)
+                        {
+                            int s = 0;
+                        }
+
+                        //start write body
+                        int BodyLoop = 136;
+                        ArrayList Body = new ArrayList();
+                        for (int i = 0; i <= BodyLoop; i++)
+                        {
+                            if (i == 0) //1
+                            {
+                                Body.Insert(i, "01|");
+                            }
+                            else if (i == 2) //3
+                            {
+                                Body.Insert(i, "092|");
+                            }
+                            else if (i == 4) 
+                            {
+                                Body.Insert(i, WorkerName1.ToUpper() + "|");
+                            }
+                            else if (i == 5)
+                            {
+                                Body.Insert(i, maybankrcms.fld_Citizen + "|");
+                            }
+                            else if (i == 7)
+                            {
+                                Body.Insert(i, "IG" + maybankrcms.fld_TaxNo + "|");
+                            }
+                            else if (i == 10) //passport
+                            {
+                                Body.Insert(i, maybankrcms.fld_NoKp + "|");
+                            }
+                            else if (i == 11)
+                            {
+                                Body.Insert(i, maybankrcms.fld_MTDAmount + "|");
+                            }
+                            else if (i == 12) //11
+                            {
+                                Body.Insert(i, maybankrcms.fld_CP38Amount + "|");
+                            }
+                            else if (i == 13) //wife code
+                            {
+                                Body.Insert(i, maybankrcms.fld_WifeCode + "|");
+                            }
+                            else if (i == 14) //worker no
+                            {
+                                Body.Insert(i, maybankrcms.fld_NoPkj + "|");
+                            }
+                            else
+                            {
+                                Body.Insert(i, "|");
+                            }
+                        }
+
+                        for (int i = 0; i <= BodyLoop; i++)
+                        {
+                            if (i == BodyLoop)
+                            {
+                                writer.WriteLine(Body[i]);
+                            }
+                            else
+                            {
+                                writer.Write(Body[i]);
+                            }
+                        }
+                        rowno++;
+                    }//close foreach
+
+                    //footer
+                    int FooterLoop = 28;
+                    ArrayList Footer = new ArrayList();
+                    for (int i = 0; i <= FooterLoop; i++)
+                    {
+                        if (i == 0)//1
+                        {
+                            Footer.Insert(i, "99|");
+                        }
+                        else if (i == 1)//2
+                        {
+                            Footer.Insert(i, TotalMTDAmount + "|");
+                        }
+                        else if (i == 2)//3
+                        {
+                            Footer.Insert(i, TotalMTDAmount + "|");
+                        }
+                        else if (i == 3)//4
+                        {
+                            Footer.Insert(i, CountMTDData + "|");
+                        }
+                        else if (i == 4)//5
+                        {
+                            Footer.Insert(i, CountCP38Data + "|");
+                        }
+                        else if (i == 5)//6
+                        {
+                            Footer.Insert(i, CountAllData + "|");
+                        }
+                        else if (i == 6)//7
+                        {
+                            Footer.Insert(i, TotalAllAmount + "|");
+                        }
+                        else if (i == 7)//8
+                        {
+                            Footer.Insert(i, SumAllTotalHash + "|");
+                        }
+                        else
+                        {
+                            Footer.Insert(i, "|");
+                        }
+                    }
+
+                    for (int i = 0; i <= FooterLoop; i++)
+                    {
+                        if (i == FooterLoop)
+                        {
+                            writer.WriteLine(Footer[i]);
+                        }
+                        else
+                        {
+                            writer.Write(Footer[i]);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                //msg = GlobalResCorp.msgGenerateFailed;
+                statusmsg = ex.Message;
+            }
+            return filePath;
+        }
+
         public static string GenerateFileMaybankOthers(List<ModelsSP.sp_MaybankRcmsOthers_Result> maybankrcmsList, tbl_Syarikat tbl_Syarikat, string bulan, string tahun, int? NegaraID, int? SyarikatID, string CompCode, string filter, DateTime PaymentDate, string Incentive, out string filename)
         {
             decimal? TotalGaji = 0;

@@ -29,7 +29,6 @@ namespace MVC_SYSTEM.ModelsSP
             var objcontxt = (this as IObjectContextAdapter).ObjectContext;
             objcontxt.CommandTimeout = this.Database.Connection.ConnectionTimeout;
         }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -398,7 +397,7 @@ namespace MVC_SYSTEM.ModelsSP
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     
-        public virtual IEnumerable<sp_WagerateView_Result> sp_WagerateView()
+        public virtual ObjectResult<sp_WagerateView_Result> sp_WagerateView()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_WagerateView_Result>("sp_WagerateView");
         }
@@ -665,6 +664,35 @@ namespace MVC_SYSTEM.ModelsSP
                 new ObjectParameter("Incentive", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_MaybankRcmsZAP64Others_Result>("sp_MaybankRcmsZAP64Others", negaraIDParameter, syarikatIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter, incentiveParameter);
+        }
+    
+        public virtual IEnumerable<sp_TaxCP39Prev_Result> sp_TaxCP39Prev(Nullable<int> negaraID, Nullable<int> syarikatID, Nullable<int> year, Nullable<int> month, Nullable<int> userID, string compCode)
+        {
+            var negaraIDParameter = negaraID.HasValue ?
+                new ObjectParameter("NegaraID", negaraID) :
+                new ObjectParameter("NegaraID", typeof(int));
+    
+            var syarikatIDParameter = syarikatID.HasValue ?
+                new ObjectParameter("SyarikatID", syarikatID) :
+                new ObjectParameter("SyarikatID", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("Month", month) :
+                new ObjectParameter("Month", typeof(int));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var compCodeParameter = compCode != null ?
+                new ObjectParameter("CompCode", compCode) :
+                new ObjectParameter("CompCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_TaxCP39Prev_Result>("sp_TaxCP39Prev", negaraIDParameter, syarikatIDParameter, yearParameter, monthParameter, userIDParameter, compCodeParameter);
         }
     }
 }

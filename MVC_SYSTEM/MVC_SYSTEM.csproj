@@ -1175,6 +1175,9 @@
     <Compile Include="ModelsSP\sp_SocsoFileGen_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelsSP\sp_TaxCP39Prev_Result.cs">
+      <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelsSP\sp_WagerateView_Result.cs">
       <DependentUpon>MVC_SYSTEM_SP2_Models.tt</DependentUpon>
     </Compile>
@@ -3555,6 +3558,8 @@
     <Content Include="Views\MaybankFileGen\_SSCOnlinePaymentOthers.cshtml" />
     <Content Include="Views\MaybankFileGen\RcmsGenIndividuOthers.cshtml" />
     <Content Include="Views\MaybankFileGen\_rcmsIndividuOthers.cshtml" />
+    <Content Include="Views\MaybankFileGen\TaxCP39PrevGen.cshtml" />
+    <Content Include="Views\MaybankFileGen\_taxcp39prev.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
