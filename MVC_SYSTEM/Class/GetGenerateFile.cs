@@ -931,6 +931,28 @@ namespace MVC_SYSTEM.Class
             return filePath;
         }
 
+        public string CreateTextFile(string filename, string fileContent, string subFolderName)
+        {
+            string folderPath = "~/TextFile/" + subFolderName + "/";
+            string path = HttpContext.Current.Server.MapPath(folderPath);
+            string filecreation = path + filename;
+
+            TryToDelete(filecreation);
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            using (StreamWriter writer = new StreamWriter(filecreation, true))
+            {
+                writer.WriteLine(fileContent);
+                writer.Close();
+            }
+
+            return folderPath;
+        }
+
         static bool TryToDelete(string f)
         {
             try
