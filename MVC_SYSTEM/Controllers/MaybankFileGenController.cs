@@ -62,7 +62,13 @@ namespace MVC_SYSTEM.Controllers
 
             if (MenuSubList != null)
             {
-                return RedirectToAction(MenuSubList, "MaybankFileGen");
+                if (MenuSubList.Contains("|"))
+                {
+                    string[] split = MenuSubList.Split('|');
+                    return RedirectToAction(split[1], split[0]);
+                }
+                else 
+                    return RedirectToAction(MenuSubList, "MaybankFileGen");
             }
             else
             {
