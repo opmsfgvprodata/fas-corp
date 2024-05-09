@@ -847,6 +847,7 @@
           <Property Type="Int32" Name="fld_WilayahID" Nullable="true" />
           <Property Type="Int32" Name="fld_LadangID" Nullable="true" />
           <Property Type="String" Name="fld_CostCentre" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="fld_kdrkyt" Nullable="true" MaxLength="2" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1412,6 +1413,7 @@
                 <ScalarProperty Name="fld_WilayahID" ColumnName="fld_WilayahID" />
                 <ScalarProperty Name="fld_LadangID" ColumnName="fld_LadangID" />
                 <ScalarProperty Name="fld_CostCentre" ColumnName="fld_CostCentre" />
+                <ScalarProperty Name="fld_kdrkyt" ColumnName="fld_kdrkyt" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

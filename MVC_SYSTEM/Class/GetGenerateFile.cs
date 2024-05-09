@@ -499,7 +499,7 @@ namespace MVC_SYSTEM.Class
             return filePath;
         }
 
-        public static string GenerateFileMaybankTaxCP39Prev(List<ModelsSP.sp_TaxCP39Prev_Result> maybankrcmsList, tbl_Syarikat tbl_Syarikat, string bulan, string tahun, int? NegaraID, int? SyarikatID, /*int? WilayahID,*/ string CompCode, string filter, DateTime PaymentDate, out string filename)
+        public static string GenerateFileMaybankTaxCP39Prev(List<ModelsSP.sp_TaxCP39Prev_Result> maybankrcmsList, tbl_Syarikat tbl_Syarikat, string bulan, string tahun, int? NegaraID, int? SyarikatID, string CompCode, string filter, DateTime PaymentDate, List<ModelsCorporate.tblOptionConfigsWeb> CountryCodeDetail, out string filename)
         {
             decimal? TotalMTDAmount = 0;
             decimal? TotalCP38Amount = 0;
@@ -672,17 +672,17 @@ namespace MVC_SYSTEM.Class
                         //**TotalHash***
                         TotalHash = TaxNoFirst8Digit + TaxNoLast2Digit + WifeCodeInt + MTDAmountInt + CP38AmountInt;
 
-                        if (TotalHash < 0)
-                        {
-                            int s = 0;
-                        }
+                        //if (TotalHash < 0)
+                        //{
+                        //    int s = 0;
+                        //}
 
                         SumAllTotalHash = SumAllTotalHash + TotalHash;
 
-                        if(SumAllTotalHash < 0)
-                        {
-                            int s = 0;
-                        }
+                        //if(SumAllTotalHash < 0)
+                        //{
+                        //    int s = 0;
+                        //}
 
                         //start write body
                         int BodyLoop = 136;
@@ -704,6 +704,10 @@ namespace MVC_SYSTEM.Class
                             else if (i == 5)
                             {
                                 Body.Insert(i, maybankrcms.fld_Citizen + "|");
+                            }
+                            else if (i == 6)//country code
+                            {
+                                Body.Insert(i, CountryCodeDetail.Where(x => x.fldOptConfFlag2 == maybankrcms.fld_kdrkyt).Select(s => s.fldOptConfValue).FirstOrDefault() + "|");
                             }
                             else if (i == 7)
                             {

@@ -32,8 +32,7 @@ namespace MVC_SYSTEM.ModelsSP
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
-        }
-    
+        }    
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

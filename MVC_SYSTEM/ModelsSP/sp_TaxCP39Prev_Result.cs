@@ -29,5 +29,6 @@ namespace MVC_SYSTEM.ModelsSP
         public Nullable<int> fld_WilayahID { get; set; }
         public Nullable<int> fld_LadangID { get; set; }
         public string fld_CostCentre { get; set; }
+        public string fld_kdrkyt { get; set; }
     }
 }

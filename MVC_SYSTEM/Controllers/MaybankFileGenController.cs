@@ -287,6 +287,7 @@ namespace MVC_SYSTEM.Controllers
             {
                 GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
                 List<sp_TaxCP39Prev_Result> maybankrcmsList = new List<sp_TaxCP39Prev_Result>();
+                List<ModelsCorporate.tblOptionConfigsWeb> CountryCodeDetail = new List<ModelsCorporate.tblOptionConfigsWeb>();
 
                 if (WorkerId == null)
                     WorkerId = new string[] { "0" };
@@ -301,8 +302,9 @@ namespace MVC_SYSTEM.Controllers
                 }
 
                 var SyarikatDetail = db.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == CompCode).FirstOrDefault();
+                CountryCodeDetail = dbC.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "krytnlistlhdn").ToList();
 
-                filePath = GetGenerateFile.GenerateFileMaybankTaxCP39Prev(maybankrcmsList, SyarikatDetail, stringmonth, stringyear, NegaraID, SyarikatID, CompCode, filter, PaymentDate, out filename);
+                filePath = GetGenerateFile.GenerateFileMaybankTaxCP39Prev(maybankrcmsList, SyarikatDetail, stringmonth, stringyear, NegaraID, SyarikatID, CompCode, filter, PaymentDate, CountryCodeDetail, out filename);
 
                 link = Url.Action("Download", "MaybankFileGen", new { filePath, filename });
 
