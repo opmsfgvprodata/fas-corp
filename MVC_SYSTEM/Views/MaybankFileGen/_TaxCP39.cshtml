@@ -124,7 +124,7 @@
             var CompCode = $("#CompCodeList").val();
             $("#UpdateProgress1").css("display", "");
             var ajxfn = {};
-            ajxfn.url = "@Url.Action("DownloadCP39TextFile", "TextFileGenerator")";
+            ajxfn.url = "@Url.Action("DownloadCP39TextFile", "MaybankFileGen")";
             ajxfn.type = "POST";
             ajxfn.async = false;
             ajxfn.data = JSON.stringify({ Month: Month, Year: Year, CompCode: CompCode });
@@ -148,7 +148,7 @@
           var myHtml = document.getElementById('scrollArea').innerHTML;
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("ConvertPDF2", "TextFileGenerator")',
+                url: '@Url.Action("ConvertPDF2", "MaybankFileGen")',
                 dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify({ myHtml: myHtml, filename: "@uniquefilename", reportname: "CP39Report" }),

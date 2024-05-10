@@ -861,7 +861,6 @@
     <Compile Include="Controllers\SendEmailController.cs" />
     <Compile Include="Controllers\SuperAdminSelectionController.cs" />
     <Compile Include="Controllers\SystemConfigsController.cs" />
-    <Compile Include="Controllers\TextFileGeneratorController.cs" />
     <Compile Include="Controllers\UnblockCheckrollController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -3561,9 +3560,8 @@
     <Content Include="Views\MaybankFileGen\_SSCOnlinePaymentOthers.cshtml" />
     <Content Include="Views\MaybankFileGen\RcmsGenIndividuOthers.cshtml" />
     <Content Include="Views\MaybankFileGen\_rcmsIndividuOthers.cshtml" />
-    <Content Include="Views\TextFileGenerator\Index.cshtml" />
-    <Content Include="Views\TextFileGenerator\TaxCP39.cshtml" />
-    <Content Include="Views\TextFileGenerator\_TaxCP39.cshtml" />
+    <Content Include="Views\MaybankFileGen\_TaxCP39.cshtml" />
+    <Content Include="Views\MaybankFileGen\TaxCP39.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

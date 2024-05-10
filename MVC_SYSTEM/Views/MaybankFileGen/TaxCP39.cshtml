@@ -24,7 +24,7 @@
 
 <section class="content-wrapper main-content clear-fix">
     <div class="well bottom" style="padding-bottom:16px;">
-        @using (Ajax.BeginForm("_TaxCP39", "TextFileGenerator", null, options, new { @id = "rcms" }))
+        @using (Ajax.BeginForm("_TaxCP39", "MaybankFileGen", null, options, new { @id = "rcms" }))
         {
             @Html.AntiForgeryToken()
             <div class="row">
@@ -111,7 +111,7 @@
             var CompCode = $("#CompCodeList").val();
             $("#UpdateProgress1").css("display", "");
             var ajxfn = {};
-            ajxfn.url = "@Url.Action("TaxCP39Detail", "TextFileGenerator")";
+            ajxfn.url = "@Url.Action("TaxCP39Detail", "MaybankFileGen")";
             ajxfn.type = "POST";
             ajxfn.async = false;
             ajxfn.data = JSON.stringify({ Month: Month, Year: Year, CompCode: CompCode });
