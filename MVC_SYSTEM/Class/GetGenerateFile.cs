@@ -526,6 +526,7 @@ namespace MVC_SYSTEM.Class
             string day = PaymentDate.ToString("dd");
             string month = PaymentDate.ToString("MM");
             string year = PaymentDate.ToString("yyyy");
+            string CountryCode = "";
             //DateTime? date = timezone.gettimezone();
             //DateTime Today = new DateTime(date.Value.Year, date.Value.Month, date.Value.Day);
             //DateTime? PaymentDate = new DateTime(Today.Year, Today.Month, 5);
@@ -659,6 +660,8 @@ namespace MVC_SYSTEM.Class
                             WorkerName1 = maybankrcms.fld_WorkerName.Substring(0, WorkerNameLength);
                         }
 
+                        CountryCode = CountryCodeDetail.Where(x => x.fldOptConfFlag2 == maybankrcms.fld_kdrkyt).Select(s => s.fldOptConfValue).FirstOrDefault();
+
                         //***Hashing***
                         TaxNoLength = maybankrcms.fld_TaxNo.Length;
                         TaxNoFirst8Digit = Int64.Parse(maybankrcms.fld_TaxNo.Substring(0, 8));
@@ -707,7 +710,7 @@ namespace MVC_SYSTEM.Class
                             }
                             else if (i == 6)//country code
                             {
-                                Body.Insert(i, CountryCodeDetail.Where(x => x.fldOptConfFlag2 == maybankrcms.fld_kdrkyt).Select(s => s.fldOptConfValue).FirstOrDefault() + "|");
+                                Body.Insert(i, CountryCode + "|");
                             }
                             else if (i == 7)
                             {
