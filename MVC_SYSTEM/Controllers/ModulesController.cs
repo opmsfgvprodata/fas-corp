@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+//using MVC_SYSTEM.ModelsBudget; //Fitri add 2024
 
 namespace MVC_SYSTEM.Controllers
 {
@@ -19,6 +20,7 @@ namespace MVC_SYSTEM.Controllers
         private MVC_SYSTEM_ModelsCorporate db = new MVC_SYSTEM_ModelsCorporate();
         private EncryptDecrypt Encrypt = new EncryptDecrypt();
         private ChangeTimeZone timezone = new ChangeTimeZone();
+        //private MVC_SYSTEM_ModelsBudget db2 = new MVC_SYSTEM_ModelsBudget();//Fitri add 2024
         // GET: Modules
         public ActionResult Index()
         {
@@ -58,6 +60,27 @@ namespace MVC_SYSTEM.Controllers
             {
                 RedirectLink = Url.Action("Index", "Main", null, this.Request.Url.Scheme);
             }
+            //Fitri add 2024
+            else if (Modules == "budget")
+            {
+                var user = db.tblUsers.Where(u => u.fldUserID == getuserid).SingleOrDefault();
+                string usernameencrypt = Encrypt.Encrypt(user.fldUserName);
+                string passwordencrypt = Encrypt.Encrypt(user.fldUserPassword);
+                int day = timezone.gettimezone().Day;
+                int month = timezone.gettimezone().Month;
+                int year = timezone.gettimezone().Year;
+                string code = day.ToString() + month.ToString() + year.ToString();
+                code = Encrypt.Encrypt(code);
+
+                Response.Cookies.Clear();
+                FormsAuthentication.SetAuthCookie(String.Empty, false);
+                FormsAuthentication.SignOut();
+
+                RedirectLink = ModulesUrl.Where(x => x.fld_Module.ToUpper() == Modules.ToUpper() && x.fld_LevelAccess == "CRT").Select(s => s.fld_Url).FirstOrDefault();
+
+                RedirectLink = RedirectLink + "/IntegrationLogin?TokenID=" + usernameencrypt + "&PassID=" + passwordencrypt + "&Code=" + code + "&Modules=budget";
+            }
+            //End add
             else
             {
                 RedirectLink = Url.Action("Index", "Modules", null, this.Request.Url.Scheme);
