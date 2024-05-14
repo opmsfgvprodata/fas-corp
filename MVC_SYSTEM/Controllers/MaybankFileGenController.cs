@@ -1926,7 +1926,288 @@ namespace MVC_SYSTEM.Controllers
             return Json(new { msg, statusmsg, link });
         }
 
-        
+        public ActionResult TaxCP39Prev()
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+
+            DateTime Minus1month = timezone.gettimezone().AddMonths(-1);
+            int year = Minus1month.Year;
+            int month = Minus1month.Month;
+            int drpyear = 0;
+            int drprangeyear = 0;
+
+            ViewBag.MaybankFileGen = "class = active";
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            drpyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+            drprangeyear = timezone.gettimezone().Year;
+
+            var yearlist = new List<SelectListItem>();
+            for (var i = drpyear; i <= drprangeyear; i++)
+            {
+                if (i == year)
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = true });
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                }
+            }
+
+            ViewBag.YearList = yearlist;
+
+            ViewBag.MonthList = new SelectList(dbC.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "monthlist" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID), "fldOptConfValue", "fldOptConfDesc", month);
+
+            List<SelectListItem> CompCodeList = new List<SelectListItem>();
+
+            CompCodeList = new SelectList(dbC.tbl_Syarikat.OrderBy(x => x.fld_NamaPndkSyarikat), "fld_NamaPndkSyarikat", "fld_NamaPndkSyarikat").ToList();
+
+            CompCodeList.Insert(0, (new SelectListItem { Text = "All", Value = "0" }));
+            ViewBag.CompCodeList = CompCodeList;
+            return View();
+        }
+
+        public ViewResult _TaxCP39Prev(string CompCodeList, int? MonthList, int? YearList, string print)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            string NamaSyarikat = "";
+            string ClientId = "";
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            List<sp_TaxCP39Prev_Result> taxCP39 = new List<sp_TaxCP39Prev_Result>();
+
+            ViewBag.MonthList = MonthList;
+            ViewBag.YearList = YearList;
+            var CompCodeCopy = "FASSB";
+            if (CompCodeList != "0" && CompCodeList != null)
+            {
+                CompCodeCopy = CompCodeList;
+            }
+            var syarikat = dbC.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == CompCodeCopy).FirstOrDefault();
+            ViewBag.NamaSyarikat = syarikat.fld_NamaSyarikat;
+            ViewBag.NamaPendekSyarikat = syarikat.fld_NamaPndkSyarikat;
+            ViewBag.NoSyarikat = syarikat.fld_NoSyarikat;
+            ViewBag.CorpID = syarikat.fld_CorporateID;
+            ViewBag.AccNo = syarikat.fld_AccountNo;
+            ClientId = syarikat.fld_ClientBatchID;
+            if (ClientId == null || ClientId == "")
+            {
+                if (CompCodeList == "FASSB")
+                {
+                    ViewBag.clientid = "FGVASB" + MonthList + YearList;
+                }
+
+                if (CompCodeList == "RNDSB")
+                {
+                    ViewBag.clientid = "RNDSB" + MonthList + YearList;
+                }
+            }
+            else
+            {
+                ViewBag.clientid = ClientId;
+            }
+
+            ViewBag.NegaraID = NegaraID;
+            ViewBag.SyarikatID = SyarikatID;
+            ViewBag.UserID = getuserid;
+            ViewBag.UserName = User.Identity.Name;
+            ViewBag.Date = DateTime.Now.ToShortDateString();
+            ViewBag.Time = DateTime.Now.ToShortTimeString();
+            ViewBag.Print = print;
+
+            ViewBag.Description = "Region " + NamaSyarikat + " - CP 39 for " + MonthList + "/" + YearList;
+
+            string constr = ConfigurationManager.ConnectionStrings["MVC_SYSTEM_HQ_CONN"].ConnectionString;
+            var con = new SqlConnection(constr);
+            try
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("NegaraID", NegaraID);
+                parameters.Add("SyarikatID", SyarikatID);
+                parameters.Add("Month", MonthList);
+                parameters.Add("Year", YearList);
+                parameters.Add("CompCode", CompCodeList);
+                con.Open();
+                taxCP39 = SqlMapper.Query<sp_TaxCP39Prev_Result>(con, "sp_TaxCP39Prev", parameters).ToList();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            ViewBag.RecordNo = taxCP39.Count();
+
+            if (taxCP39.Count() == 0)
+            {
+                ViewBag.Message = GlobalResCorp.msgNoRecord;
+            }
+            return View(taxCP39);
+        }
+
+        public JsonResult TaxCP39DetailPrev(int Month, int Year, string CompCode)
+        {
+            string msg = "";
+            string statusmsg = "";
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+
+            string stringyear = "";
+            string stringmonth = "";
+            stringyear = Year.ToString();
+            stringmonth = Month.ToString();
+            stringmonth = (stringmonth.Length == 1 ? "0" + stringmonth : stringmonth);
+            decimal? TotalMTDAmt = 0;
+            int TotalMTDRec = 0;
+            decimal? TotalCP38Amt = 0;
+            int TotalCP38Rec = 0;
+            int CountData = 0;
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            List<sp_TaxCP39Prev_Result> taxCP39 = new List<sp_TaxCP39Prev_Result>();
+            var CompCodeCopy = "FASSB";
+            if (CompCode != "0")
+            {
+                CompCodeCopy = CompCode;
+            }
+            var SyarikatDetail = dbC.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == CompCodeCopy).FirstOrDefault();
+            string filename = "Tax CP39 (" + SyarikatDetail.fld_NamaPndkSyarikat.ToUpper() + ") " + "" + stringmonth + stringyear + ".txt";
+            string constr = ConfigurationManager.ConnectionStrings["MVC_SYSTEM_HQ_CONN"].ConnectionString;
+            var con = new SqlConnection(constr);
+            try
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("NegaraID", NegaraID);
+                parameters.Add("SyarikatID", SyarikatID);
+                parameters.Add("Month", Month);
+                parameters.Add("Year", Year);
+                parameters.Add("CompCode", CompCode);
+                con.Open();
+                taxCP39 = SqlMapper.Query<sp_TaxCP39Prev_Result>(con, "sp_TaxCP39Prev", parameters).ToList();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            if (taxCP39.Count() != 0)
+            {
+                TotalMTDAmt = taxCP39.Sum(s => s.fld_MTDAmount);
+                TotalMTDRec = taxCP39.Count();
+                TotalCP38Amt = taxCP39.Sum(s => s.fld_CP38Amount);
+                TotalCP38Rec = taxCP39.Where(x => x.fld_CP38Amount > 0).Count();
+                msg = GlobalResCorp.msgDataFound;
+                statusmsg = "success";
+            }
+            else
+            {
+                msg = GlobalResCorp.msgDataNotFound;
+                statusmsg = "warning";
+            }
+
+            dbSP.Dispose();
+            dbC.Dispose();
+            return Json(new { msg, statusmsg, file = filename, TotalMTDAmt, TotalMTDRec, TotalCP38Amt, TotalCP38Rec });
+        }
+
+        [HttpPost]
+        public ActionResult DownloadCP39TextFilePrev(int Month, int Year, string CompCode)
+        {
+            string msg = "";
+            string statusmsg = "";
+            string link = "";
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            GetGenerateFile getGenerateFile = new GetGenerateFile();
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            var CompCodeCopy = "FASSB";
+            if (CompCode != "0")
+            {
+                CompCodeCopy = CompCode;
+            }
+            var SyarikatDetail = dbC.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == CompCodeCopy).FirstOrDefault();
+            List<sp_TaxCP39Prev_Result> taxCP39 = new List<sp_TaxCP39Prev_Result>();
+            string constr = ConfigurationManager.ConnectionStrings["MVC_SYSTEM_HQ_CONN"].ConnectionString;
+            var con = new SqlConnection(constr);
+            try
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("NegaraID", NegaraID);
+                parameters.Add("SyarikatID", SyarikatID);
+                parameters.Add("Month", Month);
+                parameters.Add("Year", Year);
+                parameters.Add("CompCode", CompCode);
+                con.Open();
+                taxCP39 = SqlMapper.Query<sp_TaxCP39Prev_Result>(con, "sp_TaxCP39Prev", parameters).ToList();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            var TotalMTDAmt = taxCP39.Sum(s => s.fld_MTDAmount) * 100;
+            var TotalMTDRec = taxCP39.Count();
+            var TotalCP38Amt = taxCP39.Sum(s => s.fld_CP38Amount) * 100;
+            var TotalCP38Rec = taxCP39.Where(x => x.fld_CP38Amount > 0).Count();
+            var TotalMTDAmtStr = TotalMTDAmt.ToString("0");
+            var TotalMTDRecStr = TotalMTDRec.ToString("0");
+            var TotalCP38AmtStr = TotalCP38Amt.ToString("0");
+            var TotalCP38RecStr = TotalCP38Rec.ToString("0");
+            string fileContent = "";
+
+            #region Header
+            fileContent = GetGenerateFile.TextFileContent("H", 1, " ", true);
+            fileContent += GetGenerateFile.TextFileContent(SyarikatDetail.fld_EmployerTaxNo, 10, "0", true);
+            fileContent += GetGenerateFile.TextFileContent(SyarikatDetail.fld_EmployerTaxNo, 10, "0", true);
+            fileContent += GetGenerateFile.TextFileContent(Year.ToString(), 4, "0", true);
+            fileContent += GetGenerateFile.TextFileContent(Month.ToString(), 2, "0", true);
+            fileContent += GetGenerateFile.TextFileContent(TotalMTDAmtStr, 10, "0", true);
+            fileContent += GetGenerateFile.TextFileContent(TotalMTDRecStr, 5, "0", true);
+            fileContent += GetGenerateFile.TextFileContent(TotalCP38AmtStr, 10, "0", true);
+            fileContent += GetGenerateFile.TextFileContent(TotalCP38RecStr, 5, "0", true);
+            fileContent += Environment.NewLine;
+            #endregion Header
+
+            #region Body
+            foreach (var item in taxCP39)
+            {
+                fileContent += GetGenerateFile.TextFileContent("D", 1, " ", true);
+                fileContent += GetGenerateFile.TextFileContent(item.fld_TaxNo, 10, "0", true);
+                fileContent += GetGenerateFile.TextFileContent(item.fld_WifeCode, 1, " ", true);
+                fileContent += GetGenerateFile.TextFileContent(item.fld_WorkerName, 60, " ", false);
+                fileContent += GetGenerateFile.TextFileContent("", 12, " ", true);
+                fileContent += GetGenerateFile.TextFileContent("", 12, " ", true);
+                fileContent += GetGenerateFile.TextFileContent(item.fld_NoKp, 12, " ", false);
+                fileContent += GetGenerateFile.TextFileContent(item.fld_CountryCode, 2, " ", true);
+                fileContent += GetGenerateFile.TextFileContent((item.fld_MTDAmount * 100).ToString("0"), 8, "0", true);
+                fileContent += GetGenerateFile.TextFileContent((item.fld_CP38Amount * 100).ToString("0"), 8, "0", true);
+                fileContent += GetGenerateFile.TextFileContent(item.fld_Nopkj, 10, " ", false);
+                if (taxCP39.IndexOf(item) != taxCP39.Count - 1)
+                {
+                    fileContent += Environment.NewLine;
+                }
+            }
+            #endregion Body
+            var filename = SyarikatDetail.fld_EmployerTaxNo + GetGenerateFile.TextFileContent(Month.ToString(), 2, "0", true) + "_" + GetGenerateFile.TextFileContent(Year.ToString(), 4, "0", true) + ".txt";
+            var filePath = getGenerateFile.CreateTextFile(filename, fileContent, "CP39");
+
+            link = Url.Action("Download", "MaybankFileGen", new { filePath, filename });
+
+            msg = GlobalResCorp.msgGenerateSuccess;
+            statusmsg = "success";
+
+            return Json(new { msg, statusmsg, link });
+        }
+
         [HttpPost]
         public ActionResult ConvertPDF2(string myHtml, string filename, string reportname)
         {
