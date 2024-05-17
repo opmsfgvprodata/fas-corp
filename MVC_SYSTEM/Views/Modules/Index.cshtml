@@ -1,7 +1,8 @@
-﻿
+﻿@*@using MVC_SYSTEM.ClassBudget*@ @*Fitri add 2024*@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutModules.cshtml";
+    /*bgtUserRegister users = new bgtUserRegister();*/ //Fitri add 2024
 }
 <style>
     .modal-dialog {
@@ -107,7 +108,7 @@
                 position: static;
                 padding-top: 110px;
                 font-family: Arial;
-                font-size:12px;
+                font-size: 12px;
                 color: black;
             }
     }
@@ -130,6 +131,16 @@
                 <div class="row row-centered">
                     <a href="@Url.Action("ModulesSelection", "Modules", new { Modules = "checkroll"}, this.Request.Url.Scheme)"><div class="col-lg-2 col-centered zoom" style="background-image: url('../Asset/Images/checkroll.png'); "><p class="atext">Checkroll</p></div></a>
                     <a href="@Url.Action("ModulesSelection", "Modules", new { Modules = "labour"}, this.Request.Url.Scheme)"><div class="col-lg-2 col-centered zoom" style="background-image: url('../Asset/Images/labour.png'); "><p class="atext">Labour</p></div></a>
+                    @*Fitri add 2024*@
+                    @*@if (users.GetRegisteredUser(User.Identity.Name) == true)
+                        {*@
+                    <a href="@Url.Action("ModulesSelection", "Modules", new { Modules = "budget" }, this.Request.Url.Scheme)"><div class="col-lg-2 col-centered zoom" style="background-image: url('../Asset/Images/checkroll.png'); "><p class="atext">Budget</p></div></a>
+                    @*}
+                        else
+                        {
+                            <div class="col-lg-2 col-centered zoom" style="background-image: url('../Asset/Images/checkroll.png'); "><p class="atext">Budgets</p></div>
+                        }*@
+                    @*End add*@
                 </div>
             </div>
         </div>
