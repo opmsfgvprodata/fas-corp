@@ -1,0 +1,139 @@
+﻿@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "Tax CP39";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "searchResult",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "divLoading"
+    };
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<div id="divLoading" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResCorp.msgWait
+        </label>
+    </div>
+</div>
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom" style="padding-bottom:16px;">
+        @using (Ajax.BeginForm("_TaxCP39", "MaybankFileGen", null, options, new { @id = "rcms" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <label>@GlobalResCorp.lblMonth</label>
+                        @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2">
+                        <label>@GlobalResCorp.lblYear</label>
+                        @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-2">
+                        <label>@GlobalResRegion.lblCompany</label>
+                        @Html.DropDownList("CompCodeList", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-sm-1" style="padding-top:25px;">
+                        <input class="btn btn-primary btn-block" type="submit" name="Lihat" id="btnSubmit" value="View" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <br />
+                    <br />
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <label for="TotalMTDAmt">@GlobalResCorp.lblTotalMTDAmt</label>
+                        <input type="text" name="TotalMTDAmt" id="TotalMTDAmt" class="form-control" value="" disabled />
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="TotalMTDRec">@GlobalResCorp.lblTotalMTDRec</label>
+                        <input type="text" name="TotalMTDRec" id="TotalMTDRec" class="form-control" value="" disabled />
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="TotalCP38Amt">@GlobalResCorp.lblTotalCP38Amt</label>
+                        <input type="text" name="TotalCP38Amt" id="TotalCP38Amt" class="form-control" value="" disabled />
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="TotalCP38Rec">@GlobalResCorp.lblTotalCP38Rec</label>
+                        <input type="text" name="TotalCP38Rec" id="TotalCP38Rec" class="form-control" value="" disabled />
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="FileName">@GlobalResCorp.lblGenerateFile</label>
+                        <input type="text" name="FileName" id="FileName" class="form-control" value="" disabled />
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+    <div class="well" style="margin-top:7px;">
+        <div class="panel panel-primary">
+            <div class="panel-heading">MTD Text File Data (CP39)</div>
+            <div class="panel-body">
+                <div id="searchResult">
+                    @Html.Action("_TaxCP39")
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<script>
+    $(document).ready(function () {
+        $("#btnSubmit").click(function (e) {
+            var Month = $("#MonthList").val();
+            var Year = $("#YearList").val();
+            var CompCode = $("#CompCodeList").val();
+            $("#UpdateProgress1").css("display", "");
+            var ajxfn = {};
+            ajxfn.url = "@Url.Action("TaxCP39Detail", "MaybankFileGen")";
+            ajxfn.type = "POST";
+            ajxfn.async = false;
+            ajxfn.data = JSON.stringify({ Month: Month, Year: Year, CompCode: CompCode });
+            ajxfn.datatype = "json";
+            ajxfn.contentType = "application/json";
+            ajxfn.success = function (result) {
+                $('#TotalMTDAmt').val(result.TotalMTDAmt);
+                $('#TotalMTDRec').val(result.TotalMTDRec);
+                $('#TotalCP38Amt').val(result.TotalCP38Amt);
+                $('#TotalCP38Rec').val(result.TotalCP38Rec);
+                $('#FileName').val(result.file);
+                $.simplyToast(result.msg, result.statusmsg);
+                $("#UpdateProgress1").css("display", "none");
+            };
+            ajxfn.error = function () {
+                $.simplyToast('@GlobalResCorp.msgError', 'danger');
+                $("#UpdateProgress1").css("display", "none");
+            };
+            $.ajax(ajxfn);
+        });
+    });
+
+
+
+</script>
