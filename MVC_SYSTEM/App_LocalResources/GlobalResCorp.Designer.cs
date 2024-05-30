@@ -934,6 +934,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tarikh Sah.
+        /// </summary>
+        public static string hdrValidDate {
+            get {
+                return ResourceManager.GetString("hdrValidDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aktiviti Kerja.
         /// </summary>
         public static string hdrWorkAktvt {
@@ -1344,6 +1353,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblAverageMonthlySalaryReport {
             get {
                 return ResourceManager.GetString("lblAverageMonthlySalaryReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back Dated Key In.
+        /// </summary>
+        public static string lblBackDatedKeyIn {
+            get {
+                return ResourceManager.GetString("lblBackDatedKeyIn", resourceCulture);
             }
         }
         
@@ -1920,6 +1938,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblChckAll {
             get {
                 return ResourceManager.GetString("lblChckAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sekatan Checkroll.
+        /// </summary>
+        public static string lblCheckrollLock {
+            get {
+                return ResourceManager.GetString("lblCheckrollLock", resourceCulture);
             }
         }
         

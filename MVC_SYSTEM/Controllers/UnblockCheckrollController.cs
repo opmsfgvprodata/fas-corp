@@ -100,9 +100,9 @@ namespace MVC_SYSTEM.Controllers
             return View();
         }
 
-        public ActionResult _UnblockCheckroll(int? MonthList, int? YearList, int? WlyhList, int? EstList, int page = 1,
+        public ActionResult _UnblockCheckroll(String SelectionCategory, int? MonthList, int? YearList, int? WlyhList, int? EstList, int page = 1,
             string sort = "fld_BlokStatus",
-            string sortdir = "ASC")
+            string sortdir = "ASC") //fatin add selectioncategory - 30/05/2024
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
@@ -124,9 +124,10 @@ namespace MVC_SYSTEM.Controllers
                     .Where(x => x.fld_WilayahID == WlyhList &&
                                 x.fld_LadangID == EstList &&
                                 x.fld_Year == YearList &&
-                                x.fld_Month == MonthList);
+                                x.fld_Month == MonthList &&
+                                x.fld_Purpose == SelectionCategory); // fatin added - 30/05/2024);
 
-                if (unitData != null)
+            if (unitData != null)
                 {
                     records.Content = unitData
                         .Where(x => x.fld_NegaraID == NegaraID &&
@@ -234,7 +235,16 @@ namespace MVC_SYSTEM.Controllers
                              x.fld_NegaraID == NegaraID &&
                              x.fld_SyarikatID == SyarikatID);
 
-                    unitData.fld_ValidDT = ChangeTimeZone.gettimezone();
+                    //fatin added - 30/05/2024
+                    if (unitData.fld_Purpose == "blockdataentry")
+                    {
+                        unitData.fld_ValidDT = ChangeTimeZone.gettimezone();
+                    }
+                    else
+                    {
+                        unitData.fld_ValidDT = optionConfigsWeb.fld_ValidDT;
+                    }
+                    //unitData.fld_ValidDT = ChangeTimeZone.gettimezone();
                     unitData.fld_BlokStatus = optionConfigsWeb.fld_BlokStatus;
                     unitData.fld_Remark = optionConfigsWeb.fld_Remark;
                     unitData.fld_UnBlockAppBy = getuserid;

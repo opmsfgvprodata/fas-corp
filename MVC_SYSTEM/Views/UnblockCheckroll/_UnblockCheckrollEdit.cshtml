@@ -19,21 +19,51 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">@GlobalResCorp.UnblockCheckrollData</div>
                     <div class="panel-body">
-                        <div class="form-group">
-                            <label class="control-label col-sm-3">@GlobalResCorp.lblUnblk:</label>
-                            <div class="col-sm-8">
-                                @Html.DropDownListFor(model => model.fld_BlokStatus, new SelectList(ViewBag.fld_Selection, "Value", "Text", Model.fld_BlokStatus), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.fld_BlokStatus, "", new { @class = "text-danger" })
+                        @if (Model.fld_Purpose == "blockdataentry")
+                        {
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">@GlobalResCorp.lblUnblk:</label>
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(model => model.fld_BlokStatus, new SelectList(ViewBag.fld_Selection, "Value", "Text", Model.fld_BlokStatus), new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.fld_BlokStatus, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-3">@GlobalResCorp.hdrCatat:</label>
-                            <div class="col-sm-8">
-                                @Html.TextBoxFor(model => model.fld_Remark, htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.fld_Remark, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">@GlobalResCorp.hdrCatat:</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.fld_Remark, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.fld_Remark, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
+                        }
+                        else
+                        {
+                            @Html.HiddenFor(model => model.fld_BlokStatus)
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">@GlobalResCorp.hdrValidDate:</label>
+                                <div class="col-sm-4">
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        @Html.EditorFor(model => model.fld_ValidDT, new { htmlAttributes = new { @class = "form-control", @type = "text", autocomplete = "off", @Value = DateTime.Now.ToString("dd/MM/yyyy") } })
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">@GlobalResCorp.hdrCatat:</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.fld_Remark, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.fld_Remark, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }
+
                         @Html.HiddenFor(model => model.fld_ID)
+                        @Html.HiddenFor(model => model.fld_Purpose)
+
                     </div>
                 </div>
             </div>
@@ -47,7 +77,19 @@
 </section>
 
 <script>
-    $("form").removeData("validator");
-    $("form").removeData("unobtrusiveValidation");
-    $.validator.unobtrusive.parse("form");
+    $(document).ready(function () {
+
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+
+        //fatin added - 30/05/2024
+        $(function () {
+            $('#fld_ValidDT').datetimepicker({
+                timepicker: false,
+                format: 'd/m/Y',
+                maxDate: new Date()
+            });
+        });
+    });
 </script>

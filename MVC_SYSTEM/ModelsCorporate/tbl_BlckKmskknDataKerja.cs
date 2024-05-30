@@ -42,6 +42,9 @@ namespace MVC_SYSTEM.ModelsCorporate
 
         [StringLength(300)]
         public string fld_Remark { get; set; }
+
+        [StringLength(50)]
+        public string fld_Purpose { get; set; } //fatin added - 30/05/2024
     }
 
     [Table("tbl_BlckKmskknDataKerja")]
@@ -81,5 +84,8 @@ namespace MVC_SYSTEM.ModelsCorporate
 
         [StringLength(300)]
         public string fld_Remark { get; set; }
+
+        [StringLength(50)]
+        public string fld_Purpose { get; set; } //fatin added - 30/05/2024
     }
 }
