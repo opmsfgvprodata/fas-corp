@@ -19,7 +19,7 @@ namespace MVC_SYSTEM.App_LocalResources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class GlobalResCorp {
@@ -1344,6 +1344,24 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblAverageMonthlySalaryReport {
             get {
                 return ResourceManager.GetString("lblAverageMonthlySalaryReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maklumat Hari Sebelum Untuk Kemasukan Data.
+        /// </summary>
+        public static string lblBackDatedDayToKeyin {
+            get {
+                return ResourceManager.GetString("lblBackDatedDayToKeyin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kemaskini Maklumat Hari Sebelum Untuk Kemasukan Data.
+        /// </summary>
+        public static string lblBackDatedDayToKeyinUpdate {
+            get {
+                return ResourceManager.GetString("lblBackDatedDayToKeyinUpdate", resourceCulture);
             }
         }
         
@@ -5632,11 +5650,47 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maklumat Kerja Lebih Masa Harian Maksima.
+        /// </summary>
+        public static string lblMaxDailyOTHours {
+            get {
+                return ResourceManager.GetString("lblMaxDailyOTHours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kemaskini Maklumat Kerja Lebih Masa Harian Maksima.
+        /// </summary>
+        public static string lblMaxDailyOTHoursUpdate {
+            get {
+                return ResourceManager.GetString("lblMaxDailyOTHoursUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maximum hasil adalah.
         /// </summary>
         public static string lblMaxHasil {
             get {
                 return ResourceManager.GetString("lblMaxHasil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maklumat Kerja Lebih Masa Bulanan Maksima.
+        /// </summary>
+        public static string lblMaxMonthlyOTHours {
+            get {
+                return ResourceManager.GetString("lblMaxMonthlyOTHours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kemaskini Maklumat Kerja Lebih Masa Bulanan Maksima.
+        /// </summary>
+        public static string lblMaxMonthlyOTHoursUpdate {
+            get {
+                return ResourceManager.GetString("lblMaxMonthlyOTHoursUpdate", resourceCulture);
             }
         }
         
@@ -10447,6 +10501,24 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tempoh Hari Sebelum Untuk Kemasukan Data.
+        /// </summary>
+        public static string titleBackDatedDayToKeyin {
+            get {
+                return ResourceManager.GetString("titleBackDatedDayToKeyin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Penyelenggaraan Hari Sebelum Untuk Kemasukan Data.
+        /// </summary>
+        public static string titleBackDatedDayToKeyinMaintenance {
+            get {
+                return ResourceManager.GetString("titleBackDatedDayToKeyinMaintenance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Salin Insentif.
         /// </summary>
         public static string titleCopyIncentive {
@@ -10524,6 +10596,42 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string titleIncentiveInfo {
             get {
                 return ResourceManager.GetString("titleIncentiveInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tempoh Maksima Kerja Lebih Masa Harian.
+        /// </summary>
+        public static string titleMaxDailyOTHours {
+            get {
+                return ResourceManager.GetString("titleMaxDailyOTHours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Penyelenggaraan Maksima Kerja Lebih Masa Harian.
+        /// </summary>
+        public static string titleMaxDailyOTHoursMaintenance {
+            get {
+                return ResourceManager.GetString("titleMaxDailyOTHoursMaintenance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tempoh Maksima Kerja Lebih Masa Bulanan.
+        /// </summary>
+        public static string titleMaxMonthlyOTHours {
+            get {
+                return ResourceManager.GetString("titleMaxMonthlyOTHours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Penyelenggaraan Maksima Kerja Lebih Masa Bulanan.
+        /// </summary>
+        public static string titleMaxMonthlyOTHoursMaintenance {
+            get {
+                return ResourceManager.GetString("titleMaxMonthlyOTHoursMaintenance", resourceCulture);
             }
         }
         

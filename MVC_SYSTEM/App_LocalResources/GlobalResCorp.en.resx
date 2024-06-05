@@ -2499,4 +2499,61 @@
   <data name="lblTotalMTDRec" xml:space="preserve">
     <value>Total MTD Records</value>
   </data>
+  <data name="lblBackDatedDayToKeyin" xml:space="preserve">
+    <value>Back Dated Day To Key In Information</value>
+  </data>
+  <data name="lblBackDatedDayToKeyinUpdate" xml:space="preserve">
+    <value>Update Back Dated Day To Key In</value>
+  </data>
+  <data name="lblBlokData" xml:space="preserve">
+    <value>Data Block Information</value>
+  </data>
+  <data name="lblBlokInfo" xml:space="preserve">
+    <value>Work Data Block Information</value>
+  </data>
+  <data name="lblBlokUpdate" xml:space="preserve">
+    <value>Update Work Data Block</value>
+  </data>
+  <data name="lblMaxDailyOTHours" xml:space="preserve">
+    <value>Max Daily OT Hours Information</value>
+  </data>
+  <data name="lblMaxDailyOTHoursUpdate" xml:space="preserve">
+    <value>Update Max Daily OT Hours</value>
+  </data>
+  <data name="lblMaxMonthlyOTHours" xml:space="preserve">
+    <value>Max Monthly OT Hours Information</value>
+  </data>
+  <data name="lblMaxMonthlyOTHoursUpdate" xml:space="preserve">
+    <value>Update Max Monthly OT Hours</value>
+  </data>
+  <data name="lblTblBlokData" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="lblTblBlokDataMax" xml:space="preserve">
+    <value>Maximum Days</value>
+  </data>
+  <data name="titleBackDatedDayToKeyin" xml:space="preserve">
+    <value>Back Dated Day To Key In Period</value>
+  </data>
+  <data name="titleBackDatedDayToKeyinMaintenance" xml:space="preserve">
+    <value>Back Dated Day To Key In Maintenance</value>
+  </data>
+  <data name="titleMaxDailyOTHours" xml:space="preserve">
+    <value>Max Daily OT Hours Period</value>
+  </data>
+  <data name="titleMaxDailyOTHoursMaintenance" xml:space="preserve">
+    <value>Max Daily OT Hours Maintenance</value>
+  </data>
+  <data name="titleMaxMonthlyOTHours" xml:space="preserve">
+    <value>Max Monthly OT Hours Period</value>
+  </data>
+  <data name="titleMaxMonthlyOTHoursMaintenance" xml:space="preserve">
+    <value>Max Monthly OT Hours Maintenance</value>
+  </data>
+  <data name="titleWorkBlockDay" xml:space="preserve">
+    <value>Work Data Block Period</value>
+  </data>
+  <data name="titleWorkBlockDayVld" xml:space="preserve">
+    <value>Work Data Unblock Validity</value>
+  </data>
 </root>

@@ -3552,6 +3552,15 @@
     <Content Include="Views\MaybankFileGen\_SSCOnlinePayment.cshtml" />
     <Content Include="Views\MaybankFileGen\RcmsZAP64.cshtml" />
     <Content Include="Views\MaybankFileGen\_RcmsZAP64.cshtml" />
+    <Content Include="Views\Maintenance\BlokDataBackDatedMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\_BlokDataBackDatedMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\_BlokDataBackDatedMaintenanceEdit.cshtml" />
+    <Content Include="Views\Maintenance\BlokDataDailyOTMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\BlokDataMonthlyOTMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\_BlokDataDailyOTMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\_BlokDataMonthlyOTMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\_BlokDataDailyOTMaintenanceEdit.cshtml" />
+    <Content Include="Views\Maintenance\_BlokDataMonthlyOTMaintenanceEdit.cshtml" />
     <Content Include="Views\MaybankFileGen\RcmsGenOthers.cshtml" />
     <Content Include="Views\MaybankFileGen\_rcmsOthers.cshtml" />
     <Content Include="Views\MaybankFileGen\SSCOnlinePaymentOthers.cshtml" />
