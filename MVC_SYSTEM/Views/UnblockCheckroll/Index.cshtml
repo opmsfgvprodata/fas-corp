@@ -25,11 +25,20 @@
         {
             @Html.AntiForgeryToken()
         <div class="row">
+            @*fatin added - 30/05/2024*@
             <div class="col-sm-2">
+                @Html.RadioButton("SelectionCategory", "blockdataentry", true, new { @id = "SelectionCategory1" })
+                @Html.Label(GlobalResCorp.lblCheckrollLock)
+                <br />
+                @Html.RadioButton("SelectionCategory", "backdatedkeyin", false, new { @id = "SelectionCategory2" })
+                @Html.Label(GlobalResCorp.lblBackDatedKeyIn)
+            </div>
+            @*end*@
+            <div class="col-sm-1"> @*fatin modified - 30/05/2024*@
                 @Html.Label(GlobalResCorp.lblMonth)
                 @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-1"> @*fatin modified - 30/05/2024*@
                 @Html.Label(GlobalResCorp.lblYear)
                 @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
             </div>
