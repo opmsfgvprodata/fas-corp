@@ -38,7 +38,7 @@
                         }
                         else
                         {
-                            @Html.HiddenFor(model => model.fld_BlokStatus)
+                            @*@Html.HiddenFor(model => model.fld_BlokStatus)*@
 
                             <div class="form-group">
                                 <label class="control-label col-sm-3">@GlobalResCorp.hdrValidDate:</label>
@@ -88,7 +88,7 @@
             $('#fld_ValidDT').datetimepicker({
                 timepicker: false,
                 format: 'd/m/Y',
-                maxDate: new Date()
+                minDate: 0
             });
         });
     });
