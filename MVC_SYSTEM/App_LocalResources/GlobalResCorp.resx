@@ -3657,6 +3657,15 @@
   <data name="lblTotalMTDRec" xml:space="preserve">
     <value>Total MTD Records</value>
   </data>
+  <data name="lblBackDatedKeyIn" xml:space="preserve">
+    <value>Back Dated Key In</value>
+  </data>
+  <data name="lblCheckrollLock" xml:space="preserve">
+    <value>Sekatan Checkroll</value>
+  </data>
+  <data name="hdrValidDate" xml:space="preserve">
+    <value>Tarikh Sah</value>
+  </data>
   <data name="lblBackDatedDayToKeyin" xml:space="preserve">
     <value>Maklumat Hari Sebelum Untuk Kemasukan Data</value>
   </data>

@@ -4,6 +4,7 @@ using MVC_SYSTEM.log;
 using MVC_SYSTEM.ModelsCorporate;
 using MVC_SYSTEM.ViewingModels;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
@@ -100,9 +101,9 @@ namespace MVC_SYSTEM.Controllers
             return View();
         }
 
-        public ActionResult _UnblockCheckroll(int? MonthList, int? YearList, int? WlyhList, int? EstList, int page = 1,
+        public ActionResult _UnblockCheckroll(String SelectionCategory, int? MonthList, int? YearList, int? WlyhList, int? EstList, int page = 1,
             string sort = "fld_BlokStatus",
-            string sortdir = "ASC")
+            string sortdir = "ASC") //fatin add selectioncategory - 30/05/2024
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
@@ -119,14 +120,28 @@ namespace MVC_SYSTEM.Controllers
             //    ViewBag.Message = "Sila Pilih Bulan, Tahun, Wilayah dan Ladang";
             //    return View();
             //}
-            
-                var unitData = db.tbl_BlckKmskknDataKerja
+
+            IQueryable<tbl_BlckKmskknDataKerja> unitData;
+
+            if (SelectionCategory == "blockdataentry")
+            {
+                unitData = db.tbl_BlckKmskknDataKerja
+                     .Where(x => x.fld_WilayahID == WlyhList &&
+                                 x.fld_LadangID == EstList &&
+                                 x.fld_Year == YearList &&
+                                 x.fld_Month == MonthList &&
+                                 x.fld_Purpose == SelectionCategory); // fatin added - 30/05/2024);
+            }
+            else
+            {
+                unitData = db.tbl_BlckKmskknDataKerja
                     .Where(x => x.fld_WilayahID == WlyhList &&
                                 x.fld_LadangID == EstList &&
-                                x.fld_Year == YearList &&
-                                x.fld_Month == MonthList);
+                                x.fld_Purpose == SelectionCategory); // fatin added - 30/05/2024);
+            }
 
-                if (unitData != null)
+
+            if (unitData != null)
                 {
                     records.Content = unitData
                         .Where(x => x.fld_NegaraID == NegaraID &&
@@ -144,8 +159,9 @@ namespace MVC_SYSTEM.Controllers
                     records.PageSize = pageSize;
                     ViewBag.RoleID = role;
                     ViewBag.pageSize = 1;
+                    ViewBag.SelectionCategory = SelectionCategory;
 
-                    return View(records);
+                return View(records);
                 }
                 else
                 {
@@ -159,9 +175,11 @@ namespace MVC_SYSTEM.Controllers
                     //    records.TotalRecords = unitData
                     //        .Count();
                 }
-            
 
-            
+               
+
+
+
         }
 
         public JsonResult GetSubEst(int Wlyh)
@@ -227,15 +245,25 @@ namespace MVC_SYSTEM.Controllers
 
             try
             {
-                if (ModelState.IsValid)
-                {
+                //if (ModelState.IsValid)
+                //{
                     var unitData = db.tbl_BlckKmskknDataKerja.SingleOrDefault(
                         x => x.fld_ID == optionConfigsWeb.fld_ID &&
                              x.fld_NegaraID == NegaraID &&
                              x.fld_SyarikatID == SyarikatID);
 
-                    unitData.fld_ValidDT = ChangeTimeZone.gettimezone();
-                    unitData.fld_BlokStatus = optionConfigsWeb.fld_BlokStatus;
+                    //fatin added - 30/05/2024
+                    if (unitData.fld_Purpose == "blockdataentry")
+                    {
+                        unitData.fld_ValidDT = ChangeTimeZone.gettimezone();
+                        unitData.fld_BlokStatus = optionConfigsWeb.fld_BlokStatus;
+                    }
+                    else
+                    {
+                        unitData.fld_ValidDT = optionConfigsWeb.fld_ValidDT;
+                        unitData.fld_BlokStatus = null;
+                    }
+ 
                     unitData.fld_Remark = optionConfigsWeb.fld_Remark;
                     unitData.fld_UnBlockAppBy = getuserid;
                     unitData.fld_UnBlockAppDT = ChangeTimeZone.gettimezone();
@@ -266,19 +294,19 @@ namespace MVC_SYSTEM.Controllers
                         action = "_UnblockCheckroll",
                         controller = "UnblockCheckroll"
                     });
-                }
+                //}
             
 
-                else
-                {
-                    return Json(new
-                    {
-                        success = false,
-                        msg = GlobalResCorp.msgErrorData,
-                        status = "danger",
-                        checkingdata = "0"
-                    });
-                }
+                //else
+                //{
+                //    return Json(new
+                //    {
+                //        success = false,
+                //        msg = GlobalResCorp.msgErrorData,
+                //        status = "danger",
+                //        checkingdata = "0"
+                //    });
+                //}
             }
 
             catch (Exception ex)

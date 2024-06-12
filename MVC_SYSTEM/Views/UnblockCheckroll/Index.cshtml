@@ -25,13 +25,22 @@
         {
             @Html.AntiForgeryToken()
         <div class="row">
+            @*fatin added - 30/05/2024*@
             <div class="col-sm-2">
-                @Html.Label(GlobalResCorp.lblMonth)
-                @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                @Html.RadioButton("SelectionCategory", "blockdataentry", true, new { @id = "SelectionCategory1" })
+                @Html.Label(GlobalResCorp.lblCheckrollLock)
+                <br />
+                @Html.RadioButton("SelectionCategory", "backdatedkeyin", false, new { @id = "SelectionCategory2" })
+                @Html.Label(GlobalResCorp.lblBackDatedKeyIn)
             </div>
-            <div class="col-sm-2">
+            @*end*@
+            <div class="col-sm-1"> @*fatin modified - 30/05/2024*@
+                @Html.Label(GlobalResCorp.lblMonth)
+                @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control", id = "MonthList" })
+            </div>
+            <div class="col-sm-1"> @*fatin modified - 30/05/2024*@
                 @Html.Label(GlobalResCorp.lblYear)
-                @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control", id = "YearList" })
             </div>
             <div class="col-sm-2">
                 @Html.Label(GlobalResCorp.lblRegion)
@@ -89,6 +98,26 @@
     //}
 
     $(document).ready(function () {
+
+        var initialRadioGrp = $('input[name=SelectionCategory]:checked').val();
+        toggleFields(initialRadioGrp);
+
+        // Event listener for radio buttons
+        $('input[name="SelectionCategory"]').on("click", function () {
+            var Radiogrp = $('input[name=SelectionCategory]:checked').val();
+            toggleFields(Radiogrp);
+        });
+
+        function toggleFields(value) {
+            if (value === "blockdataentry") {
+                $("#MonthList").prop("disabled", false);
+                $("#YearList").prop("disabled", false);
+            } else {
+                $("#MonthList").prop("disabled", true);
+                $("#YearList").prop("disabled", true);
+            }
+        }
+
         $("#WlyhList").change(function () {
             var Wlyhlist = {};
             var disableoption = "";
