@@ -3702,4 +3702,16 @@
   <data name="titleMaxMonthlyOTHoursMaintenance" xml:space="preserve">
     <value>Penyelenggaraan Maksima Kerja Lebih Masa Bulanan</value>
   </data>
+  <data name="lblTotalDaysWorking" xml:space="preserve">
+    <value>Maklumat Jumlah Hari Bekerja</value>
+  </data>
+  <data name="lblTotalDaysWorkingUpdate" xml:space="preserve">
+    <value>Kemaskini Jumlah Hari Bekerja</value>
+  </data>
+  <data name="titleTotalDaysWorking" xml:space="preserve">
+    <value>Tempoh Jumlah Hari Bekerja</value>
+  </data>
+  <data name="titleTotalDaysWorkingMaintenance" xml:space="preserve">
+    <value>Penyelenggaraan Jumlah Hari Bekerja</value>
+  </data>
 </root>

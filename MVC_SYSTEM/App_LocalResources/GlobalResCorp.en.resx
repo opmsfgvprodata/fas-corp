@@ -2565,4 +2565,31 @@
   <data name="titleWorkBlockDayVld" xml:space="preserve">
     <value>Work Data Unblock Validity</value>
   </data>
+  <data name="lblTotalDaysWorking" xml:space="preserve">
+    <value>Total Days Working Information</value>
+  </data>
+  <data name="lblTotalDaysWorkingUpdate" xml:space="preserve">
+    <value>Update Total Days Working</value>
+  </data>
+  <data name="titleTotalDaysWorking" xml:space="preserve">
+    <value>Total Days Working Period</value>
+  </data>
+  <data name="titleTotalDaysWorkingMaintenance" xml:space="preserve">
+    <value>Total Days Working Maintenance</value>
+  </data>
+  <data name="hdrCatat" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="lblEstate" xml:space="preserve">
+    <value>Estate</value>
+  </data>
+  <data name="lblUnblockUpdate" xml:space="preserve">
+    <value>Update Checkroll Lock</value>
+  </data>
+  <data name="lblValidDT" xml:space="preserve">
+    <value>Approved Date</value>
+  </data>
+  <data name="UnblockCheckrollData" xml:space="preserve">
+    <value>Checkroll Lock Information</value>
+  </data>
 </root>
