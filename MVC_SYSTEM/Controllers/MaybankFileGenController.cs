@@ -1926,7 +1926,708 @@ namespace MVC_SYSTEM.Controllers
             return Json(new { msg, statusmsg, link });
         }
 
-        
+        public ActionResult TaxCP39Form()
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+
+            DateTime Minus1month = timezone.gettimezone().AddMonths(-1);
+            int year = Minus1month.Year;
+            int month = Minus1month.Month;
+            int drpyear = 0;
+            int drprangeyear = 0;
+
+            ViewBag.MaybankFileGen = "class = active";
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            drpyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+            drprangeyear = timezone.gettimezone().Year;
+
+            var yearlist = new List<SelectListItem>();
+            for (var i = drpyear; i <= drprangeyear; i++)
+            {
+                if (i == year)
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = true });
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                }
+            }
+
+            ViewBag.YearList = yearlist;
+
+            ViewBag.MonthList = new SelectList(dbC.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "monthlist" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID), "fldOptConfValue", "fldOptConfDesc", month);
+
+            List<SelectListItem> CompCodeList = new List<SelectListItem>();
+
+            CompCodeList = new SelectList(dbC.tbl_Syarikat.OrderBy(x => x.fld_NamaPndkSyarikat), "fld_NamaPndkSyarikat", "fld_NamaPndkSyarikat").ToList();
+
+            CompCodeList.Insert(0, (new SelectListItem { Text = "All", Value = "0" }));
+            ViewBag.CompCodeList = CompCodeList;
+            return View();
+        }
+
+        public FileStreamResult TaxCP39FormPdf(int Month, int Year, string CompCode)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string NamaSyarikat = "";
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            List<sp_TaxCP39_Result> taxCP39 = new List<sp_TaxCP39_Result>();
+
+            var monthName = ((Constans.Month)Month).ToString().ToUpper();
+            var SyarikatDetail = dbC.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == CompCode).FirstOrDefault(); ;
+
+            if (CompCode != null)
+            {
+                string constr = ConfigurationManager.ConnectionStrings["MVC_SYSTEM_HQ_CONN"].ConnectionString;
+                var con = new SqlConnection(constr);
+                try
+                {
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("NegaraID", NegaraID);
+                    parameters.Add("SyarikatID", SyarikatID);
+                    parameters.Add("Month", Month);
+                    parameters.Add("Year", Year);
+                    parameters.Add("CompCode", CompCode);
+                    con.Open();
+                    taxCP39 = SqlMapper.Query<sp_TaxCP39_Result>(con, "sp_TaxCP39", parameters).ToList();
+                    con.Close();
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
+
+            if (taxCP39.Count() == 0)
+            {
+                Document pdfDoc = new Document(PageSize.A4, 10, 10, 10, 5);
+                MemoryStream ms = new MemoryStream();
+                MemoryStream output = new MemoryStream();
+                PdfWriter pdfWriter = PdfWriter.GetInstance(pdfDoc, ms);
+                Chunk chunk = new Chunk();
+                Paragraph para = new Paragraph();
+                pdfDoc.Open();
+                PdfPTable table = new PdfPTable(1);
+                table.WidthPercentage = 100;
+                PdfPCell cell = new PdfPCell();
+                chunk = new Chunk("No Data Found", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                cell = new PdfPCell(new Phrase(chunk));
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.Border = 0;
+                table.AddCell(cell);
+                pdfDoc.Add(table);
+                pdfWriter.CloseStream = false;
+                pdfDoc.Close();
+
+                ms.Close();
+
+                byte[] file = ms.ToArray();
+                output.Write(file, 0, file.Length);
+                output.Position = 0;
+                return new FileStreamResult(output, "application/pdf");
+            }
+            else
+            {
+                MemoryStream output = new MemoryStream();
+
+                string cp39Form = GetConfig.PdfPathFile("CP39 FORM-1.pdf");
+
+                // open the reader
+                PdfReader reader = new PdfReader(cp39Form);
+                Rectangle size = reader.GetPageSizeWithRotation(1);
+                Document document = new Document(size);
+
+                // open the writer
+                MemoryStream ms = new MemoryStream();
+                //FileStream fs = new FileStream(newFile, FileMode.Create, FileAccess.Write);
+                PdfWriter writer = PdfWriter.GetInstance(document, ms);
+                document.Open();
+                PdfContentByte cb = writer.DirectContent;
+
+                // front page content
+                BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.EMBEDDED);
+                cb.SetColorFill(BaseColor.BLACK);
+                cb.SetFontAndSize(bf, 8);
+
+                string text = "";
+
+                cb.BeginText();
+                text = monthName; //Month name
+                cb.ShowTextAligned(0, text, 358, 506, 0);
+                cb.EndText();
+
+                cb.BeginText();
+                text = Year.ToString(); //Year
+                cb.ShowTextAligned(0, text, 450, 506, 0);
+                cb.EndText();
+
+                var noEmployerTax = SyarikatDetail.fld_EmployerTaxNo;
+                char[] noEmployerTaxArr = noEmployerTax.ToCharArray();
+                int arrCountNoEmployerTaxArr = noEmployerTaxArr.Count();
+                float noEmployerXPosition = 243;
+
+                for (int i = 0; i < arrCountNoEmployerTaxArr; i++)
+                {
+                    cb.BeginText();
+                    text = noEmployerTaxArr[i].ToString(); //employer Tax No
+                    if (i == 2)
+                    {
+                        noEmployerXPosition -= 16;
+                    }
+                    cb.ShowTextAligned(0, text, noEmployerXPosition, 451, 0);
+                    cb.EndText();
+                    noEmployerXPosition -= 12;
+                }
+
+                var TotalMTDAmt = taxCP39.Sum(s => s.fld_CarumanPekerja);
+                var TotalMTDRec = taxCP39.Count();
+                var TotalCP38Amt = taxCP39.Sum(s => s.fld_CP38Amount);
+                var TotalCP38Rec = taxCP39.Where(x => x.fld_CP38Amount > 0).Count();
+
+                cb.BeginText();
+                text = "RM   " + TotalMTDAmt.ToString("N"); //MTD Amt
+                cb.ShowTextAligned(2, text, 413, 450, 0);
+                cb.EndText();
+
+                cb.BeginText();
+                text = "RM   " + TotalCP38Amt.ToString("N"); //CP38
+                cb.ShowTextAligned(2, text, 503, 450, 0);
+                cb.EndText();
+
+                cb.BeginText();
+                text = TotalMTDRec.ToString(); //MTD Amt
+                cb.ShowTextAligned(1, text, 373, 432, 0);
+                cb.EndText();
+
+                cb.BeginText();
+                text = TotalCP38Rec.ToString(); //CP38
+                cb.ShowTextAligned(1, text, 466, 432, 0);
+                cb.EndText();
+
+                var totalAmount = TotalMTDAmt + TotalCP38Amt;
+
+                cb.BeginText();
+                text = "RM   " + totalAmount.ToString("N"); //Total Amt
+                cb.ShowTextAligned(1, text, 446, 409, 0);
+                cb.EndText();
+
+                cb.BeginText();
+                text = DateTime.Now.ToString("dd.MM.yyyy"); //Total Amt
+                cb.ShowTextAligned(1, text, 446, 337, 0);
+                cb.EndText();
+
+                // front page content
+
+                PdfImportedPage page = writer.GetImportedPage(reader, 1);
+                cb.AddTemplate(page, 0, 0);
+
+                document.Close();
+                writer.Close();
+                reader.Close();
+                ms.Close();
+                byte[] file = ms.ToArray();
+
+                cp39Form = GetConfig.PdfPathFile("CP39 FORM-2.pdf");
+
+                // open the reader
+
+                size = new Rectangle(792, 612);
+                document = new Document(size);
+
+                // open the writer
+                ms = new MemoryStream();
+                //FileStream fs = new FileStream(newFile, FileMode.Create, FileAccess.Write);
+                writer = PdfWriter.GetInstance(document, ms);
+                document.Open();
+                cb = writer.DirectContent;
+
+                // front page content
+
+
+                var taxCP39Arr = taxCP39.ToArray();
+                var totalPages = Convert.ToInt32(taxCP39Arr.Count() / 24);
+                var getModulus = taxCP39Arr.Count() % 24;
+                if (getModulus > 0)
+                {
+                    totalPages += 1;
+                }
+                var dataIndex = 0;
+
+                for (int i = 0; i < totalPages; i++)
+                {
+                    document.NewPage();
+                    cb = writer.DirectContent;
+
+                    bf = BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.EMBEDDED);
+                    cb.SetColorFill(BaseColor.BLACK);
+                    cb.SetFontAndSize(bf, 8);
+
+                    PdfPTable mainTable = new PdfPTable(5);
+                    Chunk chunk = new Chunk();
+                    mainTable.WidthPercentage = 100;
+                    float[] widths = new float[] { 0.5f, 0.6f, 1.5f, 1, 0.1f };
+                    mainTable.SetWidths(widths);
+
+                    PdfPCell mainCell = new PdfPCell();
+                    chunk = new Chunk("No. Rujukan Majikan E", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    mainCell = new PdfPCell(new Phrase(chunk));
+                    mainCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    mainCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    mainCell.Border = 0;
+                    mainTable.AddCell(mainCell);
+
+                    PdfPTable table = new PdfPTable(11);
+                    chunk = new Chunk();
+                    //table.WidthPercentage = 5;
+                    widths = new float[] { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
+                    table.SetWidths(widths);
+
+                    PdfPCell cell = new PdfPCell();
+
+                    for (int y = 9; y >= 0; y--)
+                    {
+                        try
+                        {
+                            text = noEmployerTaxArr[y].ToString();
+                        }
+                        catch (Exception ex)
+                        {
+                            text = "";
+                        }
+                        chunk = new Chunk(text, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        if (y == 2)
+                        {
+                            chunk = new Chunk("-", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                            cell = new PdfPCell(new Phrase(chunk));
+                            cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            cell.Border = 0;
+                            table.AddCell(cell);
+                        }
+                    }
+                    mainCell = new PdfPCell(table);
+                    mainCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    mainCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    mainCell.Border = 0;
+                    mainTable.AddCell(mainCell);
+
+                    chunk = new Chunk(" ", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    mainCell = new PdfPCell(new Phrase(chunk));
+                    mainCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    mainCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    mainCell.Border = 0;
+                    mainTable.AddCell(mainCell);
+
+                    chunk = new Chunk("Muka Surat", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    mainCell = new PdfPCell(new Phrase(chunk));
+                    mainCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                    mainCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    mainCell.Border = 0;
+                    mainTable.AddCell(mainCell);
+
+                    text = (i + 1).ToString();
+                    text = GetGenerateFile.TextFileContent(text, 2, "0", true);
+                    char[] pageNoArr = text.ToCharArray();
+
+                    table = new PdfPTable(2);
+                    chunk = new Chunk();
+                    widths = new float[] { 0.1f, 0.1f };
+                    table.SetWidths(widths);
+
+                    chunk = new Chunk(pageNoArr[0].ToString(), FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    chunk = new Chunk(pageNoArr[1].ToString(), FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    mainCell = new PdfPCell(table);
+                    mainCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    mainCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    mainCell.Colspan = 5;
+                    mainCell.Border = 0;
+                    mainTable.AddCell(mainCell);
+
+                    table = new PdfPTable(10);
+                    table.SpacingBefore = 10;
+                    chunk = new Chunk();
+                    table.WidthPercentage = 106;
+
+                    widths = new float[] { 0.5f, 1.5f, 3, 1, 1, 1, 1, 1, 1, 1 };
+
+                    table.SetWidths(widths);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("BIL.", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Rowspan = 2;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("NO. RUJUKAN CUKAI \r\nPENDAPATAN", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Rowspan = 2;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("NAMA PENUH PEKERJA \r\n(SEPERTI DI KAD PENGENALAN ATAU PASPORT)", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Rowspan = 2;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("NO. K/P LAMA", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Rowspan = 2;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("NO. K/P BARU", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Rowspan = 2;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("NO. \r\nPEKERJA", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Rowspan = 2;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("BAGI PEKERJA ASING", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Colspan = 2;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("JUMLAH POTONGAN CUKAI", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Colspan = 2;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("NO. \r\nPASPORT", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("KOD \r\nNEGARA", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("PCB (RM)", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("CP38 (RM)", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    decimal totalPCB = 0;
+                    decimal totalCP38 = 0;
+                    for (int pageDataIndex = 0; pageDataIndex < 24; pageDataIndex++)
+                    {
+                        string bil = "";
+                        string refTaxNo = "";
+                        string workerName = "";
+                        string oldIC = "";
+                        string newIC = "";
+                        string workerNo = "";
+                        string passportNo = "";
+                        string countryCode = "";
+                        string pCB = "";
+                        string cP38 = "";
+                        var taxCP39Data = new sp_TaxCP39_Result();
+                        if (dataIndex < taxCP39Arr.Count())
+                        {
+                            taxCP39Data = taxCP39Arr[dataIndex];
+                            bil = (pageDataIndex + 1).ToString();
+                            refTaxNo = taxCP39Data.fld_TaxNo;
+                            workerName = taxCP39Data.fld_Nama;
+                            newIC = taxCP39Data.fld_Nokp;
+                            workerNo = taxCP39Data.fld_Nopkj;
+                            passportNo = taxCP39Data.fld_PassportNo;
+                            countryCode = taxCP39Data.fld_CountryCode != "MY" ? taxCP39Data.fld_CountryCode : "";
+                            pCB = taxCP39Data.fld_CarumanPekerja.ToString("N");
+                            cP38 = taxCP39Data.fld_CP38Amount.ToString("N");
+                            totalPCB = totalPCB + taxCP39Data.fld_CarumanPekerja;
+                            totalCP38 = totalCP38 + taxCP39Data.fld_CP38Amount;
+                        }
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(bil, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(refTaxNo, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(workerName, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(oldIC, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(newIC, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(workerNo, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(passportNo, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(countryCode, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(pCB, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(cP38, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+                        dataIndex++;
+                    }
+                    cell = new PdfPCell();
+                    chunk = new Chunk("Borang CP39 boleh diperolehi di laman web : http://www.hasil.gov.my", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.FixedHeight = 18;
+                    cell.Border = 0;
+                    cell.Colspan = 6;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("JUMLAH", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.FixedHeight = 18;
+                    cell.Colspan = 2;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk(totalPCB.ToString("N"), FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.FixedHeight = 18;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk(totalCP38.ToString("N"), FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.FixedHeight = 18;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk(" ", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.FixedHeight = 18;
+                    cell.Colspan = 6;
+                    cell.Border = 0;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("JUMLAH BESAR", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.FixedHeight = 18;
+                    cell.Colspan = 2;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk(totalAmount.ToString("N"), FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.FixedHeight = 18;
+                    cell.Colspan = 2;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    mainCell = new PdfPCell(table);
+                    mainCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    mainCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    mainCell.Colspan = 5;
+                    mainCell.Border = 0;
+                    mainTable.AddCell(mainCell);
+
+                    document.Add(mainTable);
+                }
+
+                // front page content
+
+                document.Close();
+                writer.Close();
+                reader.Close();
+                ms.Close();
+                byte[] file2 = ms.ToArray();
+
+                //I don't have a web server handy so I'm going to write my final MemoryStream to a byte array and then to disk
+                byte[] bytes;
+
+
+                //Create our final combined MemoryStream
+                using (MemoryStream finalStream = new MemoryStream())
+                {
+                    //Create our copy object
+                    PdfCopyFields copy = new PdfCopyFields(finalStream);
+
+                    copy.AddDocument(new PdfReader(file));
+
+                    copy.AddDocument(new PdfReader(file2));
+                    copy.Close();
+
+                    //Get the raw bytes to save to disk
+                    bytes = finalStream.ToArray();
+                }
+                output.Write(bytes, 0, bytes.Length);
+                output.Position = 0;
+                return new FileStreamResult(output, "application/pdf");
+
+            }
+        }
+
         [HttpPost]
         public ActionResult ConvertPDF2(string myHtml, string filename, string reportname)
         {
