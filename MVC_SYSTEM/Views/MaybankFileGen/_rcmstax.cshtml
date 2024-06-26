@@ -8,8 +8,12 @@
 @{
     int? month = ViewBag.MonthList;
     int? year = ViewBag.YearList;
+    int bil = 0;
     string worker = ViewBag.WorkerList;
     string uniquefilename = "M2E MTD (" + ViewBag.NamaPendekSyarikat + ") " + ViewBag.MonthList + ViewBag.YearList;
+    decimal? totalMTD = 0;
+    decimal? totalCP38 = 0;
+
 }
 
 @if (Model != null && Model.Count() != 0)
@@ -38,6 +42,18 @@
                     </th>
                 </tr>
                 <tr>
+                    <th colspan="11" style="text-align: left; vertical-align: middle; border: none;">
+                        ID Korporat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: @ViewBag.CorpID
+                        <br />
+
+                        ID Klien&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: @ViewBag.clientid
+                        <br />
+                        Nombor Akaun&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: @ViewBag.AccNo
+                    </th>
+                </tr>
+
+                <tr>
+                    <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">No.</th>
                     <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Income Tax No.</th>
                     <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Worker No.</th>
                     <th rowspan="1" style="margin: 2px !important; padding: 5px !important; text-align: center; vertical-align: middle !important; border: 1px solid red;" border="1">Worker Name</th>
@@ -52,19 +68,36 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="black">@item.fld_TaxNo</font></td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="black">@item.fld_Nopkj</font></td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="black">@item.fld_Nama.ToUpper()</font></td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="black">@item.fld_Nokp</font></td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="black">@item.fld_PassportNo</font></td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: center; border-right: none; border-left: none"><font color="black">@item.fld_WifeCode</font></td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: center; border-right: none; border-left: none"><font color="black">@item.fld_CountryCode</font></td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none"><font color="black">@item.fld_CarumanPekerja</font></td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none "><font color="black">@item.fld_CP38Amount</font></td>
-                    </tr>
+                    bil = bil + 1;
+                    totalMTD += item.fld_CarumanPekerja;
+                    totalCP38 += item.fld_CP38Amount;
 
+                <tr>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: center; border-right: none; border-left: none"><font color="black">@bil.</font></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="black">@item.fld_TaxNo</font></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="black">@item.fld_Nopkj</font></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="black">@item.fld_Nama.ToUpper()</font></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="black">@item.fld_Nokp</font></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none"><font color="black">@item.fld_PassportNo</font></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: center; border-right: none; border-left: none"><font color="black">@item.fld_WifeCode</font></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: center; border-right: none; border-left: none"><font color="black">@item.fld_CountryCode</font></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none"><font color="black">@item.fld_CarumanPekerja</font></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none "><font color="black">@item.fld_CP38Amount</font></td>
+                </tr>
                 }
+
+                <tr>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px solid gray; text-align: left; border-bottom: none;border-right: none; border-left: none"><font color="black"></font></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px solid gray; text-align: left; border-bottom: none;border-right: none; border-left: none"><font color="black"></font></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px solid gray; text-align: left; border-bottom: none;border-right: none; border-left: none"><font color="black"></font></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px solid gray; text-align: left; border-bottom: none;border-right: none; border-left: none"><font color="black"></font></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px solid gray; text-align: left; border-bottom: none;border-right: none; border-left: none"><font color="black"></font></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px solid gray; text-align: left; border-bottom: none;border-right: none; border-left: none"><font color="black"></font></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px solid gray; text-align: center; border-bottom: none;border-right: none; border-left: none"><font color="black"></font></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px solid gray; text-align: center; border-bottom: none;border-right: none; border-left: none"><font color="black"></font></td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px solid gray; text-align: right; border-bottom: none; border-right: none; border-left: none; font-weight:bold">@totalMTD</td>
+                    <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px solid gray; text-align: right; border-bottom : none;border-right: none; border-left: none; font-weight:bold">@totalCP38</td>
+                </tr>
 
             </tbody>
         </table>
