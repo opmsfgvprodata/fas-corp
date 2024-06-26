@@ -3566,6 +3566,8 @@
     <Content Include="Views\MaybankFileGen\_rcmsIndividuOthers.cshtml" />
     <Content Include="Views\MaybankFileGen\_TaxCP39.cshtml" />
     <Content Include="Views\MaybankFileGen\TaxCP39.cshtml" />
+    <Content Include="Views\MaybankFileGen\RcmsGenTax.cshtml" />
+    <Content Include="Views\MaybankFileGen\_rcmstax.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
