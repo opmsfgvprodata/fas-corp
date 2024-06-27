@@ -781,6 +781,7 @@
     <Compile Include="Class\CheckSharedFolder.cs" />
     <Compile Include="Class\Connection.cs" />
     <Compile Include="Class\ConnectionStringFactory.cs" />
+    <Compile Include="Class\Constans.cs" />
     <Compile Include="Class\ConvertToPdf.cs" />
     <Compile Include="Class\CreateASC.cs" />
     <Compile Include="Class\DownloadFiles.cs" />
@@ -2115,6 +2116,7 @@
     <Content Include="ModelsSP\MVC_SYSTEM_SP2_Models.edmx.diagram">
       <DependentUpon>MVC_SYSTEM_SP2_Models.edmx</DependentUpon>
     </Content>
+    <Content Include="libman.json" />
     <None Include="Properties\PublishProfiles\MVC_SYSTEM.pubxml" />
     <Content Include="Models\MVC_SYSTEM_SP_Models.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -3568,6 +3570,7 @@
     <Content Include="Views\MaybankFileGen\TaxCP39.cshtml" />
     <Content Include="Views\MaybankFileGen\RcmsGenTax.cshtml" />
     <Content Include="Views\MaybankFileGen\_rcmstax.cshtml" />
+    <Content Include="Views\MaybankFileGen\TaxCP39Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
