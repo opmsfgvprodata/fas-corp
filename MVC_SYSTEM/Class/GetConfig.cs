@@ -513,5 +513,10 @@ namespace MVC_SYSTEM.Class
                 .Select(s => s.fld_ActivityCode).FirstOrDefault();
             return SAPCode;
         }
+
+        public string PdfPathFile(string filename)
+        {
+            return HttpContext.Current.Server.MapPath("~/Asset/pdf/" + filename);
+        }
     }
 }
