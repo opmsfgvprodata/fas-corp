@@ -518,12 +518,12 @@ namespace MVC_SYSTEM.Controllers
             {
                 if (CompCode == "FASSB")
                 {
-                    ClientIDText = "FGVASB" + stringmonth + stringyear;
+                    ClientIDText = "FAS" + stringmonth + stringyear;
                 }
 
                 if (CompCode == "RNDSB")
                 {
-                    ClientIDText = "RNDSB" + stringmonth + stringyear;
+                    ClientIDText = "RND" + stringmonth + stringyear;
                 }
             }
             else
@@ -952,12 +952,12 @@ namespace MVC_SYSTEM.Controllers
             {
                 if (CompCodeList == "FASSB")
                 {
-                    ViewBag.clientid = "FGVASB" + MonthList + YearList;
+                    ViewBag.clientid = "FAS" + MonthList + YearList;
                 }
 
                 if (CompCodeList == "RNDSB")
                 {
-                    ViewBag.clientid = "RNDSB" + MonthList + YearList;
+                    ViewBag.clientid = "RND" + MonthList + YearList;
                 }
             }
             else
