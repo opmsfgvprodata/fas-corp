@@ -1829,6 +1829,54 @@ namespace MVC_SYSTEM.Controllers
             return View();
         }
 
+        public ActionResult RcmsZAP64Tax()
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+
+            DateTime Minus1month = timezone.gettimezone().AddMonths(-1);
+            int year = Minus1month.Year;
+            int month = Minus1month.Month;
+            int drpyear = 0;
+            int drprangeyear = 0;
+
+            ViewBag.MaybankFileGen = "class = active";
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            drpyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+            drprangeyear = timezone.gettimezone().Year;
+
+            var yearlist = new List<SelectListItem>();
+            for (var i = drpyear; i <= drprangeyear; i++)
+            {
+                if (i == year)
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = true });
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                }
+            }
+
+            ViewBag.YearList = yearlist;
+
+            ViewBag.MonthList = new SelectList(dbC.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "monthlist" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID), "fldOptConfValue", "fldOptConfDesc", month);
+
+            List<SelectListItem> CompCodeList = new List<SelectListItem>();
+
+            CompCodeList = new SelectList(dbC.tbl_Syarikat.OrderBy(x => x.fld_NamaPndkSyarikat), "fld_NamaPndkSyarikat", "fld_NamaPndkSyarikat").ToList();
+
+            CompCodeList.Insert(0, (new SelectListItem { Text = "Please Select", Value = "0" }));
+            ViewBag.CompCodeList = CompCodeList;
+
+            ViewBag.UserID = getuserid;
+            //dbC.Dispose();
+            return View();
+        }
+
         public ViewResult _RcmsZAP64(string CompCodeList, int? MonthList, int? YearList, string print, string PaymentDate)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
@@ -1982,6 +2030,112 @@ namespace MVC_SYSTEM.Controllers
             {
                 dbSP.SetCommandTimeout(2400);
                 maybankrcmsZAP64 = dbSP.sp_MaybankRcmsZAP64Others(NegaraID, SyarikatID, YearList, MonthList, getuserid, CompCodeList, IncentiveList).ToList();
+
+                var BankList = dbC.tbl_Bank
+                    .Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_Deleted == false)
+                    .ToList();
+
+                ViewBag.RecordNo = maybankrcmsZAP64.Count();
+
+                if (maybankrcmsZAP64.Count() == 0)
+                {
+                    ViewBag.Message = GlobalResCorp.msgNoRecord;
+                }
+
+
+                return View(maybankrcmsZAP64);
+            }
+        }
+
+        public ViewResult _RcmsZAP64Tax(string CompCodeList, int? MonthList, int? YearList, string print, string PaymentDate)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            //string WilayahName = "";
+            string NamaSyarikat = "";
+            //string LdgCode = "";
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            List<sp_MaybankRcmsZAP64Tax_Result> maybankrcmsZAP64 = new List<sp_MaybankRcmsZAP64Tax_Result>();
+
+
+            ViewBag.MonthList = MonthList;
+            ViewBag.YearList = YearList;
+            ViewBag.NamaSyarikat = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_NamaSyarikat)
+                .FirstOrDefault();
+            ViewBag.NamaPendekSyarikat = dbC.tbl_Syarikat
+               .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+               .Select(s => s.fld_NamaPndkSyarikat)
+               .FirstOrDefault();
+            ViewBag.NoSyarikat = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_NoSyarikat)
+                .FirstOrDefault();
+            ViewBag.CorpID = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_CorporateID)
+                .FirstOrDefault();
+            ViewBag.ClientID = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_ClientBatchID)
+                .FirstOrDefault();
+            ViewBag.AccNo = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_AccountNo)
+                .FirstOrDefault();
+
+            ViewBag.NegaraID = NegaraID;
+            ViewBag.SyarikatID = SyarikatID;
+            ViewBag.UserID = getuserid;
+            ViewBag.UserName = User.Identity.Name;
+            ViewBag.Date = DateTime.Now.ToShortDateString();
+            ViewBag.Time = DateTime.Now.ToShortTimeString();
+            ViewBag.Print = print;
+
+            if (YearList == null && MonthList == null)
+            {
+                ViewBag.DocDate = DateTime.Now.AddMonths(+1).AddDays(-DateTime.Now.Day).ToString("dd.MM.yyyy");
+            }
+            else
+            {
+                var lastday = DateTime.DaysInMonth(YearList.Value, MonthList.Value);
+                ViewBag.DocDate = lastday + "." + MonthList + "." + YearList;
+            }
+            ViewBag.PostingDate = Convert.ToDateTime(PaymentDate).ToString("dd.MM.yyyy");
+            ViewBag.Description = "Region " + NamaSyarikat + " - Maybank Rcms ZAP64 for " + MonthList + "/" + YearList;
+            if (MonthList == null || YearList == null || CompCodeList == "0")
+            {
+                ViewBag.Message = "Please select month, year, company and payment date";
+                return View(maybankrcmsZAP64);
+            }
+            else
+            {
+                //dbSP.SetCommandTimeout(2400);
+                //maybankrcmsZAP64 = dbSP.sp_MaybankRcmsZAP64(NegaraID, SyarikatID, YearList, MonthList, getuserid, CompCodeList).ToList();
+
+                string constr = ConfigurationManager.ConnectionStrings["MVC_SYSTEM_HQ_CONN"].ConnectionString;
+                var con = new SqlConnection(constr);
+                try
+                {
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("NegaraID", NegaraID);
+                    parameters.Add("SyarikatID", SyarikatID);
+                    parameters.Add("Year", YearList);
+                    parameters.Add("Month", MonthList);
+                    parameters.Add("UserID", getuserid);
+                    parameters.Add("CompCode", CompCodeList);
+                    con.Open();
+                    maybankrcmsZAP64 = SqlMapper.Query<sp_MaybankRcmsZAP64Tax_Result>(con, "sp_MaybankRcmsZAP64Tax", parameters).ToList();
+                    con.Close();
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+
 
                 var BankList = dbC.tbl_Bank
                     .Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_Deleted == false)
