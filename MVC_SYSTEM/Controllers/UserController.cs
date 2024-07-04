@@ -502,7 +502,6 @@ namespace MVC_SYSTEM.Controllers
             try
             {
                 var getdata = db.tblUsers.Find(id);
-                getdata.fldUserPassword = crypto.Encrypt(tblUser.fldUserPassword);
                 getdata.fldUserFullName = tblUser.fldUserFullName.ToUpper();
                 getdata.fldUserShortName = tblUser.fldUserShortName.ToUpper();
                 getdata.fldUserEmail = tblUser.fldUserEmail;
@@ -530,6 +529,78 @@ namespace MVC_SYSTEM.Controllers
             //{
             //    return Json(new { success = true, msg = "Please check fill you inserted.", status = "warning", checkingdata = "1" });
             //}
+        }
+
+        // GET: User/Password/5
+        public ActionResult Password(int? id)
+        {
+            int? NegaraID = 0;
+            int? SyarikatID = 0;
+            int? WilayahID = 0;
+            int? LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            int[] wlyhid = new int[] { };
+            //string mywlyid = "";
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return PartialView("Password");
+        }
+
+        // POST: User/Password/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Password(int id, ModelsCustom.CusMod_Password password)
+        {
+            DateTime getdatetime = timezone.gettimezone();
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            int? NegaraID = 0;
+            int? SyarikatID = 0;
+            int? WilayahID = 0;
+            int? LadangID = 0;
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            try
+            {
+                var getdata = db.tblUsers.Find(id);
+                var getid = id;
+                if (getdata.fldUserPassword == crypto.Encrypt(password.oldPassword) && password.newPassword == password.confirmPassword)
+                {
+                    getdata.fldUserPassword = crypto.Encrypt(password.newPassword);
+                    getdata.fld_ModifiedBy = getuserid;
+                    getdata.fld_ModifiedDT = getdatetime;
+                    db.Entry(getdata).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Json(new { success = true, msg = "Password successfully edited.", status = "success", checkingdata = "0", method = "1", getid = getid, data1 = "", data2 = "" });
+                }
+                else
+                {
+                    string msg = "";
+                    if (password.newPassword != password.confirmPassword)
+                    {
+                        msg = "New password and confirm password is not match.";
+                    }
+
+                    if (getdata.fldUserPassword != crypto.Encrypt(password.oldPassword))
+                    {
+                        msg = "Old password is wrong.";
+                    }
+
+                    return Json(new { success = false, msg, status = "warning", checkingdata = "0", method = "1", getid = getid, data1 = "", data2 = "" });
+                }
+            }
+            catch (Exception ex)
+            {
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                return Json(new { success = true, msg = "Error occur please contact IT.", status = "danger", checkingdata = "1" });
+            }
         }
 
         // Add by fitri 17-08-2020
