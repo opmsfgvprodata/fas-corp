@@ -71,7 +71,7 @@ namespace MVC_SYSTEM.Controllers
                     string[] split = MenuSubList.Split('|');
                     return RedirectToAction(split[1], split[0]);
                 }
-                else 
+                else
                     return RedirectToAction(MenuSubList, "MaybankFileGen");
             }
             else
@@ -417,7 +417,7 @@ namespace MVC_SYSTEM.Controllers
                 if (CompCode == "RNDSB")
                 {
                     ClientIDText = "RNDSB" + stringmonth + stringyear;
-                }               
+                }
             }
             else
             {
@@ -439,7 +439,7 @@ namespace MVC_SYSTEM.Controllers
 
             dbSP.Dispose();
             dbC.Dispose();
-            return Json(new { msg, statusmsg, file = filename, salary = TotalGaji, totaldata = CountData, clientid = ClientIDText});
+            return Json(new { msg, statusmsg, file = filename, salary = TotalGaji, totaldata = CountData, clientid = ClientIDText });
         }
 
         public JsonResult CheckGenDataDetailTax(int Month, int Year, string CompCode, /*int Wilayah,*/ string[] WorkerId)
@@ -677,7 +677,7 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.MonthList = new SelectList(dbC.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "monthlist" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID), "fldOptConfValue", "fldOptConfDesc", month);
 
             List<SelectListItem> CompCodeList = new List<SelectListItem>();
-        
+
             CompCodeList = new SelectList(dbC.tbl_Syarikat.OrderBy(x => x.fld_NamaPndkSyarikat), "fld_NamaPndkSyarikat", "fld_NamaPndkSyarikat").ToList();
 
             CompCodeList.Insert(0, (new SelectListItem { Text = "Please Select", Value = "0" }));
@@ -1889,7 +1889,7 @@ namespace MVC_SYSTEM.Controllers
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
             List<sp_MaybankRcmsZAP64_Result> maybankrcmsZAP64 = new List<sp_MaybankRcmsZAP64_Result>();
 
-            
+
             ViewBag.MonthList = MonthList;
             ViewBag.YearList = YearList;
             ViewBag.NamaSyarikat = dbC.tbl_Syarikat
@@ -1916,7 +1916,7 @@ namespace MVC_SYSTEM.Controllers
                 .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
                 .Select(s => s.fld_AccountNo)
                 .FirstOrDefault();
-           
+
             ViewBag.NegaraID = NegaraID;
             ViewBag.SyarikatID = SyarikatID;
             ViewBag.UserID = getuserid;
@@ -1925,7 +1925,7 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.Time = DateTime.Now.ToShortTimeString();
             ViewBag.Print = print;
 
-            if(YearList == null && MonthList == null)
+            if (YearList == null && MonthList == null)
             {
                 ViewBag.DocDate = DateTime.Now.AddMonths(+1).AddDays(-DateTime.Now.Day).ToString("dd.MM.yyyy");
             }
@@ -2475,7 +2475,6 @@ namespace MVC_SYSTEM.Controllers
 
             CompCodeList = new SelectList(dbC.tbl_Syarikat.OrderBy(x => x.fld_NamaPndkSyarikat), "fld_NamaPndkSyarikat", "fld_NamaPndkSyarikat").ToList();
 
-            CompCodeList.Insert(0, (new SelectListItem { Text = "All", Value = "0" }));
             ViewBag.CompCodeList = CompCodeList;
             return View();
         }
@@ -2581,19 +2580,60 @@ namespace MVC_SYSTEM.Controllers
                 var noEmployerTax = SyarikatDetail.fld_EmployerTaxNo;
                 char[] noEmployerTaxArr = noEmployerTax.ToCharArray();
                 int arrCountNoEmployerTaxArr = noEmployerTaxArr.Count();
-                float noEmployerXPosition = 243;
+                float noEmployerXPosition = 0;
 
-                for (int i = 0; i < arrCountNoEmployerTaxArr; i++)
+                for (int i = 0; i <= arrCountNoEmployerTaxArr; i++)
                 {
-                    cb.BeginText();
-                    text = noEmployerTaxArr[i].ToString(); //employer Tax No
-                    if (i == 2)
+                    try
                     {
-                        noEmployerXPosition -= 16;
+                        text = noEmployerTaxArr[i].ToString();
                     }
-                    cb.ShowTextAligned(0, text, noEmployerXPosition, 451, 0);
-                    cb.EndText();
-                    noEmployerXPosition -= 12;
+                    catch (Exception ex)
+                    {
+                        text = "";
+                    }
+                    if (text != "")
+                    {
+                        switch (i)
+                        {
+                            case 0:
+                                noEmployerXPosition = 100;
+                                break;
+                            case 1:
+                                noEmployerXPosition = 113;
+                                break;
+                            case 2:
+                                noEmployerXPosition = 126;
+                                break;
+                            case 3:
+                                noEmployerXPosition = 140;
+                                break;
+                            case 4:
+                                noEmployerXPosition = 152;
+                                break;
+                            case 5:
+                                noEmployerXPosition = 167;
+                                break;
+                            case 6:
+                                noEmployerXPosition = 180;
+                                break;
+                            case 7:
+                                noEmployerXPosition = 192;
+                                break;
+                            case 8:
+                                noEmployerXPosition = 205;
+                                break;
+                            case 9:
+                                noEmployerXPosition = 230;
+                                break;
+                            case 10:
+                                noEmployerXPosition = 243;
+                                break;
+                        }
+                        cb.BeginText();
+                        cb.ShowTextAligned(0, text, noEmployerXPosition, 451, 0);
+                        cb.EndText();
+                    }
                 }
 
                 var TotalMTDAmt = taxCP39.Sum(s => s.fld_CarumanPekerja);
@@ -2693,15 +2733,15 @@ namespace MVC_SYSTEM.Controllers
                     mainCell.Border = 0;
                     mainTable.AddCell(mainCell);
 
-                    PdfPTable table = new PdfPTable(11);
+                    PdfPTable table = new PdfPTable(12);
                     chunk = new Chunk();
                     //table.WidthPercentage = 5;
-                    widths = new float[] { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
+                    widths = new float[] { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
                     table.SetWidths(widths);
 
                     PdfPCell cell = new PdfPCell();
 
-                    for (int y = 9; y >= 0; y--)
+                    for (int y = 0; y <= arrCountNoEmployerTaxArr; y++)
                     {
                         try
                         {
@@ -2718,7 +2758,7 @@ namespace MVC_SYSTEM.Controllers
                         cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
                         table.AddCell(cell);
 
-                        if (y == 2)
+                        if (y == 8)
                         {
                             chunk = new Chunk("-", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
                             cell = new PdfPCell(new Phrase(chunk));
