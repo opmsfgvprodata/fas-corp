@@ -2669,6 +2669,11 @@ namespace MVC_SYSTEM.Controllers
                 cb.EndText();
 
                 cb.BeginText();
+                text = SyarikatDetail.fld_NamaSyarikat;
+                cb.ShowTextAligned(0, text, 98, 390, 0);
+                cb.EndText();
+
+                cb.BeginText();
                 text = DateTime.Now.ToString("dd.MM.yyyy"); //Total Amt
                 cb.ShowTextAligned(1, text, 446, 337, 0);
                 cb.EndText();
