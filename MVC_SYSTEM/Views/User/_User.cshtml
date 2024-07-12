@@ -36,6 +36,7 @@
                                   if (item.fldDeleted == false)
                                   {
                                       var tindakan = "<a data-modal1='' href='" + @Url.Action("Edit", "User") + "/?id=" + item.fldUserID + "' class='btn btn-success' role='button' title='" + GlobalResCorp.btnUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-pencil-square-o  fa-lg'></i></a>&nbsp;" +
+                                      "<a data-modal1='' href='" + @Url.Action("Password", "User") + "/?id=" + item.fldUserID + "' class='btn btn-warning' role='button' title='Change Password' onclick='return DisplayProgressMessage(this);'><i class='fa fa-lock fa-lg'></i></a>&nbsp;" +
                                       "<a data-modal1='' href='" + @Url.Action("Delete", "User") + "/?id=" + item.fldUserID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-trash fa-lg'></i></a>&nbsp;";
                                       return @Html.Raw(tindakan);
                                   }
