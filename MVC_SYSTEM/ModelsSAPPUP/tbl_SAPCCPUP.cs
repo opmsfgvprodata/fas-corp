@@ -64,6 +64,15 @@ namespace MVC_SYSTEM.ModelsSAPPUP
         [StringLength(50)]
         public string CSKT_LTEXT { get; set; }
 
+        [StringLength(8)]
+        public string CSKS_DATAB { get; set; }
+
+        [StringLength(8)]
+        public string CSKS_DATBI { get; set; }
+
+        [StringLength(4)]
+        public string CSKS_GSBER { get; set; }
+
         public string CSKS_BKZKP { get; set; }
     }
 
