@@ -112,8 +112,6 @@
                 @foreach (var item in Model)
                 {
 
-                    //bil = bil + 1;
-
                     <tr>
                         @* <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: left; border-right: none; border-left: none">@bil.</td>*@
                         <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: none; text-align: center; border-right: none; border-left: none">@item.fld_Company</td>
@@ -124,11 +122,25 @@
                         <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: none; text-align: center; border-right: none; border-left: none">@item.fld_PostingKey</td>
                         <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: none; text-align: center; border-right: none; border-left: none">@item.fld_Currency</td>
                         <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: none; text-align: left; border-right: none; border-left: none">@item.fld_VendorNo</td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: none; text-align: left; border-right: none; border-left: none">@item.fld_VendorAmount</td>
+                        @if (item.fld_VendorAmount == 0)
+                        {
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: none; text-align: left; border-right: none; border-left: none"> </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: none; text-align: left; border-right: none; border-left: none">@item.fld_VendorAmount</td>
+                        }
                         <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: none; text-align: center; border-right: none; border-left: none">@item.fld_Assignment</td>
                         <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: none; text-align: left; border-right: none; border-left: none">@item.fld_Text</td>
                         <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: none; text-align: center; border-right: none; border-left: none">@item.fld_GLAcount</td>
-                        <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: none; text-align: left; border-right: none; border-left: none">@item.fld_Amount</td>
+                        @if (item.fld_Amount == 0)
+                        {
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: none; text-align: left; border-right: none; border-left: none"> </td>
+                        }
+                        else
+                        {
+                            <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: none; text-align: left; border-right: none; border-left: none">@item.fld_Amount</td>
+                        }
                         <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: none; text-align: center; border-right: none; border-left: none">@item.fld_BusinessArea</td>
                         <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: none; text-align: left; border-right: none; border-left: none">@item.fld_TradingPartner</td>
                         <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: none; text-align: left; border-right: none; border-left: none">@item.fld_TaxCode</td>
