@@ -14,7 +14,8 @@ namespace MVC_SYSTEM.ModelsDapper
         public string fld_PostingKey { get; set; }
         public string fld_Currency { get; set; }
         public string fld_VendorNo { get; set; }
-        public string fld_VendorAmount { get; set; }
+        //public string fld_VendorAmount { get; set; }
+        public Nullable<decimal> fld_VendorAmount { get; set; }
         public string fld_Assignment { get; set; }
         public string fld_Text { get; set; }
         public string fld_GLAcount { get; set; }
