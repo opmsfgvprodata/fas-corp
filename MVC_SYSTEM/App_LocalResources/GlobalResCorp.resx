@@ -3666,4 +3666,7 @@
   <data name="hdrValidDate" xml:space="preserve">
     <value>Tarikh Sah</value>
   </data>
+  <data name="lblPaymentDate" xml:space="preserve">
+    <value>Tarikh Bayaran</value>
+  </data>
 </root>
