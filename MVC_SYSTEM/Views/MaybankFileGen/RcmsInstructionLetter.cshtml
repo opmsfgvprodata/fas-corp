@@ -1,0 +1,91 @@
+﻿@using MVC_SYSTEM.Class;
+@{
+    ViewBag.Title = "Rcms Instruction Letter";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "Get",
+        UpdateTargetId = "searchResult",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "divLoading"
+    };
+}
+
+<script src="~/Asset/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<div id="divLoading" style="display:none;">
+    <div class="progressTest">
+        <label>
+            @GlobalResCorp.msgWait
+        </label>
+    </div>
+</div>
+
+<section class="content-wrapper main-content clear-fix">
+    <div class="well bottom" style="padding-bottom:16px;">
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-2">
+                    <label>@GlobalResCorp.lblMonth</label>
+                    @Html.DropDownList("MonthList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    <label>@GlobalResCorp.lblYear</label>
+                    @Html.DropDownList("YearList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    <label>@GlobalResRegion.lblCompany</label>
+                    @Html.DropDownList("CompCodeList", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-sm-2">
+                    <label>@GlobalResCorp.lblPaymentDate</label>
+                    @Html.TextBox("PaymentDate", null, htmlAttributes: new { @class = "form-control", @type = "date", @placeholder = "dd-mm-yyyy" })
+                </div>
+                <div class="col-sm-1" style="padding-top:25px;">
+                    <a class="btn btn-primary btn-block" href="#" id="pdfview">
+                        View
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well" style="margin-top:7px;">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Instruction Letter</div>
+            <div class="panel-body">
+                <div id="searchResult">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/Asset/Scripts/AjaxModal.js")
+}
+
+<script>
+    $(document).ready(function () {
+        $("#pdfview").click(function () {
+            var Month = $("#MonthList").val();
+            var Year = $("#YearList").val();
+            var CompCode = $("#CompCodeList").val();
+            var PaymentDate = $("#PaymentDate").val();
+            var param = '/?Month=' + Month + '&Year=' + Year + '&CompCode=' + CompCode + '&PaymentDate=' + PaymentDate;
+            PDFObject.embed("@Url.Action("_RcmsInstructionLetter", "MaybankFileGen")" + param, "#searchResult", { height: "450px" });
+
+            return false;
+        });
+    });
+</script>

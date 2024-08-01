@@ -8,7 +8,7 @@ namespace MVC_SYSTEM.AuthFTPModels
     public partial class MVC_SYSTEM_Auth_FTP : DbContext
     {
         public MVC_SYSTEM_Auth_FTP()
-            : base("name=MVC_SYSTEM_HQFTP_CONN")
+            : base("name=MVC_SYSTEM_HQ_CONN")
         {
         }
 

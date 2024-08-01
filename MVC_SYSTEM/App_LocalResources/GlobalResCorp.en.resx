@@ -2508,4 +2508,7 @@
   <data name="hdrValidDate" xml:space="preserve">
     <value>Valid Date</value>
   </data>
+  <data name="lblPaymentDate" xml:space="preserve">
+    <value>Payment Date</value>
+  </data>
 </root>

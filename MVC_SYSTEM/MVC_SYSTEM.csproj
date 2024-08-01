@@ -1014,7 +1014,9 @@
     <Compile Include="ModelsCustom\CustMod_TransferPkt.cs" />
     <Compile Include="ModelsCustom\CustMod_WorkerIncentiveList.cs" />
     <Compile Include="ModelsCustom\UserIDApplication.cs" />
+    <Compile Include="ModelsDapper\sp_MaybankRcmsOthers_Result.cs" />
     <Compile Include="ModelsDapper\sp_MaybankRcmsZAP64Tax_Result.cs" />
+    <Compile Include="ModelsDapper\sp_MaybankRcms_Result.cs" />
     <Compile Include="ModelsDapper\sp_TaxCP39_Result.cs" />
     <Compile Include="ModelsEstate\MVC_SYSTEM_ModelsEstate.cs" />
     <Compile Include="ModelsEstate\tblHtmlReport.cs" />
@@ -2079,6 +2081,9 @@
     <Content Include="Asset\MultiSelect\README.markdown" />
     <Content Include="Asset\MultiSelect\scss\multi-select.scss" />
     <Content Include="Asset\MultiSelect\test\lib\jasmine-1.2.0\MIT.LICENSE" />
+    <Content Include="Asset\pdf\CP39 FORM-1.pdf" />
+    <Content Include="Asset\pdf\Instruction Letter Plain FAS.pdf" />
+    <Content Include="Asset\pdf\Instruction Letter Plain RND.pdf" />
     <None Include="Asset\Scripts\jquery-3.1.0.intellisense.js" />
     <None Include="Asset\Scripts\jquery.validate-vsdoc.js" />
     <None Include="Asset\Scripts\_references.js" />
@@ -3573,6 +3578,8 @@
     <Content Include="Views\MaybankFileGen\_RcmsZAP64Tax.cshtml" />
     <Content Include="Views\User\Password.cshtml" />
     <Content Include="Views\User\_User.cshtml" />
+    <Content Include="Views\MaybankFileGen\RcmsInstructionLetter.cshtml" />
+    <Content Include="Views\MaybankFileGen\RcmsInstructionLetterOthers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
