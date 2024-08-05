@@ -6532,6 +6532,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tarikh Bayaran.
+        /// </summary>
+        public static string lblPaymentDate {
+            get {
+                return ResourceManager.GetString("lblPaymentDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Jadual Kadar Upah (Menuai).
         /// </summary>
         public static string lblPayrate {
