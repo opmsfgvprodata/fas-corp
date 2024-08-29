@@ -63,5 +63,6 @@ namespace MVC_SYSTEM.ModelsCorporate
         public string fld_RequestCode { get; set; }
 
         public string fld_KodNegeri { get; set; }
+        public string fld_CostCentre { get; set; }
     }
 }

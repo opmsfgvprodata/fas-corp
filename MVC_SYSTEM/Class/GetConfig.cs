@@ -346,7 +346,14 @@ namespace MVC_SYSTEM.Class
 
             return getvalue;
         }
+        public string GetWilayahNameFromIDLadang(int? id)
+        {
+            int? WilayahId = db.tbl_Ladang.Where(x => x.fld_ID == id).Select(x => x.fld_WlyhID).FirstOrDefault();
+            var getvalue = db.tbl_Wilayah
+                .SingleOrDefault(x => x.fld_ID == WilayahId).fld_WlyhName;
 
+            return getvalue;
+        }
         public short? getTotalOfferedWorkingDaysInAMonth(int? NegaraID, int? SyarikatID, int? LadangID, int? Month, int? Year)
         {
             var getKodNegeriLadang = Convert.ToInt32(db.tbl_Ladang.SingleOrDefault(x => x.fld_ID == LadangID).fld_KodNegeri);
@@ -518,5 +525,45 @@ namespace MVC_SYSTEM.Class
         {
             return HttpContext.Current.Server.MapPath("~/Asset/pdf/" + filename);
         }
+        public string GetSyarikatFullName(string costcentre)
+        {
+            tblOptionConfigsWeb OptionConfigsWeb = new tblOptionConfigsWeb();
+            var SyarikatFullName = "";
+            var syarikatInfo = db.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == costcentre && x.fld_Deleted == false).Select(x => x.fld_NamaSyarikat).FirstOrDefault();
+            if (syarikatInfo == null)
+            { SyarikatFullName = ""; }
+            else
+            { SyarikatFullName = syarikatInfo; }
+
+            return SyarikatFullName;
+        }
+
+        //Added by Shazana 1/8/2023
+        //Modified by Shazana 15/8/2023
+        public string GetSyarikatName(string costcentre)
+        {
+            var SyarikatName = "";
+            var SyarikatNameInfo = db.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == costcentre && x.fld_Deleted == false).Select(x => x.fld_NamaSyarikat).FirstOrDefault();
+            if (SyarikatNameInfo == null)
+            { SyarikatName = ""; }
+            else
+            { SyarikatName = SyarikatNameInfo; }
+
+            return SyarikatName;
+        }
+
+        public string GetSyarikatNo(string costcentre)
+        {
+            var SyarikatNo = "";
+            var SyarikatNoInfo = db.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == costcentre && x.fld_Deleted == false).Select(s => s.fld_NoSyarikat).FirstOrDefault();
+            if (SyarikatNoInfo == null)
+            { SyarikatNo = ""; }
+            else
+            { SyarikatNo = SyarikatNoInfo; }
+
+            return SyarikatNo;
+        }
+ 
+
     }
 }

@@ -2511,4 +2511,10 @@
   <data name="lblPaymentDate" xml:space="preserve">
     <value>Payment Date</value>
   </data>
+  <data name="lblCompany" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="lblEstate" xml:space="preserve">
+    <value>Estate</value>
+  </data>
 </root>
