@@ -1014,7 +1014,9 @@
     <Compile Include="ModelsCustom\CustMod_TransferPkt.cs" />
     <Compile Include="ModelsCustom\CustMod_WorkerIncentiveList.cs" />
     <Compile Include="ModelsCustom\UserIDApplication.cs" />
+    <Compile Include="ModelsDapper\sp_MaybankRcmsZAP64TaxOthers_Result.cs" />
     <Compile Include="ModelsDapper\sp_MaybankRcmsZAP64Tax_Result.cs" />
+    <Compile Include="ModelsDapper\sp_TaxCP39Others_Result.cs" />
     <Compile Include="ModelsDapper\sp_TaxCP39_Result.cs" />
     <Compile Include="ModelsEstate\MVC_SYSTEM_ModelsEstate.cs" />
     <Compile Include="ModelsEstate\tblHtmlReport.cs" />
@@ -3573,6 +3575,11 @@
     <Content Include="Views\MaybankFileGen\_RcmsZAP64Tax.cshtml" />
     <Content Include="Views\User\Password.cshtml" />
     <Content Include="Views\User\_User.cshtml" />
+    <Content Include="Views\MaybankFileGen\RcmsGenTaxOthers.cshtml" />
+    <Content Include="Views\MaybankFileGen\_rcmsTaxOthers.cshtml" />
+    <Content Include="Views\MaybankFileGen\RcmsZAP64TaxOthers.cshtml" />
+    <Content Include="Views\MaybankFileGen\_RcmsZAP64TaxOthers.cshtml" />
+    <Content Include="Views\MaybankFileGen\TaxCP39FormOthers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

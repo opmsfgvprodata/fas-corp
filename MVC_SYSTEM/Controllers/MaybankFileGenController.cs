@@ -249,6 +249,100 @@ namespace MVC_SYSTEM.Controllers
             return Json(new { msg, statusmsg, link });
         }
 
+        //fatin added - 29/07/2024
+        [HttpPost]
+        public ActionResult DownloadTextTaxOthers(int Month, int Year, string CompCode, string filter, string[] WorkerId, DateTime PaymentDate, string Incentive)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            string msg = "";
+            string statusmsg = "";
+            string filePath = "";
+            string filename = "";
+
+            string stringyear = "";
+            string stringmonth = "";
+            string link = "";
+            stringyear = Year.ToString();
+            stringmonth = Month.ToString();
+            stringmonth = (stringmonth.Length == 1 ? "0" + stringmonth : stringmonth);
+
+            ViewBag.MaybankFileGen = "class = active";
+
+            try
+            {
+                GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+                List<ModelsCorporate.tblOptionConfigsWeb> CountryCodeDetail = new List<ModelsCorporate.tblOptionConfigsWeb>();
+
+                List<sp_TaxCP39Others_Result> maybankrcmsOthersList = new List<sp_TaxCP39Others_Result>();
+                string constr = ConfigurationManager.ConnectionStrings["MVC_SYSTEM_HQ_CONN"].ConnectionString;
+                var con = new SqlConnection(constr);
+                try
+                {
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("NegaraID", NegaraID);
+                    parameters.Add("SyarikatID", SyarikatID);
+                    parameters.Add("Month", Month);
+                    parameters.Add("Year", Year);
+                    parameters.Add("CompCode", CompCode);
+                    parameters.Add("Incentive", Incentive);
+                    con.Open();
+                    maybankrcmsOthersList = SqlMapper.Query<sp_TaxCP39Others_Result>(con, "sp_TaxCP39Others", parameters).ToList();
+
+                    if (WorkerId == null)
+                        WorkerId = new string[] { "0" };
+
+                    if (WorkerId.Contains("0"))
+                    {
+                        maybankrcmsOthersList = SqlMapper.Query<sp_TaxCP39Others_Result>(con, "sp_TaxCP39Others", parameters).ToList();
+                    }
+                    else
+                    {
+                        maybankrcmsOthersList = SqlMapper.Query<sp_TaxCP39Others_Result>(con, "sp_TaxCP39Others", parameters).Where(x => WorkerId.Contains(x.fld_Nopkj)).ToList();
+                    }
+                    con.Close();
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+
+
+                //if (WorkerId == null)
+                //    WorkerId = new string[] { "0" };
+
+                //if (WorkerId.Contains("0"))
+                //{
+                //    maybankrcmsList = dbSP.sp_TaxCP39Prev(NegaraID.Value, SyarikatID.Value, Year, Month, getuserid, CompCode).ToList();
+                //}
+                //else
+                //{
+                //    maybankrcmsList = dbSP.sp_TaxCP39Prev(NegaraID.Value, SyarikatID.Value, Year, Month, getuserid, CompCode).Where(x => WorkerId.Contains(x.fld_NoPkj)).ToList();
+                //}
+
+                var SyarikatDetail = db.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == CompCode).FirstOrDefault();
+                //CountryCodeDetail = dbC.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "krytnlistlhdn").ToList();
+
+                filePath = GetGenerateFile.GenerateFileMaybankTaxOthers(maybankrcmsOthersList, SyarikatDetail, stringmonth, stringyear, NegaraID, SyarikatID, CompCode, filter, PaymentDate, Incentive, out filename);
+
+                link = Url.Action("Download", "MaybankFileGen", new { filePath, filename });
+
+                //dbr.Dispose();
+
+                msg = GlobalResCorp.msgGenerateSuccess;
+                statusmsg = "success";
+            }
+            catch (Exception ex)
+            {
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                msg = GlobalResCorp.msgGenerateFailed;
+                statusmsg = "warning";
+            }
+
+            return Json(new { msg, statusmsg, link });
+        }
+
         [HttpPost]
         public ActionResult DownloadTextOthers(int Month, int Year, string CompCode, string filter, string[] WorkerId, DateTime PaymentDate, string Incentive)
         {
@@ -549,6 +643,115 @@ namespace MVC_SYSTEM.Controllers
             return Json(new { msg, statusmsg, file = filename, salary = TotalGaji, totaldata = CountData, clientid = ClientIDText });
         }
 
+        //fatin added - 25/07/2024
+        public JsonResult CheckGenDataDetailTaxOthers(int Month, int Year, string CompCode, string Incentive, string[] WorkerId)
+        {
+            string msg = "";
+            string statusmsg = "";
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+
+            string stringyear = "";
+            string stringmonth = "";
+            string CorpID = "";
+            string ClientID = "";
+            string ClientIDText = "";
+            string AccNo = "";
+            string InitialName = "";
+            stringyear = Year.ToString();
+            stringmonth = Month.ToString();
+            stringmonth = (stringmonth.Length == 1 ? "0" + stringmonth : stringmonth);
+            decimal? TotalGaji = 0;
+            int CountData = 0;
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            GetNSWL.GetSyarikatRCMSDetail(CompCode, out CorpID, out ClientID, out AccNo, out InitialName);
+
+            List<sp_TaxCP39Others_Result> maybankrcmsOthersList = new List<sp_TaxCP39Others_Result>();
+
+            string constr = ConfigurationManager.ConnectionStrings["MVC_SYSTEM_HQ_CONN"].ConnectionString;
+            var con = new SqlConnection(constr);
+            try
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("NegaraID", NegaraID);
+                parameters.Add("SyarikatID", SyarikatID);
+                parameters.Add("Month", Month);
+                parameters.Add("Year", Year);
+                parameters.Add("CompCode", CompCode);
+                parameters.Add("Incentive", Incentive);
+                con.Open();
+                //maybankrcmsList = SqlMapper.Query<sp_TaxCP39_Result>(con, "sp_TaxCP39", parameters).ToList();
+                if (WorkerId == null)
+                    WorkerId = new string[] { "0" };
+
+                if (WorkerId.Contains("0"))
+                {
+                    maybankrcmsOthersList = SqlMapper.Query<sp_TaxCP39Others_Result>(con, "sp_TaxCP39Others", parameters).ToList();
+                }
+                else
+                {
+                    maybankrcmsOthersList = SqlMapper.Query<sp_TaxCP39Others_Result>(con, "sp_TaxCP39Others", parameters).Where(x => WorkerId.Contains(x.fld_Nopkj)).ToList();
+                }
+
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            //if (WorkerId == null)
+            //    WorkerId = new string[] { "0" };
+
+            //if (WorkerId.Contains("0"))
+            //{
+            //    maybankrcmsList = dbSP.sp_TaxCP39(NegaraID.Value, SyarikatID.Value, Year, Month, getuserid, CompCode).ToList();
+            //}
+            //else
+            //{
+            //    maybankrcmsList = dbSP.sp_TaxCP39(NegaraID.Value, SyarikatID.Value, Year, Month, getuserid, CompCode).Where(x => WorkerId.Contains(x.fld_Nopkj)).ToList();
+            //}
+
+            var SyarikatDetail = dbC.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == CompCode).FirstOrDefault();
+            string filename = "M2E TAX(" + SyarikatDetail.fld_NamaPndkSyarikat.ToUpper() + ") " + "" + stringmonth + stringyear + ".txt";
+
+            if (ClientID == null || ClientID == " ")
+            {
+                if (CompCode == "FASSB")
+                {
+                    ClientIDText = "FAS" + stringmonth + stringyear;
+                }
+
+                if (CompCode == "RNDSB")
+                {
+                    ClientIDText = "RND" + stringmonth + stringyear;
+                }
+            }
+            else
+            {
+                ClientIDText = ClientID;
+            }
+
+            if (maybankrcmsOthersList.Count() != 0)
+            {
+                TotalGaji = maybankrcmsOthersList.Sum(s => s.fld_PCBCarumanPekerja);
+                CountData = maybankrcmsOthersList.Count();
+                msg = GlobalResCorp.msgDataFound;
+                statusmsg = "success";
+            }
+            else
+            {
+                msg = GlobalResCorp.msgDataNotFound;
+                statusmsg = "warning";
+            }
+
+            dbSP.Dispose();
+            dbC.Dispose();
+            return Json(new { msg, statusmsg, file = filename, salary = TotalGaji, totaldata = CountData, clientid = ClientIDText });
+        }
+
         public JsonResult CheckGenDataDetailOthers(int Month, int Year, string CompCode, string Incentive, string[] WorkerId)
         {
             string msg = "";
@@ -734,6 +937,64 @@ namespace MVC_SYSTEM.Controllers
 
             CompCodeList.Insert(0, (new SelectListItem { Text = "Please Select", Value = "0" }));
             ViewBag.CompCodeList = CompCodeList;
+
+            //WilayahList.Insert(0, (new SelectListItem { Text = "Please Select", Value = "0" }));
+            //ViewBag.WilayahList = WilayahList;
+
+
+            ViewBag.UserID = getuserid;
+            //dbC.Dispose();
+            return View();
+        }
+
+        //fatin added - 25/07/2024
+        public ActionResult RcmsGenTaxOthers()
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+
+            DateTime Minus1month = timezone.gettimezone().AddMonths(-1);
+            int year = Minus1month.Year;
+            int month = Minus1month.Month;
+            int drpyear = 0;
+            int drprangeyear = 0;
+
+            ViewBag.MaybankFileGen = "class = active";
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            drpyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+            drprangeyear = timezone.gettimezone().Year;
+
+            var yearlist = new List<SelectListItem>();
+            for (var i = drpyear; i <= drprangeyear; i++)
+            {
+                if (i == year)
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = true });
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                }
+            }
+
+            ViewBag.YearList = yearlist;
+
+            ViewBag.MonthList = new SelectList(dbC.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "monthlist" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID), "fldOptConfValue", "fldOptConfDesc", month);
+
+            List<SelectListItem> CompCodeList = new List<SelectListItem>();
+
+            CompCodeList = new SelectList(dbC.tbl_Syarikat.OrderBy(x => x.fld_NamaPndkSyarikat), "fld_NamaPndkSyarikat", "fld_NamaPndkSyarikat").ToList();
+
+            CompCodeList.Insert(0, (new SelectListItem { Text = "Please Select", Value = "0" }));
+            ViewBag.CompCodeList = CompCodeList;
+
+            List<SelectListItem> IncentiveList = new List<SelectListItem>();
+            IncentiveList = new SelectList(dbC.tbl_JenisInsentif.Where(x => x.fld_InclSecondPayslip == true && x.fld_JenisInsentif == "P" && x.fld_Deleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).OrderBy(o => o.fld_KodInsentif).Select(s => new SelectListItem { Value = s.fld_KodInsentif, Text = s.fld_Keterangan }), "Value", "Text").ToList();
+            IncentiveList.Insert(0, (new SelectListItem { Text = "Please Select", Value = "0" }));
+            ViewBag.IncentiveList = IncentiveList;
 
             //WilayahList.Insert(0, (new SelectListItem { Text = "Please Select", Value = "0" }));
             //ViewBag.WilayahList = WilayahList;
@@ -1014,6 +1275,112 @@ namespace MVC_SYSTEM.Controllers
                     ViewBag.filter = filter;
                 }
                 return View(maybankrcmsList);
+            }
+        }
+
+        //fatin added - 25/07/2024
+        public ViewResult _rcmsTaxOthers(string CompCodeList, int? MonthList, int? YearList, string IncentiveList, string print, string filter)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            //string WilayahName = "";
+            string NamaSyarikat = "";
+            string ClientId = "";
+            //string LdgCode = "";
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            List<sp_TaxCP39Others_Result> maybankrcmsOthersList = new List<sp_TaxCP39Others_Result>();
+
+            ViewBag.MonthList = MonthList;
+            ViewBag.YearList = YearList;
+            ViewBag.NamaSyarikat = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_NamaSyarikat)
+                .FirstOrDefault();
+            ViewBag.NamaPendekSyarikat = dbC.tbl_Syarikat
+               .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+               .Select(s => s.fld_NamaPndkSyarikat)
+               .FirstOrDefault();
+            ViewBag.NoSyarikat = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_NoSyarikat)
+                .FirstOrDefault();
+            ViewBag.CorpID = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_CorporateID)
+                .FirstOrDefault();
+            ClientId = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_ClientBatchID)
+                .FirstOrDefault();
+            if (ClientId == null || ClientId == "")
+            {
+                if (CompCodeList == "FASSB")
+                {
+                    ViewBag.clientid = "FAS" + MonthList + YearList;
+                }
+
+                if (CompCodeList == "RNDSB")
+                {
+                    ViewBag.clientid = "RND" + MonthList + YearList;
+                }
+            }
+            else
+            {
+                ViewBag.clientid = ClientId;
+            }
+
+            ViewBag.AccNo = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_AccountNo)
+                .FirstOrDefault();
+            ViewBag.NegaraID = NegaraID;
+            ViewBag.SyarikatID = SyarikatID;
+            ViewBag.UserID = getuserid;
+            ViewBag.UserName = User.Identity.Name;
+            ViewBag.Date = DateTime.Now.ToShortDateString();
+            ViewBag.Time = DateTime.Now.ToShortTimeString();
+            ViewBag.Print = print;
+            ViewBag.Description = "Region " + NamaSyarikat + " - Salary payment for " + MonthList + "/" + YearList;
+            if (MonthList == null || YearList == null || CompCodeList == "0" || IncentiveList == "0")
+            {
+                ViewBag.Message = "Please select month, year, company, incentive type and payment date";
+                return View(maybankrcmsOthersList);
+            }
+            else
+            {
+                string constr = ConfigurationManager.ConnectionStrings["MVC_SYSTEM_HQ_CONN"].ConnectionString;
+                var con = new SqlConnection(constr);
+                try
+                {
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("NegaraID", NegaraID);
+                    parameters.Add("SyarikatID", SyarikatID);
+                    parameters.Add("Month", MonthList);
+                    parameters.Add("Year", YearList);
+                    parameters.Add("CompCode", CompCodeList);
+                    parameters.Add("Incentive", IncentiveList);
+                    con.Open();
+                    maybankrcmsOthersList = SqlMapper.Query<sp_TaxCP39Others_Result>(con, "sp_TaxCP39Others", parameters).ToList();
+                    con.Close();
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                ViewBag.RecordNo = maybankrcmsOthersList.Count();
+
+                if (maybankrcmsOthersList.Count() == 0)
+                {
+                    ViewBag.Message = GlobalResCorp.msgNoRecord;
+                }
+
+                if (filter != "")
+                {
+                    ViewBag.filter = filter;
+                }
+                return View(maybankrcmsOthersList);
             }
         }
 
@@ -1877,6 +2244,60 @@ namespace MVC_SYSTEM.Controllers
             return View();
         }
 
+        //fatin added - 30/07/2024
+        public ActionResult RcmsZAP64TaxOthers()
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+
+            DateTime Minus1month = timezone.gettimezone().AddMonths(-1);
+            int year = Minus1month.Year;
+            int month = Minus1month.Month;
+            int drpyear = 0;
+            int drprangeyear = 0;
+
+            ViewBag.MaybankFileGen = "class = active";
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            drpyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+            drprangeyear = timezone.gettimezone().Year;
+
+            var yearlist = new List<SelectListItem>();
+            for (var i = drpyear; i <= drprangeyear; i++)
+            {
+                if (i == year)
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = true });
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                }
+            }
+
+            ViewBag.YearList = yearlist;
+
+            ViewBag.MonthList = new SelectList(dbC.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "monthlist" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID), "fldOptConfValue", "fldOptConfDesc", month);
+
+            List<SelectListItem> CompCodeList = new List<SelectListItem>();
+
+            CompCodeList = new SelectList(dbC.tbl_Syarikat.OrderBy(x => x.fld_NamaPndkSyarikat), "fld_NamaPndkSyarikat", "fld_NamaPndkSyarikat").ToList();
+
+            CompCodeList.Insert(0, (new SelectListItem { Text = "Please Select", Value = "0" }));
+            ViewBag.CompCodeList = CompCodeList;
+
+            List<SelectListItem> IncentiveList = new List<SelectListItem>();
+            IncentiveList = new SelectList(dbC.tbl_JenisInsentif.Where(x => x.fld_InclSecondPayslip == true && x.fld_JenisInsentif == "P" && x.fld_Deleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).OrderBy(o => o.fld_KodInsentif).Select(s => new SelectListItem { Value = s.fld_KodInsentif, Text = s.fld_Keterangan }), "Value", "Text").ToList();
+            IncentiveList.Insert(0, (new SelectListItem { Text = "Please Select", Value = "0" }));
+            ViewBag.IncentiveList = IncentiveList;
+
+            ViewBag.UserID = getuserid;
+            //dbC.Dispose();
+            return View();
+        }
+
         public ViewResult _RcmsZAP64(string CompCodeList, int? MonthList, int? YearList, string print, string PaymentDate)
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
@@ -2150,6 +2571,115 @@ namespace MVC_SYSTEM.Controllers
 
 
                 return View(maybankrcmsZAP64);
+            }
+        }
+
+        //fatin added - 30/07/2024
+
+        public ViewResult _RcmsZAP64TaxOthers(string CompCodeList, int? MonthList, int? YearList, string print, string PaymentDate, string IncentiveList)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            //string WilayahName = "";
+            string NamaSyarikat = "";
+            //string LdgCode = "";
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            List<sp_MaybankRcmsZAP64TaxOthers_Result> maybankrcmsZAP64Others = new List<sp_MaybankRcmsZAP64TaxOthers_Result>();
+
+
+            ViewBag.MonthList = MonthList;
+            ViewBag.YearList = YearList;
+            ViewBag.NamaSyarikat = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_NamaSyarikat)
+                .FirstOrDefault();
+            ViewBag.NamaPendekSyarikat = dbC.tbl_Syarikat
+               .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+               .Select(s => s.fld_NamaPndkSyarikat)
+               .FirstOrDefault();
+            ViewBag.NoSyarikat = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_NoSyarikat)
+                .FirstOrDefault();
+            ViewBag.CorpID = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_CorporateID)
+                .FirstOrDefault();
+            ViewBag.ClientID = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_ClientBatchID)
+                .FirstOrDefault();
+            ViewBag.AccNo = dbC.tbl_Syarikat
+                .Where(x => x.fld_NegaraID == NegaraID && x.fld_NamaPndkSyarikat == CompCodeList)
+                .Select(s => s.fld_AccountNo)
+                .FirstOrDefault();
+
+            ViewBag.NegaraID = NegaraID;
+            ViewBag.SyarikatID = SyarikatID;
+            ViewBag.UserID = getuserid;
+            ViewBag.UserName = User.Identity.Name;
+            ViewBag.Date = DateTime.Now.ToShortDateString();
+            ViewBag.Time = DateTime.Now.ToShortTimeString();
+            ViewBag.Print = print;
+
+            if (YearList == null && MonthList == null)
+            {
+                ViewBag.DocDate = DateTime.Now.AddMonths(+1).AddDays(-DateTime.Now.Day).ToString("dd.MM.yyyy");
+            }
+            else
+            {
+                var lastday = DateTime.DaysInMonth(YearList.Value, MonthList.Value);
+                ViewBag.DocDate = lastday + "." + MonthList + "." + YearList;
+            }
+            ViewBag.PostingDate = Convert.ToDateTime(PaymentDate).ToString("dd.MM.yyyy");
+            ViewBag.Description = "Region " + NamaSyarikat + " - Maybank Rcms ZAP64 for " + MonthList + "/" + YearList;
+            if (MonthList == null || YearList == null || CompCodeList == "0" || IncentiveList == "0")
+            {
+                ViewBag.Message = "Please select month, year, company, incentive and payment date";
+                return View(maybankrcmsZAP64Others);
+            }
+            else
+            {
+                //dbSP.SetCommandTimeout(2400);
+                //maybankrcmsZAP64 = dbSP.sp_MaybankRcmsZAP64(NegaraID, SyarikatID, YearList, MonthList, getuserid, CompCodeList).ToList();
+
+                string constr = ConfigurationManager.ConnectionStrings["MVC_SYSTEM_HQ_CONN"].ConnectionString;
+                var con = new SqlConnection(constr);
+                try
+                {
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("NegaraID", NegaraID);
+                    parameters.Add("SyarikatID", SyarikatID);
+                    parameters.Add("Year", YearList);
+                    parameters.Add("Month", MonthList);
+                    parameters.Add("UserID", getuserid);
+                    parameters.Add("CompCode", CompCodeList);
+                    parameters.Add("Incentive", IncentiveList);
+                    con.Open();
+                    maybankrcmsZAP64Others = SqlMapper.Query<sp_MaybankRcmsZAP64TaxOthers_Result>(con, "sp_MaybankRcmsZAP64TaxOthers", parameters).ToList();
+                    con.Close();
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+
+
+                var BankList = dbC.tbl_Bank
+                    .Where(x => x.fld_SyarikatID == SyarikatID && x.fld_NegaraID == NegaraID && x.fld_Deleted == false)
+                    .ToList();
+
+                ViewBag.RecordNo = maybankrcmsZAP64Others.Count();
+
+                if (maybankrcmsZAP64Others.Count() == 0)
+                {
+                    ViewBag.Message = GlobalResCorp.msgNoRecord;
+                }
+
+
+                return View(maybankrcmsZAP64Others);
             }
         }
 
@@ -2977,6 +3507,765 @@ namespace MVC_SYSTEM.Controllers
                             cP38 = taxCP39Data.fld_CP38Amount.ToString("N");
                             totalPCB = totalPCB + taxCP39Data.fld_CarumanPekerja;
                             totalCP38 = totalCP38 + taxCP39Data.fld_CP38Amount;
+                        }
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(bil, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(refTaxNo, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(workerName, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(oldIC, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(newIC, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(workerNo, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(passportNo, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(countryCode, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(pCB, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        cell = new PdfPCell();
+                        chunk = new Chunk(cP38, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.FixedHeight = 18;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+                        dataIndex++;
+                    }
+                    cell = new PdfPCell();
+                    chunk = new Chunk("Borang CP39 boleh diperolehi di laman web : http://www.hasil.gov.my", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.FixedHeight = 18;
+                    cell.Border = 0;
+                    cell.Colspan = 6;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("JUMLAH", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.FixedHeight = 18;
+                    cell.Colspan = 2;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk(totalPCB.ToString("N"), FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.FixedHeight = 18;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk(totalCP38.ToString("N"), FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.FixedHeight = 18;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk(" ", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.FixedHeight = 18;
+                    cell.Colspan = 6;
+                    cell.Border = 0;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("JUMLAH BESAR", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.FixedHeight = 18;
+                    cell.Colspan = 2;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk(totalAmount.ToString("N"), FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.FixedHeight = 18;
+                    cell.Colspan = 2;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    mainCell = new PdfPCell(table);
+                    mainCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    mainCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    mainCell.Colspan = 5;
+                    mainCell.Border = 0;
+                    mainTable.AddCell(mainCell);
+
+                    document.Add(mainTable);
+                }
+
+                // front page content
+
+                document.Close();
+                writer.Close();
+                reader.Close();
+                ms.Close();
+                byte[] file2 = ms.ToArray();
+
+                //I don't have a web server handy so I'm going to write my final MemoryStream to a byte array and then to disk
+                byte[] bytes;
+
+
+                //Create our final combined MemoryStream
+                using (MemoryStream finalStream = new MemoryStream())
+                {
+                    //Create our copy object
+                    PdfCopyFields copy = new PdfCopyFields(finalStream);
+
+                    copy.AddDocument(new PdfReader(file));
+
+                    copy.AddDocument(new PdfReader(file2));
+                    copy.Close();
+
+                    //Get the raw bytes to save to disk
+                    bytes = finalStream.ToArray();
+                }
+                output.Write(bytes, 0, bytes.Length);
+                output.Position = 0;
+                return new FileStreamResult(output, "application/pdf");
+
+            }
+        }
+
+        //fatin added - 31/07/2024
+
+        public ActionResult TaxCP39FormOthers()
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+
+            DateTime Minus1month = timezone.gettimezone().AddMonths(-1);
+            int year = Minus1month.Year;
+            int month = Minus1month.Month;
+            int drpyear = 0;
+            int drprangeyear = 0;
+
+            ViewBag.MaybankFileGen = "class = active";
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            drpyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+            drprangeyear = timezone.gettimezone().Year;
+
+            var yearlist = new List<SelectListItem>();
+            for (var i = drpyear; i <= drprangeyear; i++)
+            {
+                if (i == year)
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = true });
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                }
+            }
+
+            ViewBag.YearList = yearlist;
+
+            ViewBag.MonthList = new SelectList(dbC.tblOptionConfigsWebs.Where(x => x.fldOptConfFlag1 == "monthlist" && x.fldDeleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID), "fldOptConfValue", "fldOptConfDesc", month);
+
+            List<SelectListItem> CompCodeList = new List<SelectListItem>();
+            CompCodeList = new SelectList(dbC.tbl_Syarikat.OrderBy(x => x.fld_NamaPndkSyarikat), "fld_NamaPndkSyarikat", "fld_NamaPndkSyarikat").ToList();
+            ViewBag.CompCodeList = CompCodeList;
+
+            List<SelectListItem> IncentiveList = new List<SelectListItem>();
+            IncentiveList = new SelectList(dbC.tbl_JenisInsentif.Where(x => x.fld_InclSecondPayslip == true && x.fld_JenisInsentif == "P" && x.fld_Deleted == false && x.fld_NegaraID == NegaraID && x.fld_SyarikatID == SyarikatID).OrderBy(o => o.fld_KodInsentif).Select(s => new SelectListItem { Value = s.fld_KodInsentif, Text = s.fld_Keterangan }), "Value", "Text").ToList();
+            IncentiveList.Insert(0, (new SelectListItem { Text = "Please Select", Value = "0" }));
+            ViewBag.IncentiveList = IncentiveList;
+
+            return View();
+        }
+
+        //fatin added - 01/08/2024
+        public FileStreamResult TaxCP39FormOthersPdf(int Month, int Year, string CompCode, string Incentive)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string NamaSyarikat = "";
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            List<sp_TaxCP39Others_Result> taxCP39Others = new List<sp_TaxCP39Others_Result>();
+
+            var monthName = ((Constans.Month)Month).ToString().ToUpper();
+            var SyarikatDetail = dbC.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == CompCode).FirstOrDefault(); ;
+
+            if (CompCode != null)
+            {
+                string constr = ConfigurationManager.ConnectionStrings["MVC_SYSTEM_HQ_CONN"].ConnectionString;
+                var con = new SqlConnection(constr);
+                try
+                {
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("NegaraID", NegaraID);
+                    parameters.Add("SyarikatID", SyarikatID);
+                    parameters.Add("Month", Month);
+                    parameters.Add("Year", Year);
+                    parameters.Add("CompCode", CompCode);
+                    parameters.Add("Incentive", Incentive);
+                    con.Open();
+                    taxCP39Others = SqlMapper.Query<sp_TaxCP39Others_Result>(con, "sp_TaxCP39Others", parameters).ToList();
+                    con.Close();
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
+
+            if (taxCP39Others.Count() == 0)
+            {
+                Document pdfDoc = new Document(PageSize.A4, 10, 10, 10, 5);
+                MemoryStream ms = new MemoryStream();
+                MemoryStream output = new MemoryStream();
+                PdfWriter pdfWriter = PdfWriter.GetInstance(pdfDoc, ms);
+                Chunk chunk = new Chunk();
+                Paragraph para = new Paragraph();
+                pdfDoc.Open();
+                PdfPTable table = new PdfPTable(1);
+                table.WidthPercentage = 100;
+                PdfPCell cell = new PdfPCell();
+                chunk = new Chunk("No Data Found", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                cell = new PdfPCell(new Phrase(chunk));
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.Border = 0;
+                table.AddCell(cell);
+                pdfDoc.Add(table);
+                pdfWriter.CloseStream = false;
+                pdfDoc.Close();
+
+                ms.Close();
+
+                byte[] file = ms.ToArray();
+                output.Write(file, 0, file.Length);
+                output.Position = 0;
+                return new FileStreamResult(output, "application/pdf");
+            }
+            else
+            {
+                MemoryStream output = new MemoryStream();
+
+                string cp39Form = GetConfig.PdfPathFile("CP39 FORM-1.pdf");
+
+                // open the reader
+                PdfReader reader = new PdfReader(cp39Form);
+                Rectangle size = reader.GetPageSizeWithRotation(1);
+                Document document = new Document(size);
+
+                // open the writer
+                MemoryStream ms = new MemoryStream();
+                //FileStream fs = new FileStream(newFile, FileMode.Create, FileAccess.Write);
+                PdfWriter writer = PdfWriter.GetInstance(document, ms);
+                document.Open();
+                PdfContentByte cb = writer.DirectContent;
+
+                // front page content
+                BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.EMBEDDED);
+                cb.SetColorFill(BaseColor.BLACK);
+                cb.SetFontAndSize(bf, 8);
+
+                string text = "";
+
+                cb.BeginText();
+                text = monthName; //Month name
+                cb.ShowTextAligned(0, text, 358, 506, 0);
+                cb.EndText();
+
+                cb.BeginText();
+                text = Year.ToString(); //Year
+                cb.ShowTextAligned(0, text, 450, 506, 0);
+                cb.EndText();
+
+                var noEmployerTax = SyarikatDetail.fld_EmployerTaxNo;
+                char[] noEmployerTaxArr = noEmployerTax.ToCharArray();
+                int arrCountNoEmployerTaxArr = noEmployerTaxArr.Count();
+                float noEmployerXPosition = 0;
+
+                for (int i = 0; i <= arrCountNoEmployerTaxArr; i++)
+                {
+                    try
+                    {
+                        text = noEmployerTaxArr[i].ToString();
+                    }
+                    catch (Exception ex)
+                    {
+                        text = "";
+                    }
+                    if (text != "")
+                    {
+                        switch (i)
+                        {
+                            case 0:
+                                noEmployerXPosition = 100;
+                                break;
+                            case 1:
+                                noEmployerXPosition = 113;
+                                break;
+                            case 2:
+                                noEmployerXPosition = 126;
+                                break;
+                            case 3:
+                                noEmployerXPosition = 140;
+                                break;
+                            case 4:
+                                noEmployerXPosition = 152;
+                                break;
+                            case 5:
+                                noEmployerXPosition = 167;
+                                break;
+                            case 6:
+                                noEmployerXPosition = 180;
+                                break;
+                            case 7:
+                                noEmployerXPosition = 192;
+                                break;
+                            case 8:
+                                noEmployerXPosition = 205;
+                                break;
+                            case 9:
+                                noEmployerXPosition = 230;
+                                break;
+                            case 10:
+                                noEmployerXPosition = 243;
+                                break;
+                        }
+                        cb.BeginText();
+                        cb.ShowTextAligned(0, text, noEmployerXPosition, 451, 0);
+                        cb.EndText();
+                    }
+                }
+
+                var TotalMTDAmt = taxCP39Others.Sum(s => s.fld_PCBCarumanPekerja);
+                var TotalMTDRec = taxCP39Others.Count();
+                var TotalCP38Amt = 0;
+                //taxCP39Others.Sum(s => s.fld_CP38Amount);
+                var TotalCP38Rec = 0;
+                    //taxCP39Others.Where(x => x.fld_CP38Amount > 0).Count();
+
+                cb.BeginText();
+                text = "RM   " + TotalMTDAmt.ToString("N"); //MTD Amt
+                cb.ShowTextAligned(2, text, 413, 450, 0);
+                cb.EndText();
+
+                cb.BeginText();
+                text = "RM   " + TotalCP38Amt.ToString("N"); //CP38
+                cb.ShowTextAligned(2, text, 503, 450, 0);
+                cb.EndText();
+
+                cb.BeginText();
+                text = TotalMTDRec.ToString(); //MTD Amt
+                cb.ShowTextAligned(1, text, 373, 432, 0);
+                cb.EndText();
+
+                cb.BeginText();
+                text = TotalCP38Rec.ToString(); //CP38
+                cb.ShowTextAligned(1, text, 466, 432, 0);
+                cb.EndText();
+
+                var totalAmount = TotalMTDAmt + TotalCP38Amt;
+
+                cb.BeginText();
+                text = "RM   " + totalAmount.ToString("N"); //Total Amt
+                cb.ShowTextAligned(1, text, 446, 409, 0);
+                cb.EndText();
+
+                cb.BeginText();
+                text = SyarikatDetail.fld_NamaSyarikat;
+                cb.ShowTextAligned(0, text, 98, 390, 0);
+                cb.EndText();
+
+                cb.BeginText();
+                text = DateTime.Now.ToString("dd.MM.yyyy"); //Total Amt
+                cb.ShowTextAligned(1, text, 446, 337, 0);
+                cb.EndText();
+
+                // front page content
+
+                PdfImportedPage page = writer.GetImportedPage(reader, 1);
+                cb.AddTemplate(page, 0, 0);
+
+                document.Close();
+                writer.Close();
+                reader.Close();
+                ms.Close();
+                byte[] file = ms.ToArray();
+
+                cp39Form = GetConfig.PdfPathFile("CP39 FORM-2.pdf");
+
+                // open the reader
+
+                size = new Rectangle(792, 612);
+                document = new Document(size);
+
+                // open the writer
+                ms = new MemoryStream();
+                //FileStream fs = new FileStream(newFile, FileMode.Create, FileAccess.Write);
+                writer = PdfWriter.GetInstance(document, ms);
+                document.Open();
+                cb = writer.DirectContent;
+
+                // front page content
+
+
+                var taxCP39Arr = taxCP39Others.ToArray();
+                var totalPages = Convert.ToInt32(taxCP39Arr.Count() / 24);
+                var getModulus = taxCP39Arr.Count() % 24;
+                if (getModulus > 0)
+                {
+                    totalPages += 1;
+                }
+                var dataIndex = 0;
+
+                for (int i = 0; i < totalPages; i++)
+                {
+                    document.NewPage();
+                    cb = writer.DirectContent;
+
+                    bf = BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.EMBEDDED);
+                    cb.SetColorFill(BaseColor.BLACK);
+                    cb.SetFontAndSize(bf, 8);
+
+                    PdfPTable mainTable = new PdfPTable(5);
+                    Chunk chunk = new Chunk();
+                    mainTable.WidthPercentage = 100;
+                    float[] widths = new float[] { 0.5f, 0.6f, 1.5f, 1, 0.1f };
+                    mainTable.SetWidths(widths);
+
+                    PdfPCell mainCell = new PdfPCell();
+                    chunk = new Chunk("No. Rujukan Majikan E", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    mainCell = new PdfPCell(new Phrase(chunk));
+                    mainCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    mainCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    mainCell.Border = 0;
+                    mainTable.AddCell(mainCell);
+
+                    PdfPTable table = new PdfPTable(12);
+                    chunk = new Chunk();
+                    //table.WidthPercentage = 5;
+                    widths = new float[] { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
+                    table.SetWidths(widths);
+
+                    PdfPCell cell = new PdfPCell();
+
+                    for (int y = 0; y <= arrCountNoEmployerTaxArr; y++)
+                    {
+                        try
+                        {
+                            text = noEmployerTaxArr[y].ToString();
+                        }
+                        catch (Exception ex)
+                        {
+                            text = "";
+                        }
+                        chunk = new Chunk(text, FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        table.AddCell(cell);
+
+                        if (y == 8)
+                        {
+                            chunk = new Chunk("-", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                            cell = new PdfPCell(new Phrase(chunk));
+                            cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            cell.Border = 0;
+                            table.AddCell(cell);
+                        }
+                    }
+                    mainCell = new PdfPCell(table);
+                    mainCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    mainCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    mainCell.Border = 0;
+                    mainTable.AddCell(mainCell);
+
+                    chunk = new Chunk(" ", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    mainCell = new PdfPCell(new Phrase(chunk));
+                    mainCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    mainCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    mainCell.Border = 0;
+                    mainTable.AddCell(mainCell);
+
+                    chunk = new Chunk("Muka Surat", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    mainCell = new PdfPCell(new Phrase(chunk));
+                    mainCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                    mainCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    mainCell.Border = 0;
+                    mainTable.AddCell(mainCell);
+
+                    text = (i + 1).ToString();
+                    text = GetGenerateFile.TextFileContent(text, 2, "0", true);
+                    char[] pageNoArr = text.ToCharArray();
+
+                    table = new PdfPTable(2);
+                    chunk = new Chunk();
+                    widths = new float[] { 0.1f, 0.1f };
+                    table.SetWidths(widths);
+
+                    chunk = new Chunk(pageNoArr[0].ToString(), FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    chunk = new Chunk(pageNoArr[1].ToString(), FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    mainCell = new PdfPCell(table);
+                    mainCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    mainCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    mainCell.Colspan = 5;
+                    mainCell.Border = 0;
+                    mainTable.AddCell(mainCell);
+
+                    table = new PdfPTable(10);
+                    table.SpacingBefore = 10;
+                    chunk = new Chunk();
+                    table.WidthPercentage = 106;
+
+                    widths = new float[] { 0.5f, 1.5f, 3, 1, 1, 1, 1, 1, 1, 1 };
+
+                    table.SetWidths(widths);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("BIL.", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Rowspan = 2;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("NO. RUJUKAN CUKAI \r\nPENDAPATAN", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Rowspan = 2;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("NAMA PENUH PEKERJA \r\n(SEPERTI DI KAD PENGENALAN ATAU PASPORT)", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Rowspan = 2;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("NO. K/P LAMA", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Rowspan = 2;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("NO. K/P BARU", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Rowspan = 2;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("NO. \r\nPEKERJA", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Rowspan = 2;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("BAGI PEKERJA ASING", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Colspan = 2;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("JUMLAH POTONGAN CUKAI", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.Colspan = 2;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("NO. \r\nPASPORT", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("KOD \r\nNEGARA", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("PCB (RM)", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell();
+                    chunk = new Chunk("CP38 (RM)", FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
+                    cell = new PdfPCell(new Phrase(chunk));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    table.AddCell(cell);
+
+                    decimal totalPCB = 0;
+                    decimal totalCP38 = 0;
+                    for (int pageDataIndex = 0; pageDataIndex < 24; pageDataIndex++)
+                    {
+                        string bil = "";
+                        string refTaxNo = "";
+                        string workerName = "";
+                        string oldIC = "";
+                        string newIC = "";
+                        string workerNo = "";
+                        string passportNo = "";
+                        string countryCode = "";
+                        string pCB = "";
+                        string cP38 = "";
+                        var taxCP39Data = new sp_TaxCP39Others_Result();
+                        if (dataIndex < taxCP39Arr.Count())
+                        {
+                            taxCP39Data = taxCP39Arr[dataIndex];
+                            bil = (pageDataIndex + 1).ToString();
+                            refTaxNo = taxCP39Data.fld_TaxNo;
+                            workerName = taxCP39Data.fld_Nama;
+                            newIC = taxCP39Data.fld_Nokp;
+                            workerNo = taxCP39Data.fld_Nopkj;
+                            passportNo = taxCP39Data.fld_PassportNo;
+                            countryCode = taxCP39Data.fld_CountryCode != "MY" ? taxCP39Data.fld_CountryCode : "";
+                            pCB = taxCP39Data.fld_PCBCarumanPekerja.ToString("N");
+                            cP38 = "0N";
+                                //taxCP39Data.fld_CP38Amount.ToString("N");
+                            totalPCB = totalPCB + taxCP39Data.fld_PCBCarumanPekerja;
+                            totalCP38 = totalCP38 + 0;
+                                //taxCP39Data.fld_CP38Amount;
                         }
 
                         cell = new PdfPCell();
