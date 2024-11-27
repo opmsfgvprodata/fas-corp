@@ -65,22 +65,17 @@ namespace MVC_SYSTEM.Controllers
             reportid = dbC.tblRoleReports.Where(x => x.fldRoleID == getroleid && x.fldNegaraID == NegaraID && x.fldSyarikatID == SyarikatID).Select(s => s.fldReportID).ToArray();
 
             List<SelectListItem> SubReportList = new List<SelectListItem>();
-            //if (!getidentity.NegaraSumber(User.Identity.Name))
-            //{
-            //    ViewBag.ReportList = new SelectList(dbC.tblReportLists.Where(x => reportid.Contains((x.fldReportListID)) && x.fldDeleted == false).OrderBy(o => o.fldReportListID).Select(s => new SelectListItem { Value = s.fldReportListID.ToString(), Text = s.fldReportListName }), "Value", "Text").ToList();
-            //}
-            //else
-            //{
-            //    ViewBag.ReportList = new SelectList(dbC.tblReportLists.Where(x => reportid.Contains((x.fldReportListID)) && x.fldDeleted == false).OrderBy(o => o.fldReportListID).Select(s => new SelectListItem { Value = s.fldReportListID.ToString(), Text = s.fldReportListName }), "Value", "Text").ToList();
-            //}
-            ViewBag.SubReportList = SubReportList;
-            string action = "", controller = "";
+            if (!getidentity.NegaraSumber(User.Identity.Name))
             {
-                action = "PenggajianDataReport"; //getreport.fldReportListAction;
-                controller = "Report";// getreport.fldReportListController;
+                ViewBag.ReportList = new SelectList(dbC.tblReportLists.Where(x => reportid.Contains((x.fldReportListID)) && x.fldDeleted == false).OrderBy(o => o.fldReportListID).Select(s => new SelectListItem { Value = s.fldReportListID.ToString(), Text = s.fldReportListName }), "Value", "Text").ToList();
             }
-            return RedirectToAction(action, controller);
-            //return View();
+            else
+            {
+                ViewBag.ReportList = new SelectList(dbC.tblReportLists.Where(x => reportid.Contains((x.fldReportListID)) && x.fldDeleted == false).OrderBy(o => o.fldReportListID).Select(s => new SelectListItem { Value = s.fldReportListID.ToString(), Text = s.fldReportListName }), "Value", "Text").ToList();
+            }
+            ViewBag.SubReportList = SubReportList;
+
+            return View();
         }
 
         [HttpPost]
@@ -93,18 +88,17 @@ namespace MVC_SYSTEM.Controllers
 
             if (getreport.fldSubReport == true && SubReportList > 0)
             {
-                action = "PenggajianDataReport"; //getreport.fldReportListAction;
-                controller = "Report";// getreport.fldReportListController;
-                //var getsubreport = dbC.tblSubReportLists.Where(x => x.fldSubReportListID == SubReportList && x.fldMainReportID == ReportList).FirstOrDefault();
-                //action = getsubreport.fldSubReportListAction;
-                //controller = getsubreport.fldSubReportListController;
+                var getsubreport = dbC.tblSubReportLists.Where(x => x.fldSubReportListID == SubReportList && x.fldMainReportID == ReportList).FirstOrDefault();
+                action = getsubreport.fldSubReportListAction;
+                controller = getsubreport.fldSubReportListController;
             }
             else
             {
-                action = "PenggajianDataReport"; //getreport.fldReportListAction;
-                controller = "Report";// getreport.fldReportListController;
+                action = getreport.fldReportListAction;
+                controller = getreport.fldReportListController;
             }
             return RedirectToAction(action, controller);
+
         }
 
         [AccessDeniedAuthorizeAttribute(Roles = "Super Power Admin,Super Admin,Admin 1,Admin 2,Admin 3,Viewer")]
