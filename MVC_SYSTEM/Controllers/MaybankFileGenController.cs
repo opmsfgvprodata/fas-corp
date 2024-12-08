@@ -3221,7 +3221,6 @@ namespace MVC_SYSTEM.Controllers
 
             List<SelectListItem> CompCodeList = new List<SelectListItem>();
             CompCodeList = new SelectList(dbC.tbl_Syarikat.OrderBy(x => x.fld_NamaPndkSyarikat), "fld_NamaPndkSyarikat", "fld_NamaPndkSyarikat").ToList();
-            CompCodeList.Insert(0, (new SelectListItem { Text = "All", Value = "0" }));
             ViewBag.CompCodeList = CompCodeList;
             return View();
         }
