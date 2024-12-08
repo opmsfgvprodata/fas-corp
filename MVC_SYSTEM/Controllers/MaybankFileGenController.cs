@@ -2492,7 +2492,7 @@ namespace MVC_SYSTEM.Controllers
             List<sp_TaxCP39_Result> taxCP39 = new List<sp_TaxCP39_Result>();
 
             var monthName = ((Constans.Month)Month).ToString().ToUpper();
-            var SyarikatDetail = dbC.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == CompCode).FirstOrDefault(); ;
+            var SyarikatDetail = dbC.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == CompCode).FirstOrDefault(); 
 
             if (CompCode != null)
             {
@@ -3236,7 +3236,6 @@ namespace MVC_SYSTEM.Controllers
             var taxCP8D_Result = new List<TaxCP8D_Result>();
             var workerInfoList = new List<WorkerInfo>();
             var workerTaxCP8DList = new List<WorkerTaxCP8D>();
-            var workerTaxInfoList = new List<WorkerTaxInfo>();
             var otherContributionList = new List<OtherContribution>();
             var specialIncentiveList = new List<SpecialIncentive>();
             var NSWL = GetNSWL.GetLadangDetailByRegion(CompCodeList);
@@ -3271,7 +3270,6 @@ namespace MVC_SYSTEM.Controllers
                         var result = SqlMapper.QueryMultiple(con, "sp_TaxCP8D", parameters, commandType: CommandType.StoredProcedure);
                         workerInfoList.AddRange(result.Read<WorkerInfo>().ToList());
                         workerTaxCP8DList.AddRange(result.Read<WorkerTaxCP8D>().ToList());
-                        workerTaxInfoList.AddRange(result.Read<WorkerTaxInfo>().ToList());
                         otherContributionList.AddRange(result.Read<OtherContribution>().ToList());
                         specialIncentiveList.AddRange(result.Read<SpecialIncentive>().ToList());
                         con.Close();
@@ -3294,10 +3292,11 @@ namespace MVC_SYSTEM.Controllers
                         var specialIncentive = specialIncentiveList.Where(x => workerNo.Contains(x.fld_Nopkj)).ToList();
                         var estateInfo = NSWL.Where(x => x.fld_DivisionID == workerInfo.fld_DivisionID).FirstOrDefault();
                         var workerInfo2 = workerInfoList.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).FirstOrDefault();
+                        var workerTaxInfo = workerTax.OrderByDescending(o => o.fld_Month).Take(1).FirstOrDefault();
                         taxCP8D_Result.Add(new TaxCP8D_Result
                         {
                             EstateName = estateInfo.fld_NamaLadang,
-                            TINNo = workerTax.Select(s => s.fld_TaxNo).FirstOrDefault(),
+                            TINNo = workerTaxInfo.fld_TaxNo,
                             NoPkerja = workerInfo.fld_NoPkjPermanent,
                             NamaPkerja = workerInfo2.fld_Nama,
                             IDNo = workerInfo2.fld_Nokp,
@@ -3339,7 +3338,6 @@ namespace MVC_SYSTEM.Controllers
                 var taxCP8D_Result = new List<TaxCP8D_Result>();
                 var workerInfoList = new List<WorkerInfo>();
                 var workerTaxCP8DList = new List<WorkerTaxCP8D>();
-                var workerTaxInfoList = new List<WorkerTaxInfo>();
                 var otherContributionList = new List<OtherContribution>();
                 var specialIncentiveList = new List<SpecialIncentive>();
                 foreach (var regionID in NSWL.Select(s => s.fld_WilayahID).Distinct().ToList())
@@ -3353,7 +3351,6 @@ namespace MVC_SYSTEM.Controllers
                     var result = SqlMapper.QueryMultiple(con, "sp_TaxCP8D", parameters, commandType: CommandType.StoredProcedure);
                     workerInfoList.AddRange(result.Read<WorkerInfo>().ToList());
                     workerTaxCP8DList.AddRange(result.Read<WorkerTaxCP8D>().ToList());
-                    workerTaxInfoList.AddRange(result.Read<WorkerTaxInfo>().ToList());
                     otherContributionList.AddRange(result.Read<OtherContribution>().ToList());
                     specialIncentiveList.AddRange(result.Read<SpecialIncentive>().ToList());
                     con.Close();
@@ -3372,10 +3369,6 @@ namespace MVC_SYSTEM.Controllers
                             var workerInfo2 = workerInfoList.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).FirstOrDefault();
                             taxCP8D_Result.Add(new TaxCP8D_Result
                             {
-                                EstateName = estateInfo.fld_NamaLadang,
-                                TINNo = workerTax.Select(s => s.fld_TaxNo).FirstOrDefault(),
-                                NoPkerja = workerInfo.fld_NoPkjPermanent,
-                                NamaPkerja = workerInfo2.fld_Nama,
                                 IDNo = workerInfo2.fld_Nokp,
                                 PCB = workerTax.Sum(s => s.fld_PCB) + specialIncentive.Sum(s => s.fld_PCBCarumanPekerja),
                                 CP38 = workerTax.Sum(s => s.fld_CP38),
@@ -3425,9 +3418,9 @@ namespace MVC_SYSTEM.Controllers
             var taxCP8D_Result = new List<TaxCP8D_Result>();
             var workerInfoList = new List<WorkerInfo>();
             var workerTaxCP8DList = new List<WorkerTaxCP8D>();
-            var workerTaxInfoList = new List<WorkerTaxInfo>();
             var otherContributionList = new List<OtherContribution>();
             var specialIncentiveList = new List<SpecialIncentive>();
+            var SyarikatDetail = dbC.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == CompCode).FirstOrDefault();
             try
             {
                 var NSWL = GetNSWL.GetLadangDetailByRegion(CompCode);
@@ -3442,7 +3435,6 @@ namespace MVC_SYSTEM.Controllers
                     var result = SqlMapper.QueryMultiple(con, "sp_TaxCP8D", parameters, commandType: CommandType.StoredProcedure);
                     workerInfoList.AddRange(result.Read<WorkerInfo>().ToList());
                     workerTaxCP8DList.AddRange(result.Read<WorkerTaxCP8D>().ToList());
-                    workerTaxInfoList.AddRange(result.Read<WorkerTaxInfo>().ToList());
                     otherContributionList.AddRange(result.Read<OtherContribution>().ToList());
                     specialIncentiveList.AddRange(result.Read<SpecialIncentive>().ToList());
                     con.Close();
@@ -3459,8 +3451,8 @@ namespace MVC_SYSTEM.Controllers
                             var specialIncentive = specialIncentiveList.Where(x => workerNo.Contains(x.fld_Nopkj)).ToList();
                             var estateInfo = NSWL.Where(x => x.fld_DivisionID == workerInfo.fld_DivisionID).FirstOrDefault();
                             var workerInfo2 = workerInfoList.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).FirstOrDefault();
-                            var workerTaxInfo = workerTaxInfoList.Where(x => x.fld_NopkjPermanent == workerInfo.fld_NoPkjPermanent).FirstOrDefault();
                             var otherContribution = otherContributionList.Where(x => x.fld_NopkjPermanent == workerInfo.fld_NoPkjPermanent).ToList();
+                            var workerTaxInfo = workerTax.OrderByDescending(o => o.fld_Month).Take(1).FirstOrDefault();
                             taxCP8D_Result.Add(new TaxCP8D_Result
                             {
                                 NamaPkerja = workerInfo2.fld_Nama,
@@ -3523,14 +3515,14 @@ namespace MVC_SYSTEM.Controllers
                 fileContent += item.PCB == 0 ? "|" : item.PCB + "|";
                 fileContent += item.CP38 == 0 ? "|" : item.CP38 + "|";
                 fileContent += item.InsuransPotonganGaji == 0 ? "|" : item.InsuransPotonganGaji + "|";
-                fileContent += item.PERKESO == 0 ? "|" : item.PERKESO;
+                fileContent += item.PERKESO == 0 ? "|" : item.PERKESO.ToString();
                 if (taxCP8D_Result.IndexOf(item) != taxCP8D_Result.Count - 1)
                 {
                     fileContent += Environment.NewLine;
                 }
             }
             #endregion Body
-            var filename = "P" + "0990252604_" + Year + ".txt";
+            var filename = "P" + SyarikatDetail.fld_EmployerTaxNo + "_" + Year + ".txt";
             var filePath = getGenerateFile.CreateTextFile(filename, fileContent, "CP39");
 
             link = Url.Action("Download", "MaybankFileGen", new { filePath, filename });

@@ -62,17 +62,8 @@ namespace MVC_SYSTEM.ModelsDapper
         public int? fld_DivisionID { get; set; }
         public string fld_TaxNo { get; set; }
         public string fld_Nokp { get; set; }
-    }
-
-    public class WorkerTaxInfo
-    {
-        public Guid fld_UniqueID { get; set; }
-        public string fld_TaxNo { get; set; }
-        public string fld_NopkjPermanent { get; set; }
-        public string fld_TaxMaritalStatus { get; set; }
-        public string fld_Nokp { get; set; }
-        public string fld_Nama { get; set; }
         public string fld_Kdrkyt { get; set; }
+        public string fld_TaxMaritalStatus { get; set; }
         public int fld_ChildAbove18CertFull { get; set; }
         public int fld_ChildAbove18CertHalf { get; set; }
         public int fld_ChildAbove18HigherFull { get; set; }
@@ -85,7 +76,6 @@ namespace MVC_SYSTEM.ModelsDapper
         public int fld_DisabledChildStudyHalf { get; set; }
         public DateTime? fld_ContractExpiryDate { get; set; }
         public DateTime? fld_Trlhr { get; set; }
-        public int? fld_DivisionID { get; set; }
     }
 
     public class OtherContribution
