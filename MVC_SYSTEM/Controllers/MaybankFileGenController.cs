@@ -3290,7 +3290,7 @@ namespace MVC_SYSTEM.Controllers
                     {
                         var workerNo = workerInfoList.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).Select(s => s.fld_Nopkj).ToList();
                         var specialIncentive = specialIncentiveList.Where(x => workerNo.Contains(x.fld_Nopkj)).ToList();
-                        var estateInfo = NSWL.Where(x => x.fld_DivisionID == workerInfo.fld_DivisionID).FirstOrDefault();
+                        var estateInfo = NSWL.Where(x => x.fld_LadangID == workerInfo.fld_LadangID).FirstOrDefault();
                         var workerInfo2 = workerInfoList.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).FirstOrDefault();
                         var workerTaxInfo = workerTax.OrderByDescending(o => o.fld_Month).Take(1).FirstOrDefault();
                         taxCP8D_Result.Add(new TaxCP8D_Result
