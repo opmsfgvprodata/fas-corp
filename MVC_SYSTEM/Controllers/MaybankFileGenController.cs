@@ -22,6 +22,7 @@ using System.Data.SqlClient;
 using static System.Net.Mime.MediaTypeNames;
 using System.Data;
 using System.Drawing;
+using System.Text.RegularExpressions;
 //using Itenso.TimePeriod;
 //using System.Globalization;
 //using System.Drawing;
@@ -3311,7 +3312,7 @@ namespace MVC_SYSTEM.Controllers
                         taxCP8D_Result.Add(new TaxCP8D_Result
                         {
                             EstateName = estateInfo.fld_NamaLadang,
-                            TINNo = workerTaxInfo.fld_TaxNo,
+                            TINNo = Regex.Replace(workerTaxInfo.fld_TaxNo, "[^0-9]", ""),
                             NoPkerja = workerInfo.fld_NoPkjPermanent,
                             NamaPkerja = workerInfo2.fld_Nama,
                             IDNo = workerInfo2.fld_Nokp,
@@ -3336,7 +3337,7 @@ namespace MVC_SYSTEM.Controllers
                             taxCP8D_Result.Add(new TaxCP8D_Result
                             {
                                 EstateName = estateInfo.fld_NamaLadang,
-                                TINNo = workerTaxInfo.fld_TaxNo,
+                                TINNo = Regex.Replace(workerTaxInfo.fld_TaxNo, "[^0-9]", ""),
                                 NoPkerja = workerInfo.fld_NoPkjPermanent,
                                 NamaPkerja = workerInfo2.fld_Nama,
                                 IDNo = workerInfo2.fld_Nokp,
@@ -3549,7 +3550,7 @@ namespace MVC_SYSTEM.Controllers
                             taxCP8D_Result.Add(new TaxCP8D_Result
                             {
                                 NamaPkerja = workerInfo2.fld_Nama,
-                                TINNo = workerTax.Select(s => s.fld_TaxNo).FirstOrDefault(),
+                                TINNo = Regex.Replace(workerTax.Select(s => s.fld_TaxNo).FirstOrDefault(), "[^0-9]", ""),
                                 NoPkerja = workerInfo.fld_NoPkjPermanent,
                                 IDNo = workerInfo2.fld_Nokp,
                                 KategoryPekerja = workerTaxInfo.fld_TaxMaritalStatus,
