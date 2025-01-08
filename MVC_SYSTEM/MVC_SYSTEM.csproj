@@ -1019,6 +1019,7 @@
     <Compile Include="ModelsDapper\sp_MaybankRcms_Result.cs" />
     <Compile Include="ModelsDapper\sp_PenggajianData_Result.cs" />
     <Compile Include="ModelsDapper\sp_TaxCP39_Result.cs" />
+    <Compile Include="ModelsDapper\sp_TaxCP8D_Result.cs" />
     <Compile Include="ModelsEstate\MVC_SYSTEM_ModelsEstate.cs" />
     <Compile Include="ModelsEstate\tblHtmlReport.cs" />
     <Compile Include="ModelsEstate\tblStatusPkj.cs" />
@@ -3583,6 +3584,8 @@
     <Content Include="Views\MaybankFileGen\RcmsInstructionLetterOthers.cshtml" />
     <Content Include="Views\Report\_PenggajianDataReport.cshtml" />
     <Content Include="Views\Report\PenggajianDataReport.cshtml" />
+    <Content Include="Views\MaybankFileGen\TaxCP8D.cshtml" />
+    <Content Include="Views\MaybankFileGen\_TaxCP8D.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

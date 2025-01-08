@@ -20,6 +20,9 @@ using MVC_SYSTEM.ModelsDapper;
 using System.Configuration;
 using System.Data.SqlClient;
 using static System.Net.Mime.MediaTypeNames;
+using System.Data;
+using System.Drawing;
+using System.Text.RegularExpressions;
 //using Itenso.TimePeriod;
 //using System.Globalization;
 //using System.Drawing;
@@ -2490,7 +2493,7 @@ namespace MVC_SYSTEM.Controllers
             List<sp_TaxCP39_Result> taxCP39 = new List<sp_TaxCP39_Result>();
 
             var monthName = ((Constans.Month)Month).ToString().ToUpper();
-            var SyarikatDetail = dbC.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == CompCode).FirstOrDefault(); ;
+            var SyarikatDetail = dbC.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == CompCode).FirstOrDefault();
 
             if (CompCode != null)
             {
@@ -2551,7 +2554,7 @@ namespace MVC_SYSTEM.Controllers
 
                 // open the reader
                 PdfReader reader = new PdfReader(cp39Form);
-                Rectangle size = reader.GetPageSizeWithRotation(1);
+                iTextSharp.text.Rectangle size = reader.GetPageSizeWithRotation(1);
                 Document document = new Document(size);
 
                 // open the writer
@@ -2694,7 +2697,7 @@ namespace MVC_SYSTEM.Controllers
 
                 // open the reader
 
-                size = new Rectangle(792, 612);
+                size = new iTextSharp.text.Rectangle(792, 612);
                 document = new Document(size);
 
                 // open the writer
@@ -2761,7 +2764,7 @@ namespace MVC_SYSTEM.Controllers
                         cell = new PdfPCell(new Phrase(chunk));
                         cell.HorizontalAlignment = Element.ALIGN_CENTER;
                         cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                         table.AddCell(cell);
 
                         if (y == 8)
@@ -2807,14 +2810,14 @@ namespace MVC_SYSTEM.Controllers
                     cell = new PdfPCell(new Phrase(chunk));
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     chunk = new Chunk(pageNoArr[1].ToString(), FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK));
                     cell = new PdfPCell(new Phrase(chunk));
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     mainCell = new PdfPCell(table);
@@ -2840,7 +2843,7 @@ namespace MVC_SYSTEM.Controllers
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.Rowspan = 2;
                     cell.BackgroundColor = BaseColor.LIGHT_GRAY;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     cell = new PdfPCell();
@@ -2850,7 +2853,7 @@ namespace MVC_SYSTEM.Controllers
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.Rowspan = 2;
                     cell.BackgroundColor = BaseColor.LIGHT_GRAY;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     cell = new PdfPCell();
@@ -2860,7 +2863,7 @@ namespace MVC_SYSTEM.Controllers
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.Rowspan = 2;
                     cell.BackgroundColor = BaseColor.LIGHT_GRAY;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     cell = new PdfPCell();
@@ -2870,7 +2873,7 @@ namespace MVC_SYSTEM.Controllers
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.Rowspan = 2;
                     cell.BackgroundColor = BaseColor.LIGHT_GRAY;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     cell = new PdfPCell();
@@ -2880,7 +2883,7 @@ namespace MVC_SYSTEM.Controllers
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.Rowspan = 2;
                     cell.BackgroundColor = BaseColor.LIGHT_GRAY;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     cell = new PdfPCell();
@@ -2890,7 +2893,7 @@ namespace MVC_SYSTEM.Controllers
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.Rowspan = 2;
                     cell.BackgroundColor = BaseColor.LIGHT_GRAY;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     cell = new PdfPCell();
@@ -2900,7 +2903,7 @@ namespace MVC_SYSTEM.Controllers
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.Colspan = 2;
                     cell.BackgroundColor = BaseColor.LIGHT_GRAY;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     cell = new PdfPCell();
@@ -2910,7 +2913,7 @@ namespace MVC_SYSTEM.Controllers
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.Colspan = 2;
                     cell.BackgroundColor = BaseColor.LIGHT_GRAY;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     cell = new PdfPCell();
@@ -2919,7 +2922,7 @@ namespace MVC_SYSTEM.Controllers
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.BackgroundColor = BaseColor.LIGHT_GRAY;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     cell = new PdfPCell();
@@ -2928,7 +2931,7 @@ namespace MVC_SYSTEM.Controllers
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.BackgroundColor = BaseColor.LIGHT_GRAY;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     cell = new PdfPCell();
@@ -2937,7 +2940,7 @@ namespace MVC_SYSTEM.Controllers
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.BackgroundColor = BaseColor.LIGHT_GRAY;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     cell = new PdfPCell();
@@ -2946,7 +2949,7 @@ namespace MVC_SYSTEM.Controllers
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.BackgroundColor = BaseColor.LIGHT_GRAY;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     decimal totalPCB = 0;
@@ -2987,7 +2990,7 @@ namespace MVC_SYSTEM.Controllers
                         cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                         cell.FixedHeight = 18;
 
-                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                         table.AddCell(cell);
 
                         cell = new PdfPCell();
@@ -2996,7 +2999,7 @@ namespace MVC_SYSTEM.Controllers
                         cell.HorizontalAlignment = Element.ALIGN_CENTER;
                         cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                         cell.FixedHeight = 18;
-                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                         table.AddCell(cell);
 
                         cell = new PdfPCell();
@@ -3005,7 +3008,7 @@ namespace MVC_SYSTEM.Controllers
                         cell.HorizontalAlignment = Element.ALIGN_LEFT;
                         cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                         cell.FixedHeight = 18;
-                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                         table.AddCell(cell);
 
                         cell = new PdfPCell();
@@ -3014,7 +3017,7 @@ namespace MVC_SYSTEM.Controllers
                         cell.HorizontalAlignment = Element.ALIGN_CENTER;
                         cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                         cell.FixedHeight = 18;
-                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                         table.AddCell(cell);
 
                         cell = new PdfPCell();
@@ -3023,7 +3026,7 @@ namespace MVC_SYSTEM.Controllers
                         cell.HorizontalAlignment = Element.ALIGN_CENTER;
                         cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                         cell.FixedHeight = 18;
-                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                         table.AddCell(cell);
 
                         cell = new PdfPCell();
@@ -3032,7 +3035,7 @@ namespace MVC_SYSTEM.Controllers
                         cell.HorizontalAlignment = Element.ALIGN_CENTER;
                         cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                         cell.FixedHeight = 18;
-                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                         table.AddCell(cell);
 
                         cell = new PdfPCell();
@@ -3041,7 +3044,7 @@ namespace MVC_SYSTEM.Controllers
                         cell.HorizontalAlignment = Element.ALIGN_CENTER;
                         cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                         cell.FixedHeight = 18;
-                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                         table.AddCell(cell);
 
                         cell = new PdfPCell();
@@ -3050,7 +3053,7 @@ namespace MVC_SYSTEM.Controllers
                         cell.HorizontalAlignment = Element.ALIGN_CENTER;
                         cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                         cell.FixedHeight = 18;
-                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                         table.AddCell(cell);
 
                         cell = new PdfPCell();
@@ -3059,7 +3062,7 @@ namespace MVC_SYSTEM.Controllers
                         cell.HorizontalAlignment = Element.ALIGN_CENTER;
                         cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                         cell.FixedHeight = 18;
-                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                         table.AddCell(cell);
 
                         cell = new PdfPCell();
@@ -3068,7 +3071,7 @@ namespace MVC_SYSTEM.Controllers
                         cell.HorizontalAlignment = Element.ALIGN_CENTER;
                         cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                         cell.FixedHeight = 18;
-                        cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                        cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                         table.AddCell(cell);
                         dataIndex++;
                     }
@@ -3089,7 +3092,7 @@ namespace MVC_SYSTEM.Controllers
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.FixedHeight = 18;
                     cell.Colspan = 2;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     cell = new PdfPCell();
@@ -3098,7 +3101,7 @@ namespace MVC_SYSTEM.Controllers
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.FixedHeight = 18;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     cell = new PdfPCell();
@@ -3107,7 +3110,7 @@ namespace MVC_SYSTEM.Controllers
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.FixedHeight = 18;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     cell = new PdfPCell();
@@ -3127,7 +3130,7 @@ namespace MVC_SYSTEM.Controllers
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.FixedHeight = 18;
                     cell.Colspan = 2;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     cell = new PdfPCell();
@@ -3137,7 +3140,7 @@ namespace MVC_SYSTEM.Controllers
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.FixedHeight = 18;
                     cell.Colspan = 2;
-                    cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER | Rectangle.TOP_BORDER;
+                    cell.Border = iTextSharp.text.Rectangle.BOTTOM_BORDER | iTextSharp.text.Rectangle.LEFT_BORDER | iTextSharp.text.Rectangle.RIGHT_BORDER | iTextSharp.text.Rectangle.TOP_BORDER;
                     table.AddCell(cell);
 
                     mainCell = new PdfPCell(table);
@@ -3181,6 +3184,490 @@ namespace MVC_SYSTEM.Controllers
                 return new FileStreamResult(output, "application/pdf");
 
             }
+        }
+
+        public ActionResult TaxCP8D()
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            int[] wlyhid = new int[] { };
+            DateTime Minus1month = timezone.gettimezone().AddMonths(-1);
+            int year = Minus1month.Year;
+            int month = Minus1month.Month;
+            int drpyear = 0;
+            int drprangeyear = 0;
+
+            ViewBag.MaybankFileGen = "class = active";
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            drpyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+            drprangeyear = timezone.gettimezone().Year;
+
+            var yearlist = new List<SelectListItem>();
+            for (var i = drpyear; i <= drprangeyear; i++)
+            {
+                if (i == year)
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = true });
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                }
+            }
+
+            ViewBag.YearList = yearlist;
+
+            List<SelectListItem> CompCodeList = new List<SelectListItem>();
+            CompCodeList = new SelectList(dbC.tbl_Syarikat.OrderBy(x => x.fld_NamaPndkSyarikat), "fld_NamaPndkSyarikat", "fld_NamaPndkSyarikat").ToList();
+            ViewBag.CompCodeList = CompCodeList;
+            return View();
+        }
+
+        public ViewResult _TaxCP8D(string CompCodeList, int? YearList, string print)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            string NamaSyarikat = "";
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            var taxCP8D_Result = new List<TaxCP8D_Result>();
+            var workerInfoList = new List<WorkerInfo>();
+            var workerTaxCP8DList = new List<WorkerTaxCP8D>();
+            var otherContributionList = new List<OtherContribution>();
+            var specialIncentiveList = new List<SpecialIncentive>();
+
+            var taxCP8D_Result_X = new List<TaxCP8D_Result>();
+            var workerInfoList_X = new List<WorkerInfo>();
+            var workerTaxCP8DList_X = new List<WorkerTaxCP8D>();
+            var otherContributionList_X = new List<OtherContribution>();
+            var specialIncentiveList_X = new List<SpecialIncentive>();
+            var NSWL = GetNSWL.GetLadangDetailByRegion(CompCodeList);
+
+            ViewBag.YearList = YearList;
+            var syarikat = dbC.tbl_Syarikat.Where(x => x.fld_SyarikatID == SyarikatID).FirstOrDefault();
+            ViewBag.NamaSyarikat = syarikat.fld_NamaSyarikat;
+            ViewBag.NamaPendekSyarikat = syarikat.fld_NamaPndkSyarikat;
+            ViewBag.NoSyarikat = syarikat.fld_NoSyarikat;
+
+            ViewBag.NegaraID = NegaraID;
+            ViewBag.SyarikatID = SyarikatID;
+            ViewBag.UserID = getuserid;
+            ViewBag.UserName = User.Identity.Name;
+            ViewBag.Date = DateTime.Now.ToShortDateString();
+            ViewBag.Time = DateTime.Now.ToShortTimeString();
+            ViewBag.Print = print;
+
+            ViewBag.Description = "Region " + NamaSyarikat + " - CP 8D for " + YearList;
+
+            if (CompCodeList != null)
+            {
+                foreach (var regionID in NSWL.Select(s => s.fld_WilayahID).Distinct().ToList())
+                {
+                    string constr = Connection.GetConnectionString(regionID, SyarikatID.Value, NegaraID.Value);
+                    var con = new SqlConnection(constr);
+                    try
+                    {
+                        DynamicParameters parameters = new DynamicParameters();
+                        parameters.Add("Year", YearList);
+                        parameters.Add("WorkerStatus", "1");
+                        con.Open();
+                        var result = SqlMapper.QueryMultiple(con, "sp_TaxCP8D", parameters, commandType: CommandType.StoredProcedure);
+                        workerInfoList.AddRange(result.Read<WorkerInfo>().ToList());
+                        workerTaxCP8DList.AddRange(result.Read<WorkerTaxCP8D>().ToList());
+                        otherContributionList.AddRange(result.Read<OtherContribution>().ToList());
+                        specialIncentiveList.AddRange(result.Read<SpecialIncentive>().ToList());
+
+                        parameters = new DynamicParameters();
+                        parameters.Add("Year", YearList);
+                        parameters.Add("WorkerStatus", "2");
+                        result = SqlMapper.QueryMultiple(con, "sp_TaxCP8D", parameters, commandType: CommandType.StoredProcedure);
+                        workerInfoList_X.AddRange(result.Read<WorkerInfo>().ToList());
+                        workerTaxCP8DList_X.AddRange(result.Read<WorkerTaxCP8D>().ToList());
+                        otherContributionList_X.AddRange(result.Read<OtherContribution>().ToList());
+                        specialIncentiveList_X.AddRange(result.Read<SpecialIncentive>().ToList());
+                        con.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw;
+                    }
+                }
+            }
+
+            if (workerTaxCP8DList.Count() > 0)
+            {
+                foreach (var workerInfo in workerInfoList.Select(s => new { s.fld_NoPkjPermanent, s.fld_LadangID, s.fld_DivisionID }).Distinct().ToList())
+                {
+                    var workerTax = workerTaxCP8DList.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).ToList();
+                    if (workerTax.Count() > 0)
+                    {
+                        var workerNo = workerInfoList.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).Select(s => s.fld_Nopkj).ToList();
+                        var specialIncentive = specialIncentiveList.Where(x => workerNo.Contains(x.fld_Nopkj)).ToList();
+                        var estateInfo = NSWL.Where(x => x.fld_LadangID == workerInfo.fld_LadangID).FirstOrDefault();
+                        var workerInfo2 = workerInfoList.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).FirstOrDefault();
+                        var workerTaxInfo = workerTax.OrderByDescending(o => o.fld_Month).Take(1).FirstOrDefault();
+                        taxCP8D_Result.Add(new TaxCP8D_Result
+                        {
+                            EstateName = estateInfo.fld_NamaLadang,
+                            TINNo = Regex.Replace(workerTaxInfo.fld_TaxNo, "[^0-9]", ""),
+                            NoPkerja = workerInfo.fld_NoPkjPermanent,
+                            NamaPkerja = workerInfo2.fld_Nama,
+                            IDNo = workerInfo2.fld_Nokp,
+                            PCB = workerTax.Sum(s => s.fld_PCB) + specialIncentive.Sum(s => s.fld_PCBCarumanPekerja),
+                            CP38 = workerTax.Sum(s => s.fld_CP38),
+                        });
+                    }
+                }
+
+                foreach (var workerInfo in workerInfoList_X.Select(s => new { s.fld_NoPkjPermanent, s.fld_LadangID, s.fld_DivisionID }).Distinct().ToList())
+                {
+                    if (!taxCP8D_Result.Any(x => x.NoPkerja == workerInfo.fld_NoPkjPermanent))
+                    {
+                        var workerTax = workerTaxCP8DList_X.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).ToList();
+                        if (workerTax.Count() > 0)
+                        {
+                            var workerNo = workerInfoList_X.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).Select(s => s.fld_Nopkj).ToList();
+                            var specialIncentive = specialIncentiveList_X.Where(x => workerNo.Contains(x.fld_Nopkj)).ToList();
+                            var estateInfo = NSWL.Where(x => x.fld_LadangID == workerInfo.fld_LadangID).FirstOrDefault();
+                            var workerInfo2 = workerInfoList_X.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).FirstOrDefault();
+                            var workerTaxInfo = workerTax.OrderByDescending(o => o.fld_Month).Take(1).FirstOrDefault();
+                            taxCP8D_Result.Add(new TaxCP8D_Result
+                            {
+                                EstateName = estateInfo.fld_NamaLadang,
+                                TINNo = Regex.Replace(workerTaxInfo.fld_TaxNo, "[^0-9]", ""),
+                                NoPkerja = workerInfo.fld_NoPkjPermanent,
+                                NamaPkerja = workerInfo2.fld_Nama,
+                                IDNo = workerInfo2.fld_Nokp,
+                                PCB = workerTax.Sum(s => s.fld_PCB) + specialIncentive.Sum(s => s.fld_PCBCarumanPekerja),
+                                CP38 = workerTax.Sum(s => s.fld_CP38),
+                            });
+                        }
+                    }
+                }
+            }
+            return View(taxCP8D_Result);
+        }
+
+        public JsonResult TaxCP8DDetail(string CompCode, int Year)
+        {
+            string msg = "";
+            string statusmsg = "";
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+
+            string stringyear = "";
+            string stringmonth = "";
+            stringyear = Year.ToString();
+            stringmonth = (stringmonth.Length == 1 ? "0" + stringmonth : stringmonth);
+            decimal? TotalMTDAmt = 0;
+            int TotalMTDRec = 0;
+            decimal? TotalCP38Amt = 0;
+            int TotalCP38Rec = 0;
+
+            var NSWL = GetNSWL.GetLadangDetailByRegion(CompCode);
+
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            List<sp_TaxCP39_Result> taxCP39 = new List<sp_TaxCP39_Result>();
+
+            var SyarikatDetail = dbC.tbl_Syarikat.Where(x => x.fld_SyarikatID == SyarikatID).FirstOrDefault();
+            string filename = "Tax CP8D (" + SyarikatDetail.fld_NamaPndkSyarikat.ToUpper() + ") " + "" + stringmonth + stringyear + ".txt";
+
+            try
+            {
+                var taxCP8D_Result = new List<TaxCP8D_Result>();
+                var workerInfoList = new List<WorkerInfo>();
+                var workerTaxCP8DList = new List<WorkerTaxCP8D>();
+                var otherContributionList = new List<OtherContribution>();
+                var specialIncentiveList = new List<SpecialIncentive>();
+
+                var taxCP8D_Result_X = new List<TaxCP8D_Result>();
+                var workerInfoList_X = new List<WorkerInfo>();
+                var workerTaxCP8DList_X = new List<WorkerTaxCP8D>();
+                var otherContributionList_X = new List<OtherContribution>();
+                var specialIncentiveList_X = new List<SpecialIncentive>();
+                foreach (var regionID in NSWL.Select(s => s.fld_WilayahID).Distinct().ToList())
+                {
+                    string constr = Connection.GetConnectionString(regionID, SyarikatID.Value, NegaraID.Value);
+                    var con = new SqlConnection(constr);
+
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("Year", Year);
+                    parameters.Add("WorkerStatus", "1");
+                    con.Open();
+                    var result = SqlMapper.QueryMultiple(con, "sp_TaxCP8D", parameters, commandType: CommandType.StoredProcedure);
+                    workerInfoList.AddRange(result.Read<WorkerInfo>().ToList());
+                    workerTaxCP8DList.AddRange(result.Read<WorkerTaxCP8D>().ToList());
+                    otherContributionList.AddRange(result.Read<OtherContribution>().ToList());
+                    specialIncentiveList.AddRange(result.Read<SpecialIncentive>().ToList());
+
+                    parameters = new DynamicParameters();
+                    parameters.Add("Year", Year);
+                    parameters.Add("WorkerStatus", "2");
+                    result = SqlMapper.QueryMultiple(con, "sp_TaxCP8D", parameters, commandType: CommandType.StoredProcedure);
+                    workerInfoList_X.AddRange(result.Read<WorkerInfo>().ToList());
+                    workerTaxCP8DList_X.AddRange(result.Read<WorkerTaxCP8D>().ToList());
+                    otherContributionList_X.AddRange(result.Read<OtherContribution>().ToList());
+                    specialIncentiveList_X.AddRange(result.Read<SpecialIncentive>().ToList());
+                    con.Close();
+                }
+
+                if (workerTaxCP8DList.Count() > 0)
+                {
+                    foreach (var workerInfo in workerInfoList.Select(s => new { s.fld_NoPkjPermanent, s.fld_LadangID, s.fld_DivisionID }).Distinct().ToList())
+                    {
+                        var workerTax = workerTaxCP8DList.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).ToList();
+                        if (workerTax.Count() > 0)
+                        {
+                            var workerNo = workerInfoList.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).Select(s => s.fld_Nopkj).ToList();
+                            var specialIncentive = specialIncentiveList.Where(x => workerNo.Contains(x.fld_Nopkj)).ToList();
+                            var estateInfo = NSWL.Where(x => x.fld_DivisionID == workerInfo.fld_DivisionID).FirstOrDefault();
+                            var workerInfo2 = workerInfoList.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).FirstOrDefault();
+                            taxCP8D_Result.Add(new TaxCP8D_Result
+                            {
+                                IDNo = workerInfo2.fld_Nokp,
+                                PCB = workerTax.Sum(s => s.fld_PCB) + specialIncentive.Sum(s => s.fld_PCBCarumanPekerja),
+                                CP38 = workerTax.Sum(s => s.fld_CP38),
+                            });
+                        }
+                    }
+
+                    foreach (var workerInfo in workerInfoList_X.Select(s => new { s.fld_NoPkjPermanent, s.fld_LadangID, s.fld_DivisionID }).Distinct().ToList())
+                    {
+                        if (!taxCP8D_Result.Any(x => x.NoPkerja == workerInfo.fld_NoPkjPermanent))
+                        {
+                            var workerTax = workerTaxCP8DList_X.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).ToList();
+                            if (workerTax.Count() > 0)
+                            {
+                                var workerNo = workerInfoList_X.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).Select(s => s.fld_Nopkj).ToList();
+                                var specialIncentive = specialIncentiveList_X.Where(x => workerNo.Contains(x.fld_Nopkj)).ToList();
+                                var estateInfo = NSWL.Where(x => x.fld_DivisionID == workerInfo.fld_DivisionID).FirstOrDefault();
+                                var workerInfo2 = workerInfoList_X.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).FirstOrDefault();
+                                taxCP8D_Result.Add(new TaxCP8D_Result
+                                {
+                                    IDNo = workerInfo2.fld_Nokp,
+                                    PCB = workerTax.Sum(s => s.fld_PCB) + specialIncentive.Sum(s => s.fld_PCBCarumanPekerja),
+                                    CP38 = workerTax.Sum(s => s.fld_CP38),
+                                });
+                            }
+                        }
+                    }
+                }
+
+                TotalMTDAmt = taxCP8D_Result.Sum(s => s.PCB);
+                TotalMTDRec = taxCP8D_Result.Count();
+                TotalCP38Amt = taxCP8D_Result.Sum(s => s.CP38);
+                TotalCP38Rec = taxCP8D_Result.Where(x => x.CP38 > 0).Count();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            if (TotalMTDAmt != 0)
+            {
+                msg = GlobalResCorp.msgDataFound;
+                statusmsg = "success";
+            }
+            else
+            {
+                msg = GlobalResCorp.msgDataNotFound;
+                statusmsg = "warning";
+            }
+
+            dbSP.Dispose();
+            dbC.Dispose();
+            return Json(new { msg, statusmsg, file = filename, TotalMTDAmt, TotalMTDRec, TotalCP38Amt, TotalCP38Rec });
+        }
+
+        [HttpPost]
+        public ActionResult DownloadCP8DTextFile(int Year, string CompCode)
+        {
+            string msg = "";
+            string statusmsg = "";
+            string link = "";
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = getidentity.ID(User.Identity.Name);
+            GetGenerateFile getGenerateFile = new GetGenerateFile();
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            var taxCP8D_Result = new List<TaxCP8D_Result>();
+            var workerInfoList = new List<WorkerInfo>();
+            var workerTaxCP8DList = new List<WorkerTaxCP8D>();
+            var otherContributionList = new List<OtherContribution>();
+            var specialIncentiveList = new List<SpecialIncentive>();
+
+            var taxCP8D_Result_X = new List<TaxCP8D_Result>();
+            var workerInfoList_X = new List<WorkerInfo>();
+            var workerTaxCP8DList_X = new List<WorkerTaxCP8D>();
+            var otherContributionList_X = new List<OtherContribution>();
+            var specialIncentiveList_X = new List<SpecialIncentive>();
+            var SyarikatDetail = dbC.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == CompCode).FirstOrDefault();
+            try
+            {
+                var NSWL = GetNSWL.GetLadangDetailByRegion(CompCode);
+
+                foreach (var regionID in NSWL.Select(s => s.fld_WilayahID).Distinct().ToList())
+                {
+                    string constr = Connection.GetConnectionString(regionID, SyarikatID.Value, NegaraID.Value);
+                    var con = new SqlConnection(constr);
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("Year", Year);
+                    parameters.Add("WorkerStatus", "1");
+                    con.Open();
+                    var result = SqlMapper.QueryMultiple(con, "sp_TaxCP8D", parameters, commandType: CommandType.StoredProcedure);
+                    workerInfoList.AddRange(result.Read<WorkerInfo>().ToList());
+                    workerTaxCP8DList.AddRange(result.Read<WorkerTaxCP8D>().ToList());
+                    otherContributionList.AddRange(result.Read<OtherContribution>().ToList());
+                    specialIncentiveList.AddRange(result.Read<SpecialIncentive>().ToList());
+
+                    parameters = new DynamicParameters();
+                    parameters.Add("Year", Year);
+                    parameters.Add("WorkerStatus", "2");
+                    result = SqlMapper.QueryMultiple(con, "sp_TaxCP8D", parameters, commandType: CommandType.StoredProcedure);
+                    workerInfoList_X.AddRange(result.Read<WorkerInfo>().ToList());
+                    workerTaxCP8DList_X.AddRange(result.Read<WorkerTaxCP8D>().ToList());
+                    otherContributionList_X.AddRange(result.Read<OtherContribution>().ToList());
+                    specialIncentiveList_X.AddRange(result.Read<SpecialIncentive>().ToList());
+                    con.Close();
+                }
+
+                if (workerTaxCP8DList.Count() > 0)
+                {
+                    foreach (var workerInfo in workerInfoList.Select(s => new { s.fld_NoPkjPermanent, s.fld_LadangID, s.fld_DivisionID }).Distinct().ToList())
+                    {
+                        var workerTax = workerTaxCP8DList.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).ToList();
+                        if (workerTax.Count() > 0)
+                        {
+                            var workerNo = workerInfoList.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).Select(s => s.fld_Nopkj).ToList();
+                            var specialIncentive = specialIncentiveList.Where(x => workerNo.Contains(x.fld_Nopkj)).ToList();
+                            var estateInfo = NSWL.Where(x => x.fld_DivisionID == workerInfo.fld_DivisionID).FirstOrDefault();
+                            var workerInfo2 = workerInfoList.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).FirstOrDefault();
+                            var otherContribution = otherContributionList.Where(x => x.fld_NopkjPermanent == workerInfo.fld_NoPkjPermanent).ToList();
+                            var workerTaxInfo = workerTax.OrderByDescending(o => o.fld_Month).Take(1).FirstOrDefault();
+                            taxCP8D_Result.Add(new TaxCP8D_Result
+                            {
+                                NamaPkerja = workerInfo2.fld_Nama,
+                                TINNo = Regex.Replace(workerTax.Select(s => s.fld_TaxNo).FirstOrDefault(), "[^0-9]", ""),
+                                NoPkerja = workerInfo.fld_NoPkjPermanent,
+                                IDNo = workerInfo2.fld_Nokp,
+                                KategoryPekerja = workerTaxInfo.fld_TaxMaritalStatus,
+                                StatusPekerja = 2,
+                                TarikhAkhirBekerja = workerTaxInfo.fld_Kdrkyt == "MA" ? workerTaxInfo.fld_Trlhr.Value.AddYears(60) : workerTaxInfo.fld_ContractExpiryDate ?? workerTaxInfo.fld_Trlhr.Value.AddYears(60),
+                                MajikanTanggungCukai = 2,
+                                BilanganAnak = workerTaxInfo.fld_ChildAbove18CertFull + workerTaxInfo.fld_ChildAbove18CertHalf + workerTaxInfo.fld_ChildAbove18HigherFull + workerTaxInfo.fld_ChildAbove18HigherHalf + workerTaxInfo.fld_ChildBelow18Full + workerTaxInfo.fld_ChildBelow18Half + workerTaxInfo.fld_DisabledChildFull + workerTaxInfo.fld_DisabledChildHalf + workerTaxInfo.fld_DisabledChildStudyFull + workerTaxInfo.fld_DisabledChildStudyHalf,
+                                JumlahPelepasanAnak = (int)workerTax.OrderByDescending(o => o.fld_Month).Select(s => s.fld_PelepasanAnak).Take(1).FirstOrDefault(),
+                                JumlahSaraanKasar = (int)workerTax.Sum(s => s.fld_SaraanKasar),
+                                ManfaatBarangan = 0,
+                                NilaiKediaman = 0,
+                                ESOS = 0,
+                                ElaunDikecualikan = 0,
+                                JumlahTuntutanPelepasan = 0,
+                                JumlahTututanZakat = 0,
+                                KWSP = (int)workerTax.Sum(s => s.fld_KWSPPkj) + (int)specialIncentive.Sum(s => s.fld_KWSPPkj),
+                                ZakatPotonganGaji = (int)workerTax.Sum(s => s.fld_Zakat),
+                                PCB = workerTax.Sum(s => s.fld_PCB) + specialIncentive.Sum(s => s.fld_PCBCarumanPekerja),
+                                CP38 = workerTax.Sum(s => s.fld_CP38),
+                                InsuransPotonganGaji = 0,
+                                PERKESO = (int)otherContribution.Sum(s => s.fld_CarumanPekerja)
+                            });
+                        }
+
+                    }
+
+                    foreach (var workerInfo in workerInfoList_X.Select(s => new { s.fld_NoPkjPermanent, s.fld_LadangID, s.fld_DivisionID }).Distinct().ToList())
+                    {
+                        if (!taxCP8D_Result.Any(x => x.NoPkerja == workerInfo.fld_NoPkjPermanent))
+                        {
+                            var workerTax = workerTaxCP8DList_X.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).ToList();
+                            if (workerTax.Count() > 0)
+                            {
+                                var workerNo = workerInfoList_X.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).Select(s => s.fld_Nopkj).ToList();
+                                var specialIncentive = specialIncentiveList_X.Where(x => workerNo.Contains(x.fld_Nopkj)).ToList();
+                                var estateInfo = NSWL.Where(x => x.fld_DivisionID == workerInfo.fld_DivisionID).FirstOrDefault();
+                                var workerInfo2 = workerInfoList_X.Where(x => x.fld_NoPkjPermanent == workerInfo.fld_NoPkjPermanent).FirstOrDefault();
+                                var otherContribution = otherContributionList_X.Where(x => x.fld_NopkjPermanent == workerInfo.fld_NoPkjPermanent).ToList();
+                                var workerTaxInfo = workerTax.OrderByDescending(o => o.fld_Month).Take(1).FirstOrDefault();
+                                taxCP8D_Result.Add(new TaxCP8D_Result
+                                {
+                                    NamaPkerja = workerInfo2.fld_Nama,
+                                    TINNo = workerTaxInfo.fld_TaxNo,
+                                    NoPkerja = workerInfo.fld_NoPkjPermanent,
+                                    IDNo = workerInfo2.fld_Nokp,
+                                    KategoryPekerja = workerTaxInfo.fld_TaxMaritalStatus,
+                                    StatusPekerja = 2,
+                                    TarikhAkhirBekerja = workerTaxInfo.fld_Kdrkyt == "MA" ? workerTaxInfo.fld_Trlhr.Value.AddYears(60) : workerTaxInfo.fld_ContractExpiryDate ?? workerTaxInfo.fld_Trlhr.Value.AddYears(60),
+                                    MajikanTanggungCukai = 2,
+                                    BilanganAnak = workerTaxInfo.fld_ChildAbove18CertFull + workerTaxInfo.fld_ChildAbove18CertHalf + workerTaxInfo.fld_ChildAbove18HigherFull + workerTaxInfo.fld_ChildAbove18HigherHalf + workerTaxInfo.fld_ChildBelow18Full + workerTaxInfo.fld_ChildBelow18Half + workerTaxInfo.fld_DisabledChildFull + workerTaxInfo.fld_DisabledChildHalf + workerTaxInfo.fld_DisabledChildStudyFull + workerTaxInfo.fld_DisabledChildStudyHalf,
+                                    JumlahPelepasanAnak = (int)workerTax.OrderByDescending(o => o.fld_Month).Select(s => s.fld_PelepasanAnak).Take(1).FirstOrDefault(),
+                                    JumlahSaraanKasar = (int)workerTax.Sum(s => s.fld_SaraanKasar),
+                                    ManfaatBarangan = 0,
+                                    NilaiKediaman = 0,
+                                    ESOS = 0,
+                                    ElaunDikecualikan = 0,
+                                    JumlahTuntutanPelepasan = 0,
+                                    JumlahTututanZakat = 0,
+                                    KWSP = (int)workerTax.Sum(s => s.fld_KWSPPkj) + (int)specialIncentive.Sum(s => s.fld_KWSPPkj),
+                                    ZakatPotonganGaji = (int)workerTax.Sum(s => s.fld_Zakat),
+                                    PCB = workerTax.Sum(s => s.fld_PCB) + specialIncentive.Sum(s => s.fld_PCBCarumanPekerja),
+                                    CP38 = workerTax.Sum(s => s.fld_CP38),
+                                    InsuransPotonganGaji = 0,
+                                    PERKESO = (int)otherContribution.Sum(s => s.fld_CarumanPekerja)
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            string fileContent = "";
+
+            #region Body
+            foreach (var item in taxCP8D_Result)
+            {
+                fileContent += item.NamaPkerja + "|";
+                fileContent += item.TINNo + "|";
+                fileContent += item.IDNo + "|";
+                fileContent += item.KategoryPekerja + "|";
+                fileContent += item.StatusPekerja + "|";
+                fileContent += item.TarikhAkhirBekerja.Value.ToString("dd-MM-yyyy") + "|";
+                fileContent += item.MajikanTanggungCukai + "|";
+                fileContent += item.BilanganAnak == 0 ? "|" : item.BilanganAnak + "|";
+                fileContent += item.JumlahPelepasanAnak == 0 ? "|" : item.JumlahPelepasanAnak + "|";
+                fileContent += item.JumlahSaraanKasar == 0 ? "|" : item.JumlahSaraanKasar + "|";
+                fileContent += item.ManfaatBarangan == 0 ? "|" : item.ManfaatBarangan + "|";
+                fileContent += item.NilaiKediaman == 0 ? "|" : item.NilaiKediaman + "|";
+                fileContent += item.ESOS == 0 ? "|" : item.ESOS + "|";
+                fileContent += item.ElaunDikecualikan == 0 ? "|" : item.ElaunDikecualikan + "|";
+                fileContent += item.JumlahTuntutanPelepasan == 0 ? "|" : item.JumlahTuntutanPelepasan + "|";
+                fileContent += item.JumlahTututanZakat == 0 ? "|" : item.JumlahTututanZakat + "|";
+                fileContent += item.KWSP == 0 ? "|" : item.KWSP + "|";
+                fileContent += item.ZakatPotonganGaji == 0 ? "|" : item.ZakatPotonganGaji + "|";
+                fileContent += item.PCB == 0 ? "|" : item.PCB + "|";
+                fileContent += item.CP38 == 0 ? "|" : item.CP38 + "|";
+                fileContent += item.InsuransPotonganGaji == 0 ? "|" : item.InsuransPotonganGaji + "|";
+                fileContent += item.PERKESO == 0 ? "|" : item.PERKESO.ToString();
+                if (taxCP8D_Result.IndexOf(item) != taxCP8D_Result.Count - 1)
+                {
+                    fileContent += Environment.NewLine;
+                }
+            }
+            #endregion Body
+            var filename = "P" + SyarikatDetail.fld_EmployerTaxNo + "_" + Year + ".txt";
+            var filePath = getGenerateFile.CreateTextFile(filename, fileContent, "CP39");
+
+            link = Url.Action("Download", "MaybankFileGen", new { filePath, filename });
+
+            msg = GlobalResCorp.msgGenerateSuccess;
+            statusmsg = "success";
+
+            return Json(new { msg, statusmsg, link });
         }
 
         public ActionResult RcmsInstructionLetter()
@@ -3332,7 +3819,7 @@ namespace MVC_SYSTEM.Controllers
 
                 // open the reader
                 PdfReader reader = new PdfReader(pdfForm);
-                Rectangle size = reader.GetPageSizeWithRotation(1);
+                iTextSharp.text.Rectangle size = reader.GetPageSizeWithRotation(1);
                 Document document = new Document(size);
 
                 // open the writer
@@ -3354,12 +3841,12 @@ namespace MVC_SYSTEM.Controllers
                 string clientCode = syarikat.fld_CorporateID.ToString();
                 string originatorName = syarikat.fld_NamaSyarikat.ToString().ToUpper();
                 string originatorAcc = syarikat.fld_AccountNo;
-                string amount = maybankRcms_Result.Sum(s=>s.fld_GajiBersih).Value.ToString("n");
+                string amount = maybankRcms_Result.Sum(s => s.fld_GajiBersih).Value.ToString("n");
                 string headCount = maybankRcms_Result.Count().ToString();
                 DateTime creditDate = DateTime.ParseExact(PaymentDate, "yyyy-MM-dd",
                                        System.Globalization.CultureInfo.InvariantCulture);
                 string creditDateStr = creditDate.ToString("dd.MM.yyyy");
-                string highestCredit = maybankRcms_Result.Max(s=>s.fld_GajiBersih).Value.ToString("n");
+                string highestCredit = maybankRcms_Result.Max(s => s.fld_GajiBersih).Value.ToString("n");
                 string lowestCredit = maybankRcms_Result.Min(s => s.fld_GajiBersih).Value.ToString("n");
 
                 cb.BeginText();
@@ -3441,7 +3928,7 @@ namespace MVC_SYSTEM.Controllers
                 ms.Close();
                 byte[] file = ms.ToArray();
 
-                
+
                 output.Write(file, 0, file.Length);
                 output.Position = 0;
                 return new FileStreamResult(output, "application/pdf");
@@ -3604,7 +4091,7 @@ namespace MVC_SYSTEM.Controllers
 
                 // open the reader
                 PdfReader reader = new PdfReader(pdfForm);
-                Rectangle size = reader.GetPageSizeWithRotation(1);
+                iTextSharp.text.Rectangle size = reader.GetPageSizeWithRotation(1);
                 Document document = new Document(size);
 
                 // open the writer
