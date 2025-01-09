@@ -28,9 +28,32 @@ namespace MVC_SYSTEM.AuthModels
 
         [StringLength(50)]
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
-        [Required(ErrorMessage = "E-mail is required.")]
+        //[Required(ErrorMessage = "E-mail is required.")]
         [Display(Name = "Email")]
         public string fldUserEmail { get; set; }
+
+        [Required(ErrorMessage = "IC No is required.")]
+        [RegularExpression(@"^\d{12}$", ErrorMessage = "IC Number must be exactly 12 digits and numeric.")]
+        [StringLength(20)]
+        [Display(Name = "IC No")]
+        public string fldICNo { get; set; }
+
+        [Required(ErrorMessage = "Staff ID is required.")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Staff ID must be numeric.")]
+        [StringLength(10)]
+        [Display(Name = "Staff ID")]
+        public string fldEmployeeID { get; set; }
+
+        [Required(ErrorMessage = "Mobile Phone No is required.")]
+        [RegularExpression(@"^6\d+$", ErrorMessage = "Mobile no must start with '6' and contain only digits.")]
+        [StringLength(20)]
+        [Display(Name = "Mobile Phone No")]
+        public string fldMobileNo { get; set; }
+
+        [RegularExpression(@"^6\d+$", ErrorMessage = "Office no must start with '6' and contain only digits.")]
+        [StringLength(20)]
+        [Display(Name = "Office Phone No")]
+        public string fldOfficeNo { get; set; }
 
         [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]
@@ -102,9 +125,32 @@ namespace MVC_SYSTEM.AuthModels
 
         [StringLength(50)]
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
-        [Required(ErrorMessage = "E-mail is required.")]
+        //[Required(ErrorMessage = "E-mail is required.")]
         [Display(Name = "Email")]
         public string fldUserEmail { get; set; }
+
+        [Required(ErrorMessage = "IC No is required.")]
+        [RegularExpression(@"^\d{12}$", ErrorMessage = "IC Number must be exactly 12 digits and numeric.")]
+        [StringLength(20)]
+        [Display(Name = "IC No")]
+        public string fldICNo { get; set; }
+
+        [Required(ErrorMessage = "Staff ID is required.")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Staff ID must be numeric.")]
+        [StringLength(10)]
+        [Display(Name = "Staff ID")]
+        public string fldEmployeeID { get; set; }
+
+        [Required(ErrorMessage = "Mobile Phone No is required.")]
+        [RegularExpression(@"^6\d+$", ErrorMessage = "Mobile no must start with '6' and contain only digits.")]
+        [StringLength(20)]
+        [Display(Name = "Mobile Phone No")]
+        public string fldMobileNo { get; set; }
+
+        [RegularExpression(@"^6\d+$", ErrorMessage = "Office no must start with '6' and contain only digits.")]
+        [StringLength(20)]
+        [Display(Name = "Office Phone No")]
+        public string fldOfficeNo { get; set; }
 
         [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]
