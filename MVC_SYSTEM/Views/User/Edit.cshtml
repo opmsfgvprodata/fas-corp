@@ -44,6 +44,44 @@
                         </div>
 
                         <div class="form-group">
+                            @Html.LabelFor(model => model.fldEmployeeID, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.fldEmployeeID, new { htmlAttributes = new { @class = "form-control numeric", @type = "text", @oninput = "this.value=this.value.replace(/[^0-9]/g,'')" } })
+                                @Html.ValidationMessageFor(model => model.fldEmployeeID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.fldICNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.fldICNo, new { htmlAttributes = new { @class = "form-control numeric", @maxlength = "12", @oninput = "this.value=this.value.replace(/[^0-9]/g,'')" } })
+                                @Html.ValidationMessageFor(model => model.fldICNo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.fldMobileNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.fldMobileNo, new { htmlAttributes = new { @class = "form-control digit ",
+                               @oninput = "this.value=this.value.replace(/[^0-9]/g,'');",
+                               @onblur = "if(this.value !== '' && !this.value.startsWith('6')) this.value='6' + this.value"
+                           } })
+                                @Html.ValidationMessageFor(model => model.fldMobileNo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.fldOfficeNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.fldOfficeNo, new { htmlAttributes = new { @class = "form-control digit ",
+                               @oninput = "this.value=this.value.replace(/[^0-9]/g,'');",
+                               @onblur = "if(this.value !== '' && !this.value.startsWith('6')) this.value='6' + this.value"
+                           } })
+                                @Html.ValidationMessageFor(model => model.fldOfficeNo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             @Html.LabelFor(model => model.fldUserEmail, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-9">
                                 @Html.EditorFor(model => model.fldUserEmail, new { htmlAttributes = new { @class = "form-control" } })

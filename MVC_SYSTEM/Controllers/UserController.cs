@@ -505,6 +505,10 @@ namespace MVC_SYSTEM.Controllers
                 getdata.fldUserFullName = tblUser.fldUserFullName.ToUpper();
                 getdata.fldUserShortName = tblUser.fldUserShortName.ToUpper();
                 getdata.fldUserEmail = tblUser.fldUserEmail;
+                getdata.fldEmployeeID = tblUser.fldEmployeeID;
+                getdata.fldICNo = tblUser.fldICNo;
+                getdata.fldMobileNo = tblUser.fldMobileNo;
+                getdata.fldOfficeNo = tblUser.fldOfficeNo;
                 getdata.fldClientID = getclientid;
                 getdata.fldRoleID = tblUser.fldRoleID;
                 getdata.fldDeleted = tblUser.fldDeleted;
