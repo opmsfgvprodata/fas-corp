@@ -117,6 +117,17 @@ namespace MVC_SYSTEM.Class
             return DivisionID;
         }
 
+        public List<vw_NSWL_2> GetLadangDetailByRegion(string CompCode)
+        {
+            List<vw_NSWL_2> NSWL = new List<vw_NSWL_2>();
+
+            NSWL = db.vw_NSWL_2.Where(x => x.fld_CostCentre == CompCode && x.fld_Deleted_L == false).ToList();
+
+            db.Dispose();
+
+            return NSWL;
+        }
+
         //Baru
         public List<ModelsCorporate.vw_NSWL> GetAllLadangDetail()
         {

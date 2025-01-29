@@ -3669,4 +3669,10 @@
   <data name="lblPaymentDate" xml:space="preserve">
     <value>Tarikh Bayaran</value>
   </data>
+  <data name="lblTotalCP8DAmt" xml:space="preserve">
+    <value>Total CP8D Amount</value>
+  </data>
+  <data name="lblTotalCP8DRec" xml:space="preserve">
+    <value>Total CP8D Records</value>
+  </data>
 </root>
