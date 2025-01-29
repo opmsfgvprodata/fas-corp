@@ -10,6 +10,8 @@
     string worker = ViewBag.WorkerList;
     string uniquefilename = "CP 8D (" + ViewBag.NamaPendekSyarikat + ") " + ViewBag.YearList;
     int no = 1;
+    decimal? totalMtd = 0;
+    decimal? totalCP8D = 0;
 }
 
 @if (Model != null && Model.Count() != 0)
@@ -62,8 +64,14 @@
                         <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none "><font color="black">@item.CP38</font></td>
                     </tr>
                     no++;
+                    totalMtd += item.PCB;
+                    totalCP8D += item.CP38;
                 }
-
+            <tr>
+                <td colspan="6" align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none"><font color="black">Total</font></td>
+                <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none"><font color="black">@totalMtd</font></td>
+                <td align="center" style="margin: 2px !important; padding: 4px !important; vertical-align: middle !important; border: 1px dotted gray; text-align: right; border-right: none; border-left: none"><font color="black">@totalCP8D</font></td>
+            </tr>
             </tbody>
         </table>
 
