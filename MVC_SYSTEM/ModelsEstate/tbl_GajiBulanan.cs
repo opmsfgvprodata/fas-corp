@@ -100,5 +100,35 @@ namespace MVC_SYSTEM.ModelsEstate
 
         [Column(TypeName = "numeric")]
         public decimal? fld_ByrKwsnSkr { get; set; }
+
+        [Column(TypeName = "numeric")]
+        public decimal? fld_PurataGajiORP { get; set; }
+
+        [Column(TypeName = "numeric")]
+        public decimal? fld_PurataGajiORP12Bln { get; set; }
+
+        [Column(TypeName = "numeric")]
+        public decimal? fld_ByrKerjaORP { get; set; }
+
+        [Column(TypeName = "numeric")]
+        public decimal? fld_BonusHarianORP { get; set; }
+
+        [Column(TypeName = "numeric")]
+        public decimal? fld_LainInsentifORP { get; set; }
+
+        [Column(TypeName = "numeric")]
+        public decimal? fld_TotalByrKerjaORP { get; set; }
+
+        [StringLength(15)]
+        public string fld_PaymentMode { get; set; }
+
+        [Column(TypeName = "numeric")]
+        public decimal? fld_BakiCutiTahunan { get; set; }
+
+        [StringLength(20)]
+        public string fld_NoPkjPermanent { get; set; }
+
+        [Column(TypeName = "numeric")]
+        public decimal? fld_TaxReliefInsentive { get; set; }
     }
 }

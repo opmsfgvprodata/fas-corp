@@ -2210,6 +2210,9 @@ namespace MVC_SYSTEM.Controllers
             GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
             List<sp_TaxCP39_Result> taxCP39 = new List<sp_TaxCP39_Result>();
 
+            GlobalFunction globalFunction = new GlobalFunction();
+            globalFunction.GenerateLHDNSiriNo(YearList);
+
             ViewBag.MonthList = MonthList;
             ViewBag.YearList = YearList;
             var CompCodeCopy = "FASSB";

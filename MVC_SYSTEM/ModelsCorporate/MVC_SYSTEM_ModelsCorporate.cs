@@ -148,6 +148,8 @@ namespace MVC_SYSTEM.ModelsCorporate
 
         //public virtual DbSet<tbl_KategoriAktiviti> tbl_KategoriAktivitiPUP { get; set; }
 
+        public virtual DbSet<tbl_EAWorkerSiriNo> tbl_EAWorkerSiriNo { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<tbl_SubCarumanTambahan>()

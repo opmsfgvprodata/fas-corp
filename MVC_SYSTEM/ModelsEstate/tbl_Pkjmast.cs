@@ -184,6 +184,9 @@ namespace MVC_SYSTEM.ModelsEstate
 
         [StringLength(5)]
         public string fld_Negara2 { get; set; }
+
+        [StringLength(20)]
+        public string fld_NopkjPermanent { get; set; }
     }
 
     public partial class tbl_PkjmastModelViewEdit

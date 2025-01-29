@@ -919,6 +919,7 @@
     <Compile Include="ModelsCorporate\tbl_CutiUmumLdg.cs" />
     <Compile Include="ModelsCorporate\tbl_CutiUmumMaster.cs" />
     <Compile Include="ModelsCorporate\tbl_Division.cs" />
+    <Compile Include="ModelsCorporate\tbl_EAWorkerSiriNo.cs" />
     <Compile Include="ModelsCorporate\tbl_EstateDivisionSelection.cs" />
     <Compile Include="ModelsCorporate\tbl_EstateSelection.cs" />
     <Compile Include="ModelsCorporate\tbl_GLSAP.cs" />
@@ -1007,6 +1008,7 @@
     <Compile Include="ModelsCorporate\vw_Socso.cs" />
     <Compile Include="ModelsCorporate\vw_TKADetail.cs" />
     <Compile Include="ModelsCorporate\vw_UserIDDetail.cs" />
+    <Compile Include="ModelsCustom\CusMod_EAWorkerInfo.cs" />
     <Compile Include="ModelsCustom\CusMod_Password.cs" />
     <Compile Include="ModelsCustom\CusMod_tbl_JenisInsentif.cs" />
     <Compile Include="ModelsCustom\CusMod_tbl_UpahAktiviti.cs" />
@@ -1068,6 +1070,7 @@
     <Compile Include="ModelsEstate\tbl_SubPkt.cs" />
     <Compile Include="ModelsEstate\tbl_SupportedDoc.cs" />
     <Compile Include="ModelsEstate\tbl_TamatPermitPassport.cs" />
+    <Compile Include="ModelsEstate\tbl_TaxWorkerInfo.cs" />
     <Compile Include="ModelsEstate\tbl_TutupUrusNiaga.cs" />
     <Compile Include="ModelsEstate\test1.cs" />
     <Compile Include="ModelsEstate\test2.cs" />

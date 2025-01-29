@@ -90,6 +90,7 @@ namespace MVC_SYSTEM.ModelsEstate
         public virtual DbSet<vw_PermitPassportDetail> vw_PermitPassportDetail { get; set; }
         public virtual DbSet<vw_MaklumatInsentif> vw_MaklumatInsentif { get; set; }
         public virtual DbSet<tbl_PktPinjam> tbl_PktPinjam { get; set; }
+        public virtual DbSet<tbl_TaxWorkerInfo> tbl_TaxWorkerInfo { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
