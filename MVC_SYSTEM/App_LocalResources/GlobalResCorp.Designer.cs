@@ -8719,6 +8719,24 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total CP8D Amount.
+        /// </summary>
+        public static string lblTotalCP8DAmt {
+            get {
+                return ResourceManager.GetString("lblTotalCP8DAmt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total CP8D Records.
+        /// </summary>
+        public static string lblTotalCP8DRec {
+            get {
+                return ResourceManager.GetString("lblTotalCP8DRec", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Jumlah Potongan.
         /// </summary>
         public static string lblTotalDeduction {
