@@ -3377,7 +3377,7 @@ namespace MVC_SYSTEM.Controllers
             List<sp_TaxCP39_Result> taxCP39 = new List<sp_TaxCP39_Result>();
 
             var SyarikatDetail = dbC.tbl_Syarikat.Where(x => x.fld_SyarikatID == SyarikatID).FirstOrDefault();
-            string filename = "Tax CP8D (" + SyarikatDetail.fld_NamaPndkSyarikat.ToUpper() + ") " + "" + stringmonth + stringyear + ".txt";
+            string filename = "P" + SyarikatDetail.fld_EmployerTaxNo + "_" + Year + ".txt";
 
             try
             {
@@ -3509,6 +3509,7 @@ namespace MVC_SYSTEM.Controllers
             var otherContributionList_X = new List<OtherContribution>();
             var specialIncentiveList_X = new List<SpecialIncentive>();
             var SyarikatDetail = dbC.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == CompCode).FirstOrDefault();
+            filename = "P" + SyarikatDetail.fld_EmployerTaxNo + "_" + Year + ".txt";
             try
             {
                 var NSWL = GetNSWL.GetLadangDetailByRegion(CompCode);
@@ -3664,7 +3665,7 @@ namespace MVC_SYSTEM.Controllers
             }
             #endregion Body
             //var filename = "P" + SyarikatDetail.fld_EmployerTaxNo + "_" + Year + ".txt";
-            var filePath = getGenerateFile.CreateTextFile(filename, fileContent, "CP39");
+            var filePath = getGenerateFile.CreateTextFile(filename, fileContent, "CP8D");
 
             link = Url.Action("Download", "MaybankFileGen", new { filePath, filename });
 
