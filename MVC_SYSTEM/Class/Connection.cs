@@ -7,11 +7,6 @@ using MVC_SYSTEM.ModelsEstate;
 
 namespace MVC_SYSTEM.Class
 {
-    public class HardCodeConnection
-    {
-        public const string host = "4.144.178.156,11433";
-    }
-
     public class Connection
     {
         public void GetConnection(out string host, out string catalog, out string user, out string pass, int? wlyhID, int? syrktID, int? ngrID)
@@ -23,9 +18,6 @@ namespace MVC_SYSTEM.Class
             user = getconnection.userID;
             pass = getconnection.Password;
 
-            //Debug
-            host = HardCodeConnection.host;
-
         }
 
         public MVC_SYSTEM_ModelsEstate GetConnectionMobile(int? wlyhID, int? syrktID, int? ngrID)
@@ -36,8 +28,6 @@ namespace MVC_SYSTEM.Class
             string catalog = getconnection.InitialCatalog;
             string user = getconnection.userID;
             string pass = getconnection.Password;
-            //Debug
-            host = HardCodeConnection.host;
             var dbr = new MVC_SYSTEM_ModelsEstate();
             return dbr.ConnectToSqlServerMobile(host, catalog, user, pass);
         }
@@ -51,8 +41,6 @@ namespace MVC_SYSTEM.Class
             var catalog = getConnection.InitialCatalog;
             var user = getConnection.userID;
             var pass = getConnection.Password;
-            //Debug
-            host = HardCodeConnection.host;
             var connectionString = String.Format("data source={0};initial catalog={1};user id={2};password={3};MultipleActiveResultSets=True;App=EntityFramework;Connection Timeout=300", host, catalog, user, pass);
             return connectionString;
         }
