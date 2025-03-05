@@ -921,6 +921,7 @@
     <Compile Include="ModelsCorporate\tbl_CutiUmumLdg.cs" />
     <Compile Include="ModelsCorporate\tbl_CutiUmumMaster.cs" />
     <Compile Include="ModelsCorporate\tbl_Division.cs" />
+    <Compile Include="ModelsCorporate\tbl_EAWorkerSiriNo.cs" />
     <Compile Include="ModelsCorporate\tbl_EstateDivisionSelection.cs" />
     <Compile Include="ModelsCorporate\tbl_EstateSelection.cs" />
     <Compile Include="ModelsCorporate\tbl_GLSAP.cs" />
@@ -1009,6 +1010,7 @@
     <Compile Include="ModelsCorporate\vw_Socso.cs" />
     <Compile Include="ModelsCorporate\vw_TKADetail.cs" />
     <Compile Include="ModelsCorporate\vw_UserIDDetail.cs" />
+    <Compile Include="ModelsCustom\CusMod_EAWorkerInfo.cs" />
     <Compile Include="ModelsCustom\CusMod_Password.cs" />
     <Compile Include="ModelsCustom\CusMod_tbl_JenisInsentif.cs" />
     <Compile Include="ModelsCustom\CusMod_tbl_UpahAktiviti.cs" />
@@ -1021,6 +1023,7 @@
     <Compile Include="ModelsDapper\sp_MaybankRcms_Result.cs" />
     <Compile Include="ModelsDapper\sp_PenggajianData_Result.cs" />
     <Compile Include="ModelsDapper\sp_TaxCP39_Result.cs" />
+    <Compile Include="ModelsDapper\sp_TaxCP8D_Result.cs" />
     <Compile Include="ModelsEstate\MVC_SYSTEM_ModelsEstate.cs" />
     <Compile Include="ModelsEstate\tblHtmlReport.cs" />
     <Compile Include="ModelsEstate\tblStatusPkj.cs" />
@@ -1070,6 +1073,7 @@
     <Compile Include="ModelsEstate\tbl_SubPkt.cs" />
     <Compile Include="ModelsEstate\tbl_SupportedDoc.cs" />
     <Compile Include="ModelsEstate\tbl_TamatPermitPassport.cs" />
+    <Compile Include="ModelsEstate\tbl_TaxWorkerInfo.cs" />
     <Compile Include="ModelsEstate\tbl_TutupUrusNiaga.cs" />
     <Compile Include="ModelsEstate\test1.cs" />
     <Compile Include="ModelsEstate\test2.cs" />
@@ -3587,6 +3591,8 @@
     <Content Include="Views\MaybankFileGen\RcmsInstructionLetterOthers.cshtml" />
     <Content Include="Views\Report\_PenggajianDataReport.cshtml" />
     <Content Include="Views\Report\PenggajianDataReport.cshtml" />
+    <Content Include="Views\MaybankFileGen\TaxCP8D.cshtml" />
+    <Content Include="Views\MaybankFileGen\_TaxCP8D.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

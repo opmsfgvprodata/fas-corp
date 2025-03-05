@@ -77,5 +77,8 @@ namespace MVC_SYSTEM.ModelsCorporate
         public string fld_DivisionName { get; set; }
 
         public bool? fld_Deleted_D { get; set; }
+
+        [StringLength(50)]
+        public string fld_CostCentre { get; set; }
     }
 }
