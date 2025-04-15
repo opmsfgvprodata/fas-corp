@@ -3513,30 +3513,38 @@ namespace MVC_SYSTEM.Controllers
             try
             {
                 var NSWL = GetNSWL.GetLadangDetailByRegion(CompCode);
+                var LadangIDList = NSWL.Select(s => s.fld_LadangID).Distinct().ToList();
 
                 foreach (var regionID in NSWL.Select(s => s.fld_WilayahID).Distinct().ToList())
                 {
                     string constr = Connection.GetConnectionString(regionID, SyarikatID.Value, NegaraID.Value);
                     var con = new SqlConnection(constr);
-                    DynamicParameters parameters = new DynamicParameters();
-                    parameters.Add("Year", Year);
-                    parameters.Add("WorkerStatus", "1");
-                    con.Open();
-                    var result = SqlMapper.QueryMultiple(con, "sp_TaxCP8D", parameters, commandType: CommandType.StoredProcedure);
-                    workerInfoList.AddRange(result.Read<WorkerInfo>().ToList());
-                    workerTaxCP8DList.AddRange(result.Read<WorkerTaxCP8D>().ToList());
-                    otherContributionList.AddRange(result.Read<OtherContribution>().ToList());
-                    specialIncentiveList.AddRange(result.Read<SpecialIncentive>().ToList());
+                    try
+                    {
+                        DynamicParameters parameters = new DynamicParameters();
+                        parameters.Add("Year", Year);
+                        parameters.Add("WorkerStatus", "1");
+                        con.Open();
+                        var result = SqlMapper.QueryMultiple(con, "sp_TaxCP8D", parameters, commandType: CommandType.StoredProcedure);
+                        workerInfoList.AddRange(result.Read<WorkerInfo>().Where(x => LadangIDList.Contains(x.fld_LadangID.Value)).ToList());
+                        workerTaxCP8DList.AddRange(result.Read<WorkerTaxCP8D>().Where(x => LadangIDList.Contains(x.fld_LadangID.Value)).ToList());
+                        otherContributionList.AddRange(result.Read<OtherContribution>().ToList());
+                        specialIncentiveList.AddRange(result.Read<SpecialIncentive>().ToList());
 
-                    parameters = new DynamicParameters();
-                    parameters.Add("Year", Year);
-                    parameters.Add("WorkerStatus", "2");
-                    result = SqlMapper.QueryMultiple(con, "sp_TaxCP8D", parameters, commandType: CommandType.StoredProcedure);
-                    workerInfoList_X.AddRange(result.Read<WorkerInfo>().ToList());
-                    workerTaxCP8DList_X.AddRange(result.Read<WorkerTaxCP8D>().ToList());
-                    otherContributionList_X.AddRange(result.Read<OtherContribution>().ToList());
-                    specialIncentiveList_X.AddRange(result.Read<SpecialIncentive>().ToList());
-                    con.Close();
+                        parameters = new DynamicParameters();
+                        parameters.Add("Year", Year);
+                        parameters.Add("WorkerStatus", "2");
+                        result = SqlMapper.QueryMultiple(con, "sp_TaxCP8D", parameters, commandType: CommandType.StoredProcedure);
+                        workerInfoList_X.AddRange(result.Read<WorkerInfo>().Where(x => LadangIDList.Contains(x.fld_LadangID.Value)).ToList());
+                        workerTaxCP8DList_X.AddRange(result.Read<WorkerTaxCP8D>().Where(x => LadangIDList.Contains(x.fld_LadangID.Value)).ToList());
+                        otherContributionList_X.AddRange(result.Read<OtherContribution>().ToList());
+                        specialIncentiveList_X.AddRange(result.Read<SpecialIncentive>().ToList());
+                        con.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw;
+                    }
                 }
 
                 if (workerTaxCP8DList.Count() > 0)
