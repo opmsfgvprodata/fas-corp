@@ -3584,7 +3584,7 @@ namespace MVC_SYSTEM.Controllers
                                 PCB = workerTax.Sum(s => s.fld_PCB) + specialIncentive.Sum(s => s.fld_PCBCarumanPekerja),
                                 CP38 = workerTax.Sum(s => s.fld_CP38),
                                 InsuransPotonganGaji = 0,
-                                PERKESO = (int)otherContribution.Sum(s => s.fld_CarumanPekerja)
+                                PERKESO = (int)otherContribution.Sum(s => s.fld_CarumanPekerja) + (int)workerTax.Sum(s => s.fld_SocsoPkj)
                             });
                         }
 
@@ -3627,7 +3627,7 @@ namespace MVC_SYSTEM.Controllers
                                     PCB = workerTax.Sum(s => s.fld_PCB) + specialIncentive.Sum(s => s.fld_PCBCarumanPekerja),
                                     CP38 = workerTax.Sum(s => s.fld_CP38),
                                     InsuransPotonganGaji = 0,
-                                    PERKESO = (int)otherContribution.Sum(s => s.fld_CarumanPekerja)
+                                    PERKESO = (int)otherContribution.Sum(s => s.fld_CarumanPekerja) + (int)workerTax.Sum(s => s.fld_SocsoPkj)
                                 });
                             }
                         }
