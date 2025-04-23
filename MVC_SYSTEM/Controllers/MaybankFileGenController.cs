@@ -23,6 +23,8 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Data;
 using System.Drawing;
 using System.Text.RegularExpressions;
+using MVC_SYSTEM.ModelsCustom;
+using System.Net.NetworkInformation;
 //using Itenso.TimePeriod;
 //using System.Globalization;
 //using System.Drawing;
@@ -4224,6 +4226,678 @@ namespace MVC_SYSTEM.Controllers
         //{
 
         //}
+
+        public ActionResult TaxFormE()
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            ViewBag.Maintenance = "class = active";
+
+            int drpyear = 0;
+            int drprangeyear = 0;
+            int month = timezone.gettimezone().Month;
+
+            drpyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+            drprangeyear = timezone.gettimezone().Year;
+
+            var nextYear = timezone.gettimezone().Year + 1;
+
+            var yearlist = new List<SelectListItem>();
+            for (var i = drpyear; i <= drprangeyear; i++)
+            {
+                if (i == timezone.gettimezone().Year)
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                }
+            }
+
+            yearlist.Add(new SelectListItem { Text = nextYear.ToString(), Value = nextYear.ToString() });
+            yearlist.Insert(0, new SelectListItem { Text = "Please select", Value = "0" });
+
+            ViewBag.YearList = yearlist;
+
+            List<SelectListItem> CompanyList = new List<SelectListItem>();
+            CompanyList = new SelectList(
+                db.tbl_Syarikat
+                    .Where(x => x.fld_NegaraID == NegaraID && x.fld_Deleted == false).OrderBy(o => o.fld_NamaPndkSyarikat)
+                    .Select(
+                        s => new SelectListItem { Value = s.fld_NamaPndkSyarikat, Text = s.fld_NamaPndkSyarikat }), "Value", "Text").ToList();
+            CompanyList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "0" });
+
+            ViewBag.CompanyList = CompanyList;
+
+
+            return View();
+        }
+
+        public ActionResult _TaxFormE(int? YearList, string CompanyList, int page = 1, string sort = "fld_Year",string sortdir = "DESC")
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            var message = "";
+            if (String.IsNullOrEmpty(YearList.ToString()))
+            {
+                message = "Please choose year and company";
+                ViewBag.Message = message;
+            }
+
+            int pageSize = int.Parse(GetConfig.GetData("paging"));
+            var records = new PagedList<ModelsCorporate.tbl_TaxEForm>();
+            int role = GetIdentity.RoleID(getuserid).Value;
+
+            var EFormData = dbC.tbl_TaxEForm
+                .Where(x => x.fld_Year == YearList && x.fld_NegaraID == NegaraID &&
+                            x.fld_SyarikatID == CompanyList);
+
+            records.Content = EFormData.OrderBy(x => x.fld_Year)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            records.TotalRecords = EFormData.Count();
+
+            records.CurrentPage = page;
+            records.PageSize = pageSize;
+            ViewBag.RoleID = role;
+            ViewBag.pageSize = pageSize;
+            ViewBag.TotalRecord = EFormData
+                .Count();
+
+            if (EFormData.Count() <= 0)
+            {
+                ViewBag.Message = "No information found";
+            }
+
+            return View(records);
+        }
+
+        public ActionResult _TaxFormECreate()
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            int drpyear = 0;
+            int drprangeyear = 0;
+            int month = timezone.gettimezone().Month;
+
+            drpyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+            drprangeyear = timezone.gettimezone().Year;
+
+            var nextYear = timezone.gettimezone().Year + 1;
+
+            var yearlist = new List<SelectListItem>();
+            for (var i = drpyear; i <= drprangeyear; i++)
+            {
+                if (i == timezone.gettimezone().Year)
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = true });
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                }
+            }
+
+            yearlist.Add(new SelectListItem { Text = nextYear.ToString(), Value = nextYear.ToString() });
+            yearlist.Insert(0, new SelectListItem { Text = "Please select", Value = "0" });
+
+            ViewBag.YearList = yearlist;
+
+            List<SelectListItem> CompanyList = new List<SelectListItem>();
+            CompanyList = new SelectList(
+                db.tbl_Syarikat
+                    .Where(x => x.fld_NegaraID == NegaraID && x.fld_Deleted == false).OrderBy(o => o.fld_NamaPndkSyarikat)
+                    .Select(
+                        s => new SelectListItem { Value = s.fld_NamaPndkSyarikat, Text = s.fld_NamaPndkSyarikat }), "Value", "Text").ToList();
+            CompanyList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "0" });
+
+            ViewBag.CompanyList = CompanyList;
+
+            List<SelectListItem> catOfEmployer = new List<SelectListItem>();
+
+            catOfEmployer = new SelectList(
+                dbC.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "taxCatEmployer" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+            catOfEmployer.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.catOfEmployer = catOfEmployer;
+
+
+            List<SelectListItem> statusEmployer = new List<SelectListItem>();
+
+            statusEmployer = new SelectList(
+                dbC.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "taxStatusEmployer" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+            statusEmployer.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.statusEmployer = statusEmployer;
+
+            List<SelectListItem>  taxIdentinficationNo= new List<SelectListItem>();
+
+            taxIdentinficationNo = new SelectList(
+                dbC.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "taxIdentificationNo" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+            taxIdentinficationNo.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.taxIdentinficationNo = taxIdentinficationNo;
+
+            List<SelectListItem> furnishCP8D = new List<SelectListItem>();
+
+            furnishCP8D = new SelectList(
+                dbC.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "taxFurnishCP8D" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+            furnishCP8D.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.furnishCP8D = furnishCP8D;
+
+            List<SelectListItem> a6Status = new List<SelectListItem>();
+
+            a6Status = new SelectList(
+                dbC.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "statusonleave" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfValue)
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+            a6Status.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.a6Status = a6Status;
+
+            ModelsCorporate.tbl_TaxEForm taxFormE = new ModelsCorporate.tbl_TaxEForm();
+            taxFormE.fld_DeclareDate = DateTime.Today;
+
+            return PartialView(taxFormE);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _TaxFormECreate(ModelsCorporate.tbl_TaxEForm taxEForm)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var taxData = dbC.tbl_TaxEForm
+                        .Where(x => x.fld_NegaraID == NegaraID &&
+                                    x.fld_SyarikatID == taxEForm.fld_SyarikatID)
+                        .Select(s => s.fld_Year)
+                        .ToList();
+
+                    if (taxData.Contains(taxEForm.fld_Year))
+                    {
+                        return Json(new
+                        {
+                            success = false,
+                            msg = "E Form already exist",
+                            status = "danger",
+                            checkingdata = "0"
+                        });
+                    }
+
+                    else
+                    {
+                        taxEForm.fld_Year = taxEForm.fld_Year;
+                        taxEForm.fld_NameofEmployer = taxEForm.fld_NameofEmployer;
+                        taxEForm.fld_EmployerTIN = taxEForm.fld_EmployerTIN;
+                        taxEForm.fld_CatofEmployer = taxEForm.fld_CatofEmployer;
+                        taxEForm.fld_StatusofEmployer = taxEForm.fld_StatusofEmployer;
+                        taxEForm.fld_TINCode = taxEForm.fld_TINCode;
+                        taxEForm.fld_TIN = taxEForm.fld_TIN;
+                        taxEForm.fld_IdentificationNo = taxEForm.fld_IdentificationNo;
+                        taxEForm.fld_PassportNo = taxEForm.fld_PassportNo;
+                        taxEForm.fld_RegNoCompaniesSSM = taxEForm.fld_RegNoCompaniesSSM;
+                        taxEForm.fld_Address1 = taxEForm.fld_Address1;
+                        taxEForm.fld_Address2 = taxEForm.fld_Address2;
+                        taxEForm.fld_Address3 = taxEForm.fld_Address3;
+                        taxEForm.fld_Postcode = taxEForm.fld_Postcode;
+                        taxEForm.fld_City = taxEForm.fld_City;
+                        taxEForm.fld_Country = taxEForm.fld_Country;
+                        taxEForm.fld_PhoneNo = taxEForm.fld_PhoneNo;
+                        taxEForm.fld_HandphoneNo = taxEForm.fld_HandphoneNo;
+                        taxEForm.fld_Email = taxEForm.fld_Email;
+                        taxEForm.fld_FurnishofCP8D = taxEForm.fld_FurnishofCP8D;
+                        taxEForm.fld_A1 = taxEForm.fld_A1;
+                        taxEForm.fld_A2 = taxEForm.fld_A2;
+                        taxEForm.fld_A3 = taxEForm.fld_A3;
+                        taxEForm.fld_A4 = taxEForm.fld_A4;
+                        taxEForm.fld_A5 = taxEForm.fld_A5;
+                        taxEForm.fld_A6 = taxEForm.fld_A6;
+                        taxEForm.fld_DeclareName = taxEForm.fld_DeclareName;
+                        taxEForm.fld_DeclareICNo = taxEForm.fld_DeclareICNo;
+                        taxEForm.fld_DeclareDate = taxEForm.fld_DeclareDate;
+                        taxEForm.fld_DeclareDesignation = taxEForm.fld_DeclareDesignation;
+                        taxEForm.fld_NegaraID = NegaraID;
+                        taxEForm.fld_SyarikatID = taxEForm.fld_SyarikatID;
+                        taxEForm.fld_CreatedBy = getuserid.ToString();
+                        taxEForm.fld_CreatedDate = timezone.gettimezone();
+
+
+                        dbC.tbl_TaxEForm.Add(taxEForm);
+                        dbC.SaveChanges();
+
+                        string appname = Request.ApplicationPath;
+                        string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                        var lang = Request.RequestContext.RouteData.Values["lang"];
+
+                        if (appname != "/")
+                        {
+                            domain = domain + appname;
+                        }
+
+                        return Json(new
+                        {
+                            success = true,
+                            msg = GlobalResCorp.msgUpdate,
+                            status = "success",
+                            checkingdata = "0",
+                            method = "1",
+                            div = "taxFormEDetails",
+                            rootUrl = domain,
+                            action = "_TaxFormE",
+                            controller = "MaybankFileGen"
+                        });
+                    }
+                }
+
+                else
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        msg = GlobalResCorp.msgErrorData,
+                        status = "danger",
+                        checkingdata = "0"
+                    });
+                }
+            }
+
+            catch (Exception ex)
+            {
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                return Json(new
+                {
+                    success = false,
+                    msg = GlobalResCorp.msgError,
+                    status = "danger",
+                    checkingdata = "0"
+                });
+            }
+
+            finally
+            {
+                db.Dispose();
+            }
+        }
+
+        public ActionResult _TaxFormEEdit(int id)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+
+            int drpyear = 0;
+            int drprangeyear = 0;
+            int month = timezone.gettimezone().Month;
+
+            drpyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+            drprangeyear = timezone.gettimezone().Year;
+
+            var nextYear = timezone.gettimezone().Year + 1;
+
+            var yearlist = new List<SelectListItem>();
+            for (var i = drpyear; i <= drprangeyear; i++)
+            {
+                if (i == timezone.gettimezone().Year)
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = true });
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                }
+            }
+
+            yearlist.Add(new SelectListItem { Text = nextYear.ToString(), Value = nextYear.ToString() });
+            yearlist.Insert(0, new SelectListItem { Text = "Please select", Value = "0" });
+
+            ViewBag.YearList = yearlist;
+
+            List<SelectListItem> CompanyList = new List<SelectListItem>();
+            CompanyList = new SelectList(
+                db.tbl_Syarikat
+                    .Where(x => x.fld_NegaraID == NegaraID && x.fld_Deleted == false).OrderBy(o => o.fld_NamaPndkSyarikat)
+                    .Select(
+                        s => new SelectListItem { Value = s.fld_NamaPndkSyarikat, Text = s.fld_NamaPndkSyarikat }), "Value", "Text").ToList();
+            CompanyList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "0" });
+
+            ViewBag.CompanyList = CompanyList;
+
+            List<SelectListItem> catOfEmployer = new List<SelectListItem>();
+
+            catOfEmployer = new SelectList(
+                dbC.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "taxCatEmployer" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+            catOfEmployer.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.catOfEmployer = catOfEmployer;
+
+
+            List<SelectListItem> statusEmployer = new List<SelectListItem>();
+
+            statusEmployer = new SelectList(
+                dbC.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "taxStatusEmployer" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+            statusEmployer.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.statusEmployer = statusEmployer;
+
+            List<SelectListItem> taxIdentinficationNo = new List<SelectListItem>();
+
+            taxIdentinficationNo = new SelectList(
+                dbC.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "taxIdentificationNo" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+            taxIdentinficationNo.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.taxIdentinficationNo = taxIdentinficationNo;
+
+            List<SelectListItem> furnishCP8D = new List<SelectListItem>();
+
+            furnishCP8D = new SelectList(
+                dbC.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "taxFurnishCP8D" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfDesc)
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+            furnishCP8D.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.furnishCP8D = furnishCP8D;
+
+            List<SelectListItem> a6Status = new List<SelectListItem>();
+
+            a6Status = new SelectList(
+                dbC.tblOptionConfigsWebs
+                    .Where(x => x.fldOptConfFlag1 == "statusonleave" && x.fld_NegaraID == NegaraID &&
+                                x.fld_SyarikatID == SyarikatID && x.fldDeleted == false)
+                    .OrderBy(o => o.fldOptConfValue)
+                    .Select(
+                        s => new SelectListItem { Value = s.fldOptConfValue, Text = s.fldOptConfDesc }),
+                "Value", "Text").ToList();
+            a6Status.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "" });
+
+            ViewBag.a6Status = a6Status;
+
+            var formEData = dbC.tbl_TaxEForm
+                .SingleOrDefault(x => x.fld_ID == id && x.fld_NegaraID == NegaraID );
+
+            return PartialView(formEData);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _TaxFormEEdit(ModelsCorporate.tbl_TaxEForm taxEForm)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var eFormData = dbC.tbl_TaxEForm.SingleOrDefault(
+                        x => x.fld_ID == taxEForm.fld_ID &&
+                             x.fld_NegaraID == NegaraID &&
+                             x.fld_SyarikatID == taxEForm.fld_SyarikatID);
+
+                    eFormData.fld_NameofEmployer = taxEForm.fld_NameofEmployer;
+                    eFormData.fld_EmployerTIN = taxEForm.fld_EmployerTIN;
+                    eFormData.fld_CatofEmployer = taxEForm.fld_CatofEmployer;
+                    eFormData.fld_StatusofEmployer = taxEForm.fld_StatusofEmployer;
+                    eFormData.fld_TINCode = taxEForm.fld_TINCode;
+                    eFormData.fld_TIN = taxEForm.fld_TIN;
+                    eFormData.fld_IdentificationNo = taxEForm.fld_IdentificationNo;
+                    eFormData.fld_PassportNo = taxEForm.fld_PassportNo;
+                    eFormData.fld_RegNoCompaniesSSM = taxEForm.fld_RegNoCompaniesSSM;
+                    eFormData.fld_Address1 = taxEForm.fld_Address1;
+                    eFormData.fld_Address2 = taxEForm.fld_Address2;
+                    eFormData.fld_Address3 = taxEForm.fld_Address3;
+                    eFormData.fld_Postcode = taxEForm.fld_Postcode;
+                    eFormData.fld_City = taxEForm.fld_City;
+                    eFormData.fld_Country = taxEForm.fld_Country;
+                    eFormData.fld_PhoneNo = taxEForm.fld_PhoneNo;
+                    eFormData.fld_HandphoneNo = taxEForm.fld_HandphoneNo;
+                    eFormData.fld_Email = taxEForm.fld_Email;
+                    eFormData.fld_FurnishofCP8D = taxEForm.fld_FurnishofCP8D;
+                    eFormData.fld_A1 = taxEForm.fld_A1;
+                    eFormData.fld_A2 = taxEForm.fld_A2;
+                    eFormData.fld_A3 = taxEForm.fld_A3;
+                    eFormData.fld_A4 = taxEForm.fld_A4;
+                    eFormData.fld_A5 = taxEForm.fld_A5;
+                    eFormData.fld_A6 = taxEForm.fld_A6;
+                    eFormData.fld_DeclareName = taxEForm.fld_DeclareName;
+                    eFormData.fld_DeclareICNo = taxEForm.fld_DeclareICNo;
+                    eFormData.fld_DeclareDate = taxEForm.fld_DeclareDate;
+                    eFormData.fld_DeclareDesignation = taxEForm.fld_DeclareDesignation;
+                    eFormData.fld_ModifiedBy = getuserid.ToString();
+                    eFormData.fld_ModifiedDate = timezone.gettimezone();
+
+                    dbC.SaveChanges();
+
+                    string appname = Request.ApplicationPath;
+                    string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                    var lang = Request.RequestContext.RouteData.Values["lang"];
+
+                    if (appname != "/")
+                    {
+                        domain = domain + appname;
+                    }
+
+                    return Json(new
+                    {
+                        success = true,
+                        msg = GlobalResCorp.msgUpdate,
+                        status = "success",
+                        checkingdata = "0",
+                        method = "2",
+                        div = "taxFormEDetails",
+                        rootUrl = domain,
+                        action = "_TaxFormE",
+                        controller = "MaybankFileGen"
+                    });
+                }
+
+                else
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        msg = GlobalResCorp.msgErrorData,
+                        status = "danger",
+                        checkingdata = "0"
+                    });
+                }
+            }
+
+            catch (Exception ex)
+            {
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                return Json(new
+                {
+                    success = false,
+                    msg = GlobalResCorp.msgError,
+                    status = "danger",
+                    checkingdata = "0"
+                });
+            }
+
+            finally
+            {
+                db.Dispose();
+            }
+        }
+
+        public ActionResult TaxFormEDelete(int? id)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            int drpyear = 0;
+            int drprangeyear = 0;
+            int month = timezone.gettimezone().Month;
+
+            drpyear = timezone.gettimezone().Year - int.Parse(GetConfig.GetData("yeardisplay")) + 1;
+            drprangeyear = timezone.gettimezone().Year;
+
+            var nextYear = timezone.gettimezone().Year + 1;
+
+            var yearlist = new List<SelectListItem>();
+            for (var i = drpyear; i <= drprangeyear; i++)
+            {
+                if (i == timezone.gettimezone().Year)
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString(), Selected = true });
+                }
+                else
+                {
+                    yearlist.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                }
+            }
+
+            yearlist.Add(new SelectListItem { Text = nextYear.ToString(), Value = nextYear.ToString() });
+            yearlist.Insert(0, new SelectListItem { Text = "Please select", Value = "0" });
+
+            ViewBag.YearList = yearlist;
+
+            List<SelectListItem> CompanyList = new List<SelectListItem>();
+            CompanyList = new SelectList(
+                db.tbl_Syarikat
+                    .Where(x => x.fld_NegaraID == NegaraID && x.fld_Deleted == false).OrderBy(o => o.fld_NamaPndkSyarikat)
+                    .Select(
+                        s => new SelectListItem { Value = s.fld_NamaPndkSyarikat, Text = s.fld_NamaPndkSyarikat }), "Value", "Text").ToList();
+            CompanyList.Insert(0, new SelectListItem { Text = GlobalResCorp.lblChoose, Value = "0" });
+
+            ViewBag.CompanyList = CompanyList;
+
+            if (id == null)
+            {
+                return RedirectToAction("_TaxFormE");
+            }
+            ModelsCorporate.tbl_TaxEForm tbl_TaxEForm = dbC.tbl_TaxEForm.Where(x => x.fld_ID == id).FirstOrDefault();
+
+            if (tbl_TaxEForm == null)
+            {
+                return RedirectToAction("_TaxFormE");
+            }
+            return PartialView("TaxFormEDelete", tbl_TaxEForm);
+        }
+
+        [HttpPost, ActionName("TaxFormEDelete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult TaxFormEDeleteConfirmed(int? id)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+
+            try
+            {
+                ModelsCorporate.tbl_TaxEForm tbl_TaxEForm = dbC.tbl_TaxEForm.Where(x => x.fld_ID == id).FirstOrDefault();
+                if (tbl_TaxEForm == null)
+                {
+                    return Json(new { success = true, msg = GlobalResCorp.msgDelete2, status = "success", checkingdata = "0", method = "1", getid = "", data1 = "", data2 = "" });
+                }
+                else
+                {
+                    dbC.tbl_TaxEForm.Remove(tbl_TaxEForm);
+                    dbC.SaveChanges();
+                    return Json(new { success = true, msg = GlobalResCorp.msgDelete2, status = "success", checkingdata = "0", method = "1", getid = "", data1 = "", data2 = "" });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                geterror.catcherro(ex.Message, ex.StackTrace, ex.Source, ex.TargetSite.ToString());
+                return Json(new { success = true, msg = GlobalResCorp.msgError, status = "danger", checkingdata = "1" });
+            }
+
+        }
+        
+        public JsonResult GetCompanyDetails(string id)
+        {
+            var company = db.tbl_Syarikat
+                .Where(x => x.fld_NamaPndkSyarikat == id && x.fld_Deleted == false)
+                .Select(x => new
+                {
+                    employerName = x.fld_NamaSyarikat,
+                    employerTIN = x.fld_EmployerTaxNo
+                })
+                .FirstOrDefault();
+
+            return Json(company, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         public ActionResult ConvertPDF2(string myHtml, string filename, string reportname)

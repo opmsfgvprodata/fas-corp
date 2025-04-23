@@ -1,0 +1,316 @@
+﻿@using MVC_SYSTEM.Class
+@model MVC_SYSTEM.ModelsCorporate.tbl_TaxEForm
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<section class="content-wrapper main-content clear-fix">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title">@GlobalResCorp.lblEFormAdd.ToUpper()</h3>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">@GlobalResCorp.lblEFormInfo</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">@GlobalResCorp.lblYear</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_Year, new SelectList(ViewBag.YearList, "Value", "Text"), new { @class = "selectionList form-control", @id = "yearDropdown" })
+                                @Html.ValidationMessageFor(model => model.fld_Year, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">@GlobalResCorp.lblCompany</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_SyarikatID, new SelectList(ViewBag.CompanyList, "Value", "Text"), new { @class = "selectionList form-control", @id = "fld_SyarikatID" })
+                                @Html.ValidationMessageFor(model => model.fld_SyarikatID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-heading text-center">@GlobalResCorp.lblhdrBasicParticulars.ToUpper()</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Name of employer as registered</label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.fld_NameofEmployer, new { htmlAttributes = new { @class = "form-control", @id = "fld_NameofEmployer" } })
+                                @Html.ValidationMessageFor(model => model.fld_NameofEmployer, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Employer's TIN</label>
+                            <div class="col-sm-8">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <strong>E</strong>
+                                    @Html.EditorFor(model => model.fld_EmployerTIN, new { htmlAttributes = new { @class = "form-control", @id = "fld_EmployerTIN" } })
+                                    @Html.ValidationMessageFor(model => model.fld_EmployerTIN, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Category of employer</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_CatofEmployer, new SelectList(ViewBag.catOfEmployer, "Value", "Text"), new { @class = "selectionList form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_CatofEmployer, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Status of employer</label>
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(model => model.fld_StatusofEmployer, new SelectList(ViewBag.statusEmployer, "Value", "Text"), new { @class = "selectionList form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_StatusofEmployer, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-sm-4 col-form-label">Tax Identification No.</label>
+                            <div class="col-sm-8">
+                                <div class="row">
+                                    <div class="col-sm-6 pr-1">
+                                        @Html.DropDownListFor(model => model.fld_TINCode, new SelectList(ViewBag.taxIdentinficationNo, "Value", "Text"), new { @class = "selectionList form-control" })
+                                    </div>
+                                    <div class="col-sm-6 pl-1">
+                                        @Html.EditorFor(model => model.fld_TIN, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.fld_TIN, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Identification No.</label>
+                            <div class="col-sm-3">
+                                @Html.EditorFor(model => model.fld_IdentificationNo, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_IdentificationNo, "", new { @class = "text-danger" })
+                            </div>
+
+                            <label class="control-label col-sm-2">Passport No.</label>
+                            <div class="col-sm-3">
+                                @Html.EditorFor(model => model.fld_PassportNo, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_PassportNo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Registration no. with Companies Commission of Malaysia (SSM) or others</label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.fld_RegNoCompaniesSSM, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_RegNoCompaniesSSM, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Correspondence address</label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.fld_Address1, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_Address1, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4"></label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.fld_Address2, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_Address2, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4"></label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.fld_Address3, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_Address3, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Postcode</label>
+                            <div class="col-sm-3">
+                                @Html.EditorFor(model => model.fld_Postcode, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_Postcode, "", new { @class = "text-danger" })
+                            </div>
+
+                            <label class="control-label col-sm-2">City</label>
+                            <div class="col-sm-3">
+                                @Html.EditorFor(model => model.fld_City, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_City, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">State</label>
+                            <div class="col-sm-3">
+                                @Html.EditorFor(model => model.fld_State, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_State, "", new { @class = "text-danger" })
+                            </div>
+
+                            <label class="control-label col-sm-2">Country</label>
+                            <div class="col-sm-3">
+                                @Html.EditorFor(model => model.fld_Country, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_Country, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Telephone no.</label>
+                            <div class="col-sm-3">
+                                @Html.EditorFor(model => model.fld_PhoneNo, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_PhoneNo, "", new { @class = "text-danger" })
+                            </div>
+
+                            <label class="control-label col-sm-2">Handphone no.</label>
+                            <div class="col-sm-3">
+                                @Html.EditorFor(model => model.fld_HandphoneNo, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_HandphoneNo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Email</label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.fld_Email, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Furnish of C.P.8D</label>
+                            <div class="col-sm-8">
+                                <div class="row">
+                                    <div class="col-sm-6 pr-1">
+                                        @Html.DropDownListFor(model => model.fld_FurnishofCP8D, new SelectList(ViewBag.furnishCP8D, "Value", "Text"), new { @class = "selectionList form-control" })
+                                        @Html.ValidationMessageFor(model => model.fld_FurnishofCP8D, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-sm-6 pl-1">
+                                        <span>* Note = This exemption is applicable to employers which are Sole Proprietorship, Partnership, Hindu Joint Family and Deceased Person’s Estate who do not have employees only</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-heading text-center">PART A: INFORMATION ON NUMBER OF EMPLOYEES FOR THE YEAR ENDED 31 DECEMBER <span id="yearText">@Model.fld_Year</span></div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">A1 Number of employees as at 31 December <span id="yearText2">@Model.fld_Year</span></label>
+                            <div class="col-sm-2">
+                                @Html.EditorFor(model => model.fld_A1, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_A1, "", new { @class = "text-danger" })
+                            </div>
+
+                            <label class="control-label col-sm-4">A2 Number of employees subjected to Monthly Tax Deduction (MTD)</label>
+                            <div class="col-sm-2">
+                                @Html.EditorFor(model => model.fld_A2, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_A2, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">A3 Number of new employees</label>
+                            <div class="col-sm-2">
+                                @Html.EditorFor(model => model.fld_A3, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_A3, "", new { @class = "text-danger" })
+                            </div>
+
+                            <label class="control-label col-sm-4">A4 Number of employees who ceased employment/died</label>
+                            <div class="col-sm-2">
+                                @Html.EditorFor(model => model.fld_A4, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_A4, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">A5 Number of employees who ceased employment and left Malaysia</label>
+                            <div class="col-sm-2">
+                                @Html.EditorFor(model => model.fld_A5, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_A5, "", new { @class = "text-danger" })
+                            </div>
+
+                            <label class="control-label col-sm-4">A6 Reported to LHDNM (if A5 is applicable)</label>
+                            <div class="col-sm-2">
+                                @Html.DropDownListFor(model => model.fld_A6, new SelectList(ViewBag.a6Status, "Value", "Text"), new { @class = "selectionList form-control" })
+                                @Html.ValidationMessageFor(model => model.fld_A6, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-heading text-center">PART B: DECLARATION</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Name</label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.fld_DeclareName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_DeclareName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Identification/Passport No.</label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.fld_DeclareICNo, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_DeclareICNo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Date</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.fld_DeclareDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+                                @Html.ValidationMessageFor(model => model.fld_DeclareDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Designation</label>
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.fld_DeclareDesignation, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.fld_DeclareDesignation, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value=@GlobalResCorp.btnSave>
+            <button class="btn btn-warning" data-dismiss="modal">@GlobalResCorp.btnBack</button>
+        </div>
+    }
+</section>
+
+<script>
+    $("form").removeData("validator");
+    $("form").removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse("form");
+
+
+    $(document).ready(function () {
+        $('#yearDropdown').on('change', function () {
+            var selectedYear = $(this).val();
+            $('#yearText').text(selectedYear);
+        });
+    });
+
+    $(document).ready(function () {
+        $('#yearDropdown').on('change', function () {
+            var selectedYear = $(this).val();
+            $('#yearText2').text(selectedYear);
+        });
+    });
+
+    $(document).ready(function () {
+        $('#fld_SyarikatID').change(function () {
+            var selectedCompanyID = $(this).val();
+            if (selectedCompanyID != "0") {
+                $.ajax({
+                    url: '@Url.Action("GetCompanyDetails", "MaybankFileGen")',
+                    type: 'GET',
+                    data: { id: selectedCompanyID },
+                    success: function (data) {
+                        $('#fld_NameofEmployer').val(data.employerName);
+                        $('#fld_EmployerTIN').val(data.employerTIN);
+                    },
+                    error: function () {
+                        alert('Unable to retrieve company name.');
+                    }
+                });
+            } else {
+                $('#fld_NameofEmployer').val('');
+                $('#fld_EmployerTIN').val('');
+            }
+        });
+    });
+
+
+</script>

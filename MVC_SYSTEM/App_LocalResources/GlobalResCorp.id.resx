@@ -2239,4 +2239,28 @@
   <data name="lblTotalCP8DRec" xml:space="preserve">
     <value>Total CP8D Records</value>
   </data>
+  <data name="lblEForm" xml:space="preserve">
+    <value>Borang E</value>
+  </data>
+  <data name="lblForm" xml:space="preserve">
+    <value>Borang</value>
+  </data>
+  <data name="lblEFormAdd" xml:space="preserve">
+    <value>Tambah Borang E</value>
+  </data>
+  <data name="lblEFormInfo" xml:space="preserve">
+    <value>MAKLUMAT BORANG E</value>
+  </data>
+  <data name="lblhdrBasicParticulars" xml:space="preserve">
+    <value>Maklumat Asas</value>
+  </data>
+  <data name="lblEFormUpdate" xml:space="preserve">
+    <value>Kemaskini Borang E</value>
+  </data>
+  <data name="lblEFormCount" xml:space="preserve">
+    <value>Maklumat Borang E</value>
+  </data>
+  <data name="lblEFormDelete" xml:space="preserve">
+    <value>Padam Borang E</value>
+  </data>
 </root>

@@ -3229,6 +3229,60 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Borang E.
+        /// </summary>
+        public static string lblEForm {
+            get {
+                return ResourceManager.GetString("lblEForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tambah Borang E.
+        /// </summary>
+        public static string lblEFormAdd {
+            get {
+                return ResourceManager.GetString("lblEFormAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maklumat Borang E.
+        /// </summary>
+        public static string lblEFormCount {
+            get {
+                return ResourceManager.GetString("lblEFormCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Padam Borang E.
+        /// </summary>
+        public static string lblEFormDelete {
+            get {
+                return ResourceManager.GetString("lblEFormDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAKLUMAT BORANG E.
+        /// </summary>
+        public static string lblEFormInfo {
+            get {
+                return ResourceManager.GetString("lblEFormInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kemaskini Borang E.
+        /// </summary>
+        public static string lblEFormUpdate {
+            get {
+                return ResourceManager.GetString("lblEFormUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Elaun Kesukaran.
         /// </summary>
         public static string lblElaunSukar {
@@ -3832,6 +3886,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Borang.
+        /// </summary>
+        public static string lblForm {
+            get {
+                return ResourceManager.GetString("lblForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Jantina.
         /// </summary>
         public static string lblGender {
@@ -4350,6 +4413,15 @@ namespace MVC_SYSTEM.App_LocalResources {
         public static string lblhdrBankingInformation {
             get {
                 return ResourceManager.GetString("lblhdrBankingInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maklumat Asas.
+        /// </summary>
+        public static string lblhdrBasicParticulars {
+            get {
+                return ResourceManager.GetString("lblhdrBasicParticulars", resourceCulture);
             }
         }
         

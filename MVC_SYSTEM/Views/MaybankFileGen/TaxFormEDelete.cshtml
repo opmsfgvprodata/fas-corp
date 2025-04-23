@@ -1,0 +1,76 @@
+﻿@model MVC_SYSTEM.ModelsCorporate.tbl_TaxEForm
+@{
+    ViewBag.Title = "WorkerDelete";
+    //Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 class="modal-title">@GlobalResCorp.lblEFormDelete</h3>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="panel panel-primary">
+                <div class="panel-heading">@GlobalResCorp.lblEFormInfo</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="control-label col-sm-4">Year</label>
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(model => model.fld_Year, new SelectList(ViewBag.YearList, "Value", "Text"), new { @class = "selectionList form-control", @disabled = "true", @id = "yearDropdown" })
+                            @Html.ValidationMessageFor(model => model.fld_Year, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4">Company</label>
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(model => model.fld_SyarikatID, new SelectList(ViewBag.CompanyList, "Value", "Text"), new { @class = "selectionList form-control", @disabled = "true", @id = "fld_SyarikatID" })
+                            @Html.ValidationMessageFor(model => model.fld_SyarikatID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-4">Name of employer as registered</label>
+                        <div class="col-sm-8">
+                            @Html.EditorFor(model => model.fld_NameofEmployer, new { htmlAttributes = new { @class = "form-control", @id = "fld_NameofEmployer", @disabled = "true" } })
+                            @Html.ValidationMessageFor(model => model.fld_NameofEmployer, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-4">Employer's TIN</label>
+                        <div class="col-sm-8">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <strong>E</strong>
+                                @Html.EditorFor(model => model.fld_EmployerTIN, new { htmlAttributes = new { @class = "form-control", @id = "fld_EmployerTIN", @disabled = "true" } })
+                                @Html.ValidationMessageFor(model => model.fld_EmployerTIN, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-9 col-sm-offset-3">
+                            <h3>
+                                <span class="label label-danger">
+                                    @GlobalResCorp.msgDelete
+                                </span>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <input class="btn btn-danger" type="submit" value=@GlobalResCorp.btnYes />
+        <button class="btn btn-primary" data-dismiss="modal">@GlobalResCorp.btnNo</button>
+
+    </div>
+    }

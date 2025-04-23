@@ -980,6 +980,7 @@
     <Compile Include="ModelsCorporate\tbl_Syarikat.cs" />
     <Compile Include="ModelsCorporate\tbl_Upah.cs" />
     <Compile Include="ModelsCorporate\tbl_UpahAktiviti.cs" />
+    <Compile Include="ModelsCorporate\tbl_TaxEForm.cs" />
     <Compile Include="ModelsCorporate\tbl_UpahMenuai.cs" />
     <Compile Include="ModelsCorporate\tbl_UploadedCountDetail.cs" />
     <Compile Include="ModelsCorporate\tbl_Version.cs" />
@@ -3589,6 +3590,11 @@
     <Content Include="Views\Report\PenggajianDataReport.cshtml" />
     <Content Include="Views\MaybankFileGen\TaxCP8D.cshtml" />
     <Content Include="Views\MaybankFileGen\_TaxCP8D.cshtml" />
+    <Content Include="Views\MaybankFileGen\TaxFormE.cshtml" />
+    <Content Include="Views\MaybankFileGen\_TaxFormE.cshtml" />
+    <Content Include="Views\MaybankFileGen\_TaxFormECreate.cshtml" />
+    <Content Include="Views\MaybankFileGen\_TaxFormEEdit.cshtml" />
+    <Content Include="Views\MaybankFileGen\TaxFormEDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
