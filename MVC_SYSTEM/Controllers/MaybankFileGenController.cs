@@ -3563,7 +3563,7 @@ namespace MVC_SYSTEM.Controllers
                             taxCP8D_Result.Add(new TaxCP8D_Result
                             {
                                 NamaPkerja = workerInfo2.fld_Nama,
-                                TINNo = Regex.Replace(workerTax.Select(s => s.fld_TaxNo).FirstOrDefault(), "[^0-9]", ""),
+                                TINNo = Regex.Replace(workerTaxInfo.fld_TaxNo, "[^0-9]", ""),
                                 NoPkerja = workerInfo.fld_NoPkjPermanent,
                                 IDNo = workerInfo2.fld_Nokp,
                                 KategoryPekerja = workerTaxInfo.fld_TaxMaritalStatus,
@@ -3606,7 +3606,7 @@ namespace MVC_SYSTEM.Controllers
                                 taxCP8D_Result.Add(new TaxCP8D_Result
                                 {
                                     NamaPkerja = workerInfo2.fld_Nama,
-                                    TINNo = workerTaxInfo.fld_TaxNo,
+                                    TINNo = Regex.Replace(workerTaxInfo.fld_TaxNo, "[^0-9]", ""),
                                     NoPkerja = workerInfo.fld_NoPkjPermanent,
                                     IDNo = workerInfo2.fld_Nokp,
                                     KategoryPekerja = workerTaxInfo.fld_TaxMaritalStatus,
