@@ -94,7 +94,9 @@ namespace MVC_SYSTEM.ModelsCorporate
         public int? fld_Year { get; set; }
 
         [StringLength(10)]
-        public string fld_SyarikatID { get; set; }
+        public string fld_Company { get; set; }
+
+        public int? fld_SyarikatID { get; set; }
         public int? fld_NegaraID { get; set; }
 
         [StringLength(50)]

@@ -29,8 +29,8 @@
                         <div class="form-group">
                             <label class="control-label col-sm-4">@GlobalResCorp.lblCompany</label>
                             <div class="col-sm-8">
-                                @Html.DropDownListFor(model => model.fld_SyarikatID, new SelectList(ViewBag.CompanyList, "Value", "Text"), new { @class = "selectionList form-control", @id = "fld_SyarikatID" })
-                                @Html.ValidationMessageFor(model => model.fld_SyarikatID, "", new { @class = "text-danger" })
+                                @Html.DropDownListFor(model => model.fld_Company, new SelectList(ViewBag.CompanyList, "Value", "Text"), new { @class = "selectionList form-control", @id = "fld_Company" })
+                                @Html.ValidationMessageFor(model => model.fld_Company, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
@@ -290,7 +290,7 @@
     });
 
     $(document).ready(function () {
-        $('#fld_SyarikatID').change(function () {
+        $('#fld_Company').change(function () {
             var selectedCompanyID = $(this).val();
             if (selectedCompanyID != "0") {
                 $.ajax({

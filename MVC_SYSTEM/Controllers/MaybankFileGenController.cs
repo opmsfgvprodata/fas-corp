@@ -4282,12 +4282,18 @@ namespace MVC_SYSTEM.Controllers
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
             string host, catalog, user, pass = "";
-            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+                GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
             var message = "";
-            if (String.IsNullOrEmpty(YearList.ToString()))
+            if (String.IsNullOrEmpty(YearList.ToString()) || String.IsNullOrEmpty(CompanyList.ToString()))
             {
                 message = "Please choose year and company";
+                ViewBag.Message = message;
+            }
+
+            else
+            {
+                message = GlobalResCorp.msgErrorSearch;
                 ViewBag.Message = message;
             }
 
@@ -4297,7 +4303,7 @@ namespace MVC_SYSTEM.Controllers
 
             var EFormData = dbC.tbl_TaxEForm
                 .Where(x => x.fld_Year == YearList && x.fld_NegaraID == NegaraID &&
-                            x.fld_SyarikatID == CompanyList);
+                            x.fld_Company == CompanyList);
 
             records.Content = EFormData.OrderBy(x => x.fld_Year)
                 .Skip((page - 1) * pageSize)
@@ -4310,13 +4316,9 @@ namespace MVC_SYSTEM.Controllers
             records.PageSize = pageSize;
             ViewBag.RoleID = role;
             ViewBag.pageSize = pageSize;
-            ViewBag.TotalRecord = EFormData
+            ViewBag.TotalRecords = EFormData
                 .Count();
 
-            if (EFormData.Count() <= 0)
-            {
-                ViewBag.Message = "No information found";
-            }
 
             return View(records);
         }
@@ -4458,9 +4460,11 @@ namespace MVC_SYSTEM.Controllers
                 {
                     var taxData = dbC.tbl_TaxEForm
                         .Where(x => x.fld_NegaraID == NegaraID &&
-                                    x.fld_SyarikatID == taxEForm.fld_SyarikatID)
+                                    x.fld_Company == taxEForm.fld_Company)
                         .Select(s => s.fld_Year)
                         .ToList();
+
+                    var fld_SyarikatID = db.tbl_Syarikat.Where(x => x.fld_NamaPndkSyarikat == taxEForm.fld_Company).Select(s => s.fld_SyarikatID).FirstOrDefault();
 
                     if (taxData.Contains(taxEForm.fld_Year))
                     {
@@ -4506,7 +4510,8 @@ namespace MVC_SYSTEM.Controllers
                         taxEForm.fld_DeclareDate = taxEForm.fld_DeclareDate;
                         taxEForm.fld_DeclareDesignation = taxEForm.fld_DeclareDesignation;
                         taxEForm.fld_NegaraID = NegaraID;
-                        taxEForm.fld_SyarikatID = taxEForm.fld_SyarikatID;
+                        taxEForm.fld_Company = taxEForm.fld_Company;
+                        taxEForm.fld_SyarikatID = fld_SyarikatID;
                         taxEForm.fld_CreatedBy = getuserid.ToString();
                         taxEForm.fld_CreatedDate = timezone.gettimezone();
 
@@ -4526,15 +4531,20 @@ namespace MVC_SYSTEM.Controllers
                         return Json(new
                         {
                             success = true,
-                            msg = GlobalResCorp.msgUpdate,
+                            msg = GlobalResCorp.msgAdd,
                             status = "success",
                             checkingdata = "0",
                             method = "1",
                             div = "taxFormEDetails",
                             rootUrl = domain,
                             action = "_TaxFormE",
-                            controller = "MaybankFileGen"
+                            controller = "MaybankFileGen",
+                            //paramName = "YearList",
+                            //paramValue = taxEForm.fld_Year,
+                            //paramName2 = "CompanyList",
+                            //paramValue2 = taxEForm.fld_Company
                         });
+                       
                     }
                 }
 
@@ -4564,7 +4574,7 @@ namespace MVC_SYSTEM.Controllers
 
             finally
             {
-                db.Dispose();
+                dbC.Dispose();
             }
         }
 
@@ -4706,8 +4716,7 @@ namespace MVC_SYSTEM.Controllers
                 {
                     var eFormData = dbC.tbl_TaxEForm.SingleOrDefault(
                         x => x.fld_ID == taxEForm.fld_ID &&
-                             x.fld_NegaraID == NegaraID &&
-                             x.fld_SyarikatID == taxEForm.fld_SyarikatID);
+                             x.fld_NegaraID == NegaraID );
 
                     eFormData.fld_NameofEmployer = taxEForm.fld_NameofEmployer;
                     eFormData.fld_EmployerTIN = taxEForm.fld_EmployerTIN;
@@ -4758,11 +4767,15 @@ namespace MVC_SYSTEM.Controllers
                         msg = GlobalResCorp.msgUpdate,
                         status = "success",
                         checkingdata = "0",
-                        method = "2",
+                        method = "1",
                         div = "taxFormEDetails",
                         rootUrl = domain,
                         action = "_TaxFormE",
-                        controller = "MaybankFileGen"
+                        controller = "MaybankFileGen",
+                        //paramName = "YearList",
+                        //paramValue = eFormData.fld_Year,
+                        //paramName2 = "CompanyList",
+                        //paramValue2 = eFormData.fld_Company
                     });
                 }
 
@@ -4792,7 +4805,7 @@ namespace MVC_SYSTEM.Controllers
 
             finally
             {
-                db.Dispose();
+                dbC.Dispose();
             }
         }
 
@@ -4867,13 +4880,53 @@ namespace MVC_SYSTEM.Controllers
                 ModelsCorporate.tbl_TaxEForm tbl_TaxEForm = dbC.tbl_TaxEForm.Where(x => x.fld_ID == id).FirstOrDefault();
                 if (tbl_TaxEForm == null)
                 {
-                    return Json(new { success = true, msg = GlobalResCorp.msgDelete2, status = "success", checkingdata = "0", method = "1", getid = "", data1 = "", data2 = "" });
+                    //return Json(new { success = true, msg = GlobalResCorp.msgDelete2, status = "success", checkingdata = "0", method = "1", getid = "", data1 = "", data2 = "" });
+                    string appname = Request.ApplicationPath;
+                    string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                    var lang = Request.RequestContext.RouteData.Values["lang"];
+
+                    if (appname != "/")
+                    {
+                        domain = domain + appname;
+                    }
+                    return Json(new
+                    {
+                        success = true,
+                        msg = GlobalResCorp.msgDelete2,
+                        status = "success",
+                        checkingdata = "0",
+                        method = "1",
+                        div = "taxFormEDetails",
+                        rootUrl = domain,
+                        action = "_TaxFormE",
+                        controller = "MaybankFileGen"
+                    });
                 }
                 else
                 {
                     dbC.tbl_TaxEForm.Remove(tbl_TaxEForm);
                     dbC.SaveChanges();
-                    return Json(new { success = true, msg = GlobalResCorp.msgDelete2, status = "success", checkingdata = "0", method = "1", getid = "", data1 = "", data2 = "" });
+                    //return Json(new { success = true, msg = GlobalResCorp.msgDelete2, status = "success", checkingdata = "0", method = "1", getid = "", data1 = "", data2 = "" });
+                    string appname = Request.ApplicationPath;
+                    string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                    var lang = Request.RequestContext.RouteData.Values["lang"];
+
+                    if (appname != "/")
+                    {
+                        domain = domain + appname;
+                    }
+                    return Json(new
+                    {
+                        success = true,
+                        msg = GlobalResCorp.msgDelete2,
+                        status = "success",
+                        checkingdata = "0",
+                        method = "1",
+                        div = "taxFormEDetails",
+                        rootUrl = domain,
+                        action = "_TaxFormE",
+                        controller = "MaybankFileGen"
+                    });
                 }
 
             }
