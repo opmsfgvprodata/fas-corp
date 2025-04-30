@@ -50,7 +50,7 @@ namespace MVC_SYSTEM.ModelsDapper
         public string fld_NoPkjPermanent { get; set; }
         public string fld_Nama { get; set; }
         public decimal fld_KWSPPkj { get; set; }
-        public string fld_SocsoPkj { get; set; }
+        public decimal fld_SocsoPkj { get; set; }
         public decimal fld_PCB { get; set; }
         public decimal fld_Zakat { get; set; }
         public decimal fld_CP38 { get; set; }
