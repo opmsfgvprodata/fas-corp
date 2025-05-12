@@ -3281,7 +3281,7 @@ namespace MVC_SYSTEM.Controllers
                         parameters.Add("WorkerStatus", "1");
                         con.Open();
                         var result = SqlMapper.QueryMultiple(con, "sp_TaxCP8D", parameters, commandType: CommandType.StoredProcedure);
-                        workerInfoList.AddRange(result.Read<WorkerInfo>().Where(x=> LadangIDList.Contains(x.fld_LadangID.Value)).ToList());
+                        workerInfoList.AddRange(result.Read<WorkerInfo>().Where(x => LadangIDList.Contains(x.fld_LadangID.Value)).ToList());
                         workerTaxCP8DList.AddRange(result.Read<WorkerTaxCP8D>().Where(x => LadangIDList.Contains(x.fld_LadangID.Value)).ToList());
                         otherContributionList.AddRange(result.Read<OtherContribution>().ToList());
                         specialIncentiveList.AddRange(result.Read<SpecialIncentive>().ToList());
@@ -4277,12 +4277,12 @@ namespace MVC_SYSTEM.Controllers
             return View();
         }
 
-        public ActionResult _TaxFormE(int? YearList, string CompanyList, int page = 1, string sort = "fld_Year",string sortdir = "DESC")
+        public ActionResult _TaxFormE(int? YearList, string CompanyList, int page = 1, string sort = "fld_Year", string sortdir = "DESC")
         {
             int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
             int? getuserid = GetIdentity.ID(User.Identity.Name);
             string host, catalog, user, pass = "";
-                GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
 
             var message = "";
             if (String.IsNullOrEmpty(YearList.ToString()) || String.IsNullOrEmpty(CompanyList.ToString()))
@@ -4396,7 +4396,7 @@ namespace MVC_SYSTEM.Controllers
 
             ViewBag.statusEmployer = statusEmployer;
 
-            List<SelectListItem>  taxIdentinficationNo= new List<SelectListItem>();
+            List<SelectListItem> taxIdentinficationNo = new List<SelectListItem>();
 
             taxIdentinficationNo = new SelectList(
                 dbC.tblOptionConfigsWebs
@@ -4544,7 +4544,7 @@ namespace MVC_SYSTEM.Controllers
                             //paramName2 = "CompanyList",
                             //paramValue2 = taxEForm.fld_Company
                         });
-                       
+
                     }
                 }
 
@@ -4695,7 +4695,7 @@ namespace MVC_SYSTEM.Controllers
             ViewBag.a6Status = a6Status;
 
             var formEData = dbC.tbl_TaxEForm
-                .SingleOrDefault(x => x.fld_ID == id && x.fld_NegaraID == NegaraID );
+                .SingleOrDefault(x => x.fld_ID == id && x.fld_NegaraID == NegaraID);
 
             return PartialView(formEData);
         }
@@ -4716,7 +4716,7 @@ namespace MVC_SYSTEM.Controllers
                 {
                     var eFormData = dbC.tbl_TaxEForm.SingleOrDefault(
                         x => x.fld_ID == taxEForm.fld_ID &&
-                             x.fld_NegaraID == NegaraID );
+                             x.fld_NegaraID == NegaraID);
 
                     eFormData.fld_NameofEmployer = taxEForm.fld_NameofEmployer;
                     eFormData.fld_EmployerTIN = taxEForm.fld_EmployerTIN;
@@ -4937,7 +4937,166 @@ namespace MVC_SYSTEM.Controllers
             }
 
         }
-        
+
+        public FileStreamResult TaxFormEPdfDownload(int id)
+        {
+            int? NegaraID, SyarikatID, WilayahID, LadangID = 0;
+            int? getuserid = GetIdentity.ID(User.Identity.Name);
+            string host, catalog, user, pass = "";
+            GetNSWL.GetData(out NegaraID, out SyarikatID, out WilayahID, out LadangID, getuserid, User.Identity.Name);
+            ModelsCorporate.tbl_TaxEForm tbl_TaxEForm = dbC.tbl_TaxEForm.Where(x => x.fld_ID == id).FirstOrDefault();
+            MemoryStream output = new MemoryStream();
+
+            string pdfFile = GetConfig.PdfPathFile("form E blank year.pdf");
+
+            // open the reader
+            PdfReader reader = new PdfReader(pdfFile);
+            iTextSharp.text.Rectangle size = reader.GetPageSizeWithRotation(1);
+            Document document = new Document(size);
+
+            // open the writer
+            MemoryStream ms = new MemoryStream();
+            //FileStream fs = new FileStream(newFile, FileMode.Create, FileAccess.Write);
+            PdfWriter writer = PdfWriter.GetInstance(document, ms);
+            document.Open();
+
+
+            for (int i = 1; i <= reader.NumberOfPages; i++)
+            {
+                document.NewPage();
+                PdfImportedPage page = writer.GetImportedPage(reader, i);
+                PdfContentByte cb = writer.DirectContent;
+                string text = "";
+                BaseFont bf = BaseFont.CreateFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.EMBEDDED);
+                cb.SetColorFill(BaseColor.DARK_GRAY);
+                cb.BeginText();
+
+                switch (i)
+                {
+                    case 1:
+                        cb.SetFontAndSize(bf, 20);
+                        text = tbl_TaxEForm.fld_Year.ToString(); //Year
+                        cb.ShowTextAligned(1, text, 525f, 723f, 0);
+
+                        cb.SetFontAndSize(bf, 8);
+                        text = tbl_TaxEForm.fld_NameofEmployer; //Name of Employer
+                        cb.ShowTextAligned(0, text, 179f, 675f, 0);
+
+                        text = tbl_TaxEForm.fld_EmployerTIN; //Employer's no
+                        cb.ShowTextAligned(0, text, 197f, 581f, 0);
+
+                        text = tbl_TaxEForm.fld_CatofEmployer; //Catogory of employer
+                        cb.ShowTextAligned(1, text, 187f, 551f, 0);
+
+                        text = tbl_TaxEForm.fld_StatusofEmployer; //Status of employer
+                        cb.ShowTextAligned(1, text, 187f, 521f, 0);
+
+                        text = tbl_TaxEForm.fld_TINCode; //Tax Id TIN
+                        cb.ShowTextAligned(0, text, 364f, 485f, 0);
+
+                        text = tbl_TaxEForm.fld_TIN; //Tax Id TIN
+                        cb.ShowTextAligned(0, text, 401f, 485f, 0);
+
+                        text = tbl_TaxEForm.fld_IdentificationNo; //Id No
+                        cb.ShowTextAligned(0, text, 179f, 455f, 0);
+
+                        text = tbl_TaxEForm.fld_PassportNo; //Possport No
+                        cb.ShowTextAligned(0, text, 179f, 425f, 0);
+
+                        text = tbl_TaxEForm.fld_RegNoCompaniesSSM; //CCM
+                        cb.ShowTextAligned(0, text, 179f, 395f, 0);
+
+                        text = tbl_TaxEForm.fld_Address1 == null ? "" : tbl_TaxEForm.fld_Address1; //Correspondance address
+                        cb.ShowTextAligned(0, text, 221f, 365f, 0);
+
+                        text = tbl_TaxEForm.fld_Address2 == null ? "" : tbl_TaxEForm.fld_Address2; //Correspondance address
+                        cb.ShowTextAligned(0, text, 221f, 339f, 0);
+
+                        text = tbl_TaxEForm.fld_Address3 == null ? "" : tbl_TaxEForm.fld_Address3; //Correspondance address
+                        cb.ShowTextAligned(0, text, 221f, 313f, 0);
+
+                        text = tbl_TaxEForm.fld_Postcode; //Postcode
+                        cb.ShowTextAligned(0, text, 221f, 287f, 0);
+
+                        text = tbl_TaxEForm.fld_City; //City
+                        cb.ShowTextAligned(0, text, 346f, 287f, 0);
+
+                        text = tbl_TaxEForm.fld_State; //State
+                        cb.ShowTextAligned(0, text, 221f, 263f, 0);
+
+                        text = tbl_TaxEForm.fld_PhoneNo; //Telephone no
+                        cb.ShowTextAligned(0, text, 170f, 237f, 0);
+
+                        text = tbl_TaxEForm.fld_HandphoneNo; //Handphopne no
+                        cb.ShowTextAligned(0, text, 170f, 204f, 0);
+
+                        text = tbl_TaxEForm.fld_Email; //Email no
+                        cb.ShowTextAligned(0, text, 170f, 176f, 0);
+
+                        text = tbl_TaxEForm.fld_FurnishofCP8D; //cp8d
+                        cb.ShowTextAligned(1, text, 222f, 128f, 0);
+                        break;
+
+                    case 2:
+                        cb.SetFontAndSize(bf, 8);
+                        text = tbl_TaxEForm.fld_NameofEmployer; //Name of Employer
+                        cb.ShowTextAligned(0, text, 110f, 758f, 0);
+
+                        text = tbl_TaxEForm.fld_EmployerTIN; //Employer TIN
+                        cb.ShowTextAligned(0, text, 404f, 745f, 0);
+
+                        text = tbl_TaxEForm.fld_Year.ToString(); //Year
+                        cb.ShowTextAligned(0, text, 158f, 683.5f, 0);
+
+                        text = tbl_TaxEForm.fld_A1.ToString(); //A1
+                        cb.ShowTextAligned(0, text, 233f, 682f, 0);
+
+                        text = tbl_TaxEForm.fld_A2.ToString(); //A2
+                        cb.ShowTextAligned(0, text, 473f, 679f, 0);
+
+                        text = tbl_TaxEForm.fld_A3.ToString(); //A3
+                        cb.ShowTextAligned(0, text, 233f, 643f, 0);
+
+                        text = tbl_TaxEForm.fld_A4.ToString(); //A4
+                        cb.ShowTextAligned(0, text, 473f, 645f, 0);
+
+                        text = tbl_TaxEForm.fld_A5.ToString(); //A5
+                        cb.ShowTextAligned(0, text, 233f, 602f, 0);
+
+                        text = tbl_TaxEForm.fld_A6.ToString(); //A6
+                        cb.ShowTextAligned(1, text, 480f, 614f, 0);
+
+                        text = tbl_TaxEForm.fld_DeclareName; //Declaration name
+                        cb.ShowTextAligned(0, text, 182f, 540f, 0);
+
+                        text = tbl_TaxEForm.fld_DeclareICNo; //Declaration ic
+                        cb.ShowTextAligned(0, text, 182f, 482f, 0);
+
+                        text = tbl_TaxEForm.fld_DeclareDate.Value.ToString("dd/MM/yyyy"); //Declaration date
+                        cb.ShowTextAligned(0, text, 441f, 402f, 0);
+
+                        text = tbl_TaxEForm.fld_DeclareDesignation; //Declaration Designation
+                        cb.ShowTextAligned(0, text, 173f, 340f, 0);
+                        break;
+                }
+
+                cb.EndText();
+                cb.AddTemplate(page, 0, 0);
+            }
+
+
+            document.Close();
+            writer.Close();
+            reader.Close();
+
+            ms.Close();
+
+            byte[] file = ms.ToArray();
+            output.Write(file, 0, file.Length);
+            output.Position = 0;
+            return new FileStreamResult(output, "application/pdf");
+        }
+
         public JsonResult GetCompanyDetails(string id)
         {
             var company = db.tbl_Syarikat

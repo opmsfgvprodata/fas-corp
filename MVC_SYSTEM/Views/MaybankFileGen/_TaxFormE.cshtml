@@ -32,9 +32,10 @@
                                     grid.Column(GlobalResCorp.hdrAction, format: (item) =>
                                     {
 
-                                    var tindakan = "<a data-modal1='' href='" + @Url.Action("_TaxFormEEdit", "MaybankFileGen") + "/?id=" + item.fld_ID + "' class='btn btn-success' role='button' title='" + GlobalResCorp.btnUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-pencil-square-o  fa-lg'></i></a>&nbsp;" +
-                                    "<a data-modal1='' href='" + @Url.Action("TaxFormEDelete", "MaybankFileGen") + "/?id=" + item.fld_ID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-trash fa-lg'></i></a>&nbsp;";
-                                    return @Html.Raw(tindakan);
+                                        var tindakan = "<a data-modal1='' href='" + @Url.Action("_TaxFormEEdit", "MaybankFileGen") + "/?id=" + item.fld_ID + "' class='btn btn-success' role='button' title='" + GlobalResCorp.btnUpdate + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-pencil-square-o  fa-lg'></i></a>&nbsp;" +
+                                        "<a data-modal1='' href='" + @Url.Action("TaxFormEDelete", "MaybankFileGen") + "/?id=" + item.fld_ID + "' class='btn btn-danger' role='button' title='" + GlobalResCorp.btnDelete + "' onclick='return DisplayProgressMessage(this);'><i class='fa fa-trash fa-lg'></i></a>&nbsp;" +
+                                        "<a href='" + @Url.Action("TaxFormEPdfDownload", "MaybankFileGen") + "/?id=" + item.fld_ID + "' class='btn btn-primary' role='button' title='View PDF' target=\"_blank\"><i class='fa fa-file-pdf-o fa-lg'></i></a>&nbsp;";
+                                        return @Html.Raw(tindakan);
 
                                     }, canSort: false, style: "tindakan")
                                     ))
