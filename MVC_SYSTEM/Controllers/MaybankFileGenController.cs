@@ -4534,15 +4534,15 @@ namespace MVC_SYSTEM.Controllers
                             msg = GlobalResCorp.msgAdd,
                             status = "success",
                             checkingdata = "0",
-                            method = "1",
+                            method = "3",
                             div = "taxFormEDetails",
                             rootUrl = domain,
                             action = "_TaxFormE",
                             controller = "MaybankFileGen",
-                            //paramName = "YearList",
-                            //paramValue = taxEForm.fld_Year,
-                            //paramName2 = "CompanyList",
-                            //paramValue2 = taxEForm.fld_Company
+                            paramName = "YearList",
+                            paramValue = taxEForm.fld_Year,
+                            paramName2 = "CompanyList",
+                            paramValue2 = taxEForm.fld_Company
                         });
                        
                     }
@@ -4767,15 +4767,15 @@ namespace MVC_SYSTEM.Controllers
                         msg = GlobalResCorp.msgUpdate,
                         status = "success",
                         checkingdata = "0",
-                        method = "1",
+                        method = "3",
                         div = "taxFormEDetails",
                         rootUrl = domain,
                         action = "_TaxFormE",
                         controller = "MaybankFileGen",
-                        //paramName = "YearList",
-                        //paramValue = eFormData.fld_Year,
-                        //paramName2 = "CompanyList",
-                        //paramValue2 = eFormData.fld_Company
+                        paramName = "YearList",
+                        paramValue = eFormData.fld_Year,
+                        paramName2 = "CompanyList",
+                        paramValue2 = eFormData.fld_Company
                     });
                 }
 
